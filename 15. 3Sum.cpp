@@ -19,7 +19,9 @@ public:
 		sort(num.begin(), num.end());
 		for (int i = 0; i < num.size(); i++) {
 			int target = -num[i];
-			if (target < 0) break;
+			if (target < 0) {
+				break;
+			}
 			int front = i + 1;
 			int back = num.size() - 1;
 
