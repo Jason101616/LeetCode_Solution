@@ -43,18 +43,26 @@ public:
         if (cur == nullptr) {
             return true;
         }
-        return isValid(cur->left, prev) && check(cur, prev) && isValid(cur->right, prev);
-    }
-    
-    bool check(TreeNode* cur, TreeNode* &prev) {
-        if (prev == nullptr) {
-            prev = cur;
-            return true;
-        }
-        if (cur->val <= prev->val) {
+        if (!isValid(cur->left, prev)) {
             return false;
         }
-        prev = cur;
-        return true;
+        
+        bool answer;
+        if (prev == nullptr) {
+            prev = cur;
+            answer = true;
+        }
+        else {
+            if (cur->val <= prev->val) {
+                return false;
+            }
+            prev = cur;
+            answer = true;
+        }
+        
+        if (!isValid(cur->right, prev)) {
+            return false;
+        }
+        return answer;
     }
 };
