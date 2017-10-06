@@ -30,7 +30,7 @@
 
 # Time:  O(n)
 # Space: O(1)
-# idea: sliding window with character count
+# idea: sliding window with character count. But slower than previous solution.
 class Solution(object):
     def findAnagrams(self, s, p):
         """
@@ -55,4 +55,5 @@ class Solution(object):
                 ret.append(i + 1 - len(p))
             cnt_s[ord(s[i + 1 - len(p)]) - orda] -= 1
         return ret
-        
+
+# a more concise solution, use Count in Python
