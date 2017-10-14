@@ -30,7 +30,7 @@
 
 # Time:  O(n)
 # Space: O(1)
-# idea: sliding window with character count. But slower than previous solution.
+# idea: sliding window with character count.
 class Solution(object):
     def findAnagrams(self, s, p):
         """
@@ -56,7 +56,9 @@ class Solution(object):
             cnt_s[ord(s[i + 1 - len(p)]) - orda] -= 1
         return ret
 
-# a more concise solution, use Count in Python
+# a more concise solution, use Count in Python. But slower than previous solution.
+# A Counter is a dict subclass for counting hashable objects. 
+# It is an unordered collection where elements are stored as dictionary keys and their counts are stored as dictionary values.
 from collections import Counter
 class Solution(object):
     def findAnagrams(self, s, p):
@@ -67,7 +69,7 @@ class Solution(object):
         """
         res = []
         pCounter = Counter(p)
-        sCounter = Counter(s[:len(p)-1])
+        sCounter = Counter(s[:len(p) - 1])
         for i in range(len(p)-1,len(s)):
             sCounter[s[i]] += 1   # include a new char in the window
             if sCounter == pCounter:    # This step is O(1), since there are at most 26 English letters 
