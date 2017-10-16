@@ -11,9 +11,10 @@
 
 # naive idea: use an array to store the value of each node. And compare the value one by one.
 # This idea will need extra space of O(n)
-# idea:
+
+# O(1) space idea:
 # Firstly, reverse the first half of the linked list. The trick is to define a fast pointer with stride of two each time.
-# When decide the head of the second half, we should be careful about the number of the nodes.
+# When decide the head of the second half, we should be careful about the total number of the nodes.
 # If it is odd, we should let the head of the second half be cur.next.
 # Secondly, compare the value of the reverse part with the second half one by one.
 # At the same time, reverse the first half again to restore the initial state.
@@ -28,35 +29,31 @@ class Solution(object):
         """
         if not head or not head.next:
             return True
-        
-        fast = head
-        prev = None
-        cur = head
-        nxt = head.next
+        prev, cur, nxt, fast = None, head, head.next, head
         while fast and fast.next:
             fast = fast.next.next
             cur.next = prev
             prev = cur
             cur = nxt
-            nxt = cur.next
-        if not fast:
-            head_second_half = cur
+            nxt = nxt.next
+            
+        if fast:
+            head_2half = cur.next
         else:
-            head_second_half = cur.next
+            head_2half = cur
         
         nxt = prev.next
-        while prev:
-            if prev.val != head_second_half.val:
-                return False
-            prev.next = cur
-            cur = prev
-            prev = nxt
-            if not prev:
-                break
-            else:
-                nxt = prev.next
-            head_second_half = head_second_half.next
+        tmp = cur
+        cur = prev
+        prev = tmp
         
+        while cur:
+            if cur.val != head_2half.val:
+                return False
+            head_2half = head_2half.next
+            cur.next = prev
+            prev = cur
+            cur = nxt
+            if nxt != None:
+                nxt = nxt.next
         return True
-            
-            
