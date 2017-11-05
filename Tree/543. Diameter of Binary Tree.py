@@ -18,13 +18,8 @@
 #         self.left = None
 #         self.right = None
 
-class Solution(object):
-    def __init__(self):
-        self.longest = 0
-    
-    # 思路：
-    # 经过某个node的最长路径一定是height of left tree + height of right tree
-    # 在求节点高度的过程中，顺便更新一个最长路径的全局变量
+# idea: simple recursion
+class Solution:
     def diameterOfBinaryTree(self, root):
         """
         :type root: TreeNode
@@ -32,16 +27,15 @@ class Solution(object):
         """
         if not root:
             return 0
-        
-        self.height(root)
-        return self.longest
-
-    def height(self, node):
+        self.longest = 0
+        self.find_longest(root)
+        return self.longest - 1
+    
+    def find_longest(self, node):
         if not node:
             return 0
-        h_l = self.height(node.left)
-        h_r = self.height(node.right)
-        if h_l + h_r > self.longest:
-            self.longest = h_l + h_r
-        return max(h_l, h_r) + 1
+        left_len = self.find_longest(node.left)
+        right_len = self.find_longest(node.right)
+        self.longest = max(self.longest, right_len + left_len + 1)
+        return max(left_len, right_len) + 1
         
