@@ -18,6 +18,7 @@
 
 # idea: use recursion. pick one node as the root, and divide the tree into left subtree and right subtree. Then combine all the possible combination. Also define a memo to store the calculated outcome to accelerate the implementation.
 
+
 class Solution(object):
     def generateTrees(self, n):
         """
@@ -26,13 +27,14 @@ class Solution(object):
         """
         if n == 0:
             return []
+
         memo = [[None for _ in range(n)] for __ in range(n)]
         return self.genTrees(1, n, memo)
-    
+
     def genTrees(self, left, right, memo):
         if left > right:
             return [None]
-        
+
         if memo[left - 1][right - 1] != None:
             return memo[left - 1][right - 1]
         ret_list = []
@@ -46,4 +48,3 @@ class Solution(object):
                     new_node.right = right_subtree[k]
                     ret_list.append(new_node)
         return ret_list
-                    
