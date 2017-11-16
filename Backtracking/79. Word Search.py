@@ -37,7 +37,8 @@ class Solution(object):
         return self.find
 
     def find_path(self, index_word, row, col, visited):
-        if self.word[index_word] != self.board[row][col]:
+        if index_word >= len(
+                self.word) or self.word[index_word] != self.board[row][col]:
             return
         if index_word == len(
                 self.word
