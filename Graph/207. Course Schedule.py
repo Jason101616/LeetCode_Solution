@@ -17,7 +17,6 @@
 # You may assume that there are no duplicate edges in the input prerequisites.
 
 
-from collections import deque
 class Solution(object):
     def canFinish(self, numCourses, prerequisites):
         """
@@ -34,13 +33,13 @@ class Solution(object):
                 graph[out_deg] = [in_deg]
             else:
                 graph[out_deg].append(in_deg)
-                
+
         for node in graph.keys():
             if not self.DFS(node, graph, visit):
                 return False
-            
+
         return True
-        
+
     def DFS(self, node, graph, visit):
         if node not in visit:
             visit[node] = -1
@@ -51,16 +50,12 @@ class Solution(object):
                 return True
             else:
                 exit(2)
-        
+
         for i in graph[node]:
             if i not in graph:
                 continue
             if not self.DFS(i, graph, visit):
                 return False
-        
+
         visit[node] = 1
         return True
-                
-        
-                
-        
