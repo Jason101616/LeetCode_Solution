@@ -3,12 +3,12 @@
 # For example,
 # Given [3,2,1,5,6,4] and k = 2, return 5.
 
-# Note: 
+# Note:
 # You may assume k is always valid, 1 ≤ k ≤ array's length.
 
 # solution 1: divide and conquer
 # time: O(n)
-# idea: 
+# idea:
 # In quicksort, in each iteration, we need to select a pivot and then partition the array into three parts:
 # Elements smaller than the pivot;
 # Elements equal to the pivot;
@@ -27,6 +27,7 @@
 # Else update left to be the right neighbor of the pivot.
 # Repeat 2.
 
+
 class Solution(object):
     def findKthLargest(self, nums, k):
         """
@@ -43,24 +44,24 @@ class Solution(object):
                 right = pos - 1
             else:
                 left = pos + 1
-                
+
     def partition(self, nums, left, right):
-        def swap(a, b):
-            return b, a
-            
         pivot_pos, pivot_val = left, nums[left]
         for i in range(left + 1, right + 1):
             if nums[i] > pivot_val:
                 pivot_pos += 1
                 if pivot_pos != i:
-                    nums[pivot_pos], nums[i] = swap(nums[pivot_pos], nums[i])
+                    nums[pivot_pos], nums[i] = nums[i], nums[pivot_pos]
         nums[left] = nums[pivot_pos]
         nums[pivot_pos] = pivot_val
         return pivot_pos
 
+
 # solution 2: use heap
 # time: O(N * log(k))
-import queue # python 3
+import queue  # python 3
+
+
 class Solution:
     def findKthLargest(self, nums, k):
         """
