@@ -1,11 +1,13 @@
 # Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
 
 from Queue import PriorityQueue
+
 # Definition for singly-linked list.
 # class ListNode(object):
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
+
 
 # time: O(Nlogk)
 class Solution(object):
@@ -26,4 +28,3 @@ class Solution(object):
             if cur_node.next:
                 node_queue.put((cur_node.next.val, cur_node.next))
         return tmp_node.next
-    
