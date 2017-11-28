@@ -16,6 +16,7 @@
 # if this stack is not empty, then hasNext is True
 # next is the top node of the stack
 # each time invoke next function, we should update the stack
+
 # Definition for a  binary tree node
 # class TreeNode(object):
 #     def __init__(self, x):

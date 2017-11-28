@@ -30,38 +30,38 @@ Binary tree [1,2,3], return false.
  If a BST is valid, the val of the inorder traversal of the tree is ascending.
  */
 class Solution {
-public:
-  bool isValidBST(TreeNode *root) {
-    if (root == nullptr) {
-      return true;
-    }
-    TreeNode *prev = nullptr;
-    return isValid(root, prev);
-  }
-
-  bool isValid(TreeNode *cur, TreeNode *&prev) {
-    if (cur == nullptr) {
-      return true;
-    }
-    if (!isValid(cur->left, prev)) {
-      return false;
+  public:
+    bool isValidBST(TreeNode *root) {
+        if (root == nullptr) {
+            return true;
+        }
+        TreeNode *prev = nullptr;
+        return isValid(root, prev);
     }
 
-    bool answer;
-    if (prev == nullptr) {
-      prev = cur;
-      answer = true;
-    } else {
-      if (cur->val <= prev->val) {
-        return false;
-      }
-      prev = cur;
-      answer = true;
-    }
+    bool isValid(TreeNode *cur, TreeNode *&prev) {
+        if (cur == nullptr) {
+            return true;
+        }
+        if (!isValid(cur->left, prev)) {
+            return false;
+        }
 
-    if (!isValid(cur->right, prev)) {
-      return false;
+        bool answer;
+        if (prev == nullptr) {
+            prev = cur;
+            answer = true;
+        } else {
+            if (cur->val <= prev->val) {
+                return false;
+            }
+            prev = cur;
+            answer = true;
+        }
+
+        if (!isValid(cur->right, prev)) {
+            return false;
+        }
+        return answer;
     }
-    return answer;
-  }
 };

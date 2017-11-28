@@ -24,6 +24,7 @@
 #         self.right = None
 
 
+# Solution 1: maintain two variables low_bound and high_bound
 class Solution:
     def isValidBST(self, root):
         """
@@ -42,3 +43,24 @@ class Solution:
         return self.is_valid_BST(node.left, low_bound,
                                  node.val) and self.is_valid_BST(
                                      node.right, node.val, high_bound)
+
+
+# Solution 2: check whether the inorder traversal is ascending
+class Solution:
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        self.prev = None
+        return self.is_valid_BST(root)
+
+    def is_valid_BST(self, node):
+        if not node:
+            return True
+        if not self.is_valid_BST(node.left):
+            return False
+        if self.prev and node.val <= self.prev.val:
+            return False
+        self.prev = node
+        return self.is_valid_BST(node.right)
