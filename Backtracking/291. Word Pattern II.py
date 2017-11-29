@@ -48,3 +48,5 @@ class Solution(object):
             string_set.remove(sub_str)
 
         return False
+
+    你写java就行
