@@ -4,15 +4,17 @@
 
 # Note: next() and hasNext() should run in average O(1) time and uses O(h) memory, where h is the height of the tree.
 
-# a. naive idea is:
+# a. Naive idea is:
 # can be divided into 3 circumstances:
 # 1. has right subtree
 # 2. do not has right sub and cur == parent.left
 # 3. hasNext return False
-# b. a further idea:
+
+# b. A further idea:
 # use inorder traversal, print the answer one by one
 # the problem is that it use more than O(h) space
-# c. just use a stack record the node in left subtree
+
+# c. j=Just use a stack record the node in left subtree
 # if this stack is not empty, then hasNext is True
 # next is the top node of the stack
 # each time invoke next function, we should update the stack
