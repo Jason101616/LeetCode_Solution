@@ -19,11 +19,10 @@
 # idea: same idea as Word Search I, but use Trie to stop backtracking earlier
 class TrieNode:
     def __init__(self, is_word=False):
-        self.num_of_char = 26
-        self.next = [None for _ in range(self.num_of_char)]
+        self.next = {}
         self.is_word = is_word
 
-
+        
 class Trie:
     def __init__(self):
         self.root = TrieNode()
@@ -31,9 +30,9 @@ class Trie:
     def add(self, word):
         cur_node = self.root
         for char in word:
-            if not cur_node.next[ord(char) - ord('a')]:
-                cur_node.next[ord(char) - ord('a')] = TrieNode()
-            cur_node = cur_node.next[ord(char) - ord('a')]
+            if char not in cur_node.next:
+                cur_node.next[char] = TrieNode()
+            cur_node = cur_node.next[char]
         cur_node.is_word = True
 
     def start_with(self, prefix):
@@ -48,9 +47,9 @@ class Trie:
     def __find_node(self, word):
         cur_node = self.root
         for char in word:
-            cur_node = cur_node.next[ord(char) - ord('a')]
-            if not cur_node:
-                break
+            if char not in cur_node.next:
+                return None
+            cur_node = cur_node.next[char]
         return cur_node
 
 
@@ -72,31 +71,20 @@ class Solution:
         self.ans = []
         row = len(board)
         col = len(board[0])
+        visited = [[False for _ in range(len(board[0]))] for __ in range(len(board))]
         for i in range(row):
             for j in range(col):
-                visited = set()
-                self.find_path(i, j, visited, board[i][j])
+                self.find_path(i, j, visited, '')
         return self.ans
 
     def find_path(self, row, col, visited, cur_string):
-        if not self.trie.start_with(cur_string):
-            return
         if self.trie.search(cur_string) and cur_string not in self.ans:
             self.ans.append(cur_string)
-        visited.add((row, col))
-        can_visit_next = self.can_visit_next(row, col, visited)
-        for i, j in can_visit_next:
-            self.find_path(i, j, visited, cur_string + self.board[i][j])
-        visited.remove((row, col))
-
-    def can_visit_next(self, row, col, visited):
-        can_visit = []
-        if row - 1 >= 0 and (row - 1, col) not in visited:
-            can_visit.append((row - 1, col))
-        if row + 1 <= len(self.board) - 1 and (row + 1, col) not in visited:
-            can_visit.append((row + 1, col))
-        if col - 1 >= 0 and (row, col - 1) not in visited:
-            can_visit.append((row, col - 1))
-        if col + 1 <= len(self.board[0]) - 1 and (row, col + 1) not in visited:
-            can_visit.append((row, col + 1))
-        return can_visit
+        if row < 0 or row >= len(self.board) or col < 0 or col >= len(self.board[0]) or visited[row][col] or not self.trie.start_with(cur_string):
+            return
+        visited[row][col] = True
+        self.find_path(row + 1, col, visited, cur_string + self.board[row][col])
+        self.find_path(row - 1, col, visited, cur_string + self.board[row][col])
+        self.find_path(row, col + 1, visited, cur_string + self.board[row][col])
+        self.find_path(row, col - 1, visited, cur_string + self.board[row][col])
+        visited[row][col] = False

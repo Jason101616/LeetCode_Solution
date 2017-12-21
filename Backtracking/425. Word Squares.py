@@ -57,11 +57,10 @@
 # The output consists of two word squares. The order of output does not matter (just the order of words in each word square matters).
 
 
-# Solution 1: DFS + use a trie to prune. TLE...
+# Solution 1: DFS + use a trie to prune.
 class TrieNode:
     def __init__(self, is_word=False):
-        self.num_of_char = 26
-        self.next = [None] * self.num_of_char
+        self.next = {}
         self.is_word = is_word
 
 
@@ -78,12 +77,12 @@ class Trie:
         :type word: str
         :rtype: void
         """
-        tmp_node = self.root
+        cur_node = self.root
         for char in word:
-            if not tmp_node.next[ord(char) - ord('a')]:
-                tmp_node.next[ord(char) - ord('a')] = TrieNode()
-            tmp_node = tmp_node.next[ord(char) - ord('a')]
-        tmp_node.is_word = True
+            if char not in cur_node.next:
+                cur_node.next[char] = TrieNode()
+            cur_node = cur_node.next[char]
+        cur_node.is_word = True
 
     def search(self, word):
         """
@@ -91,7 +90,7 @@ class Trie:
         :type word: str
         :rtype: bool
         """
-        end_node = self.__find(word)
+        end_node = self.__find_node(word)
         if end_node and end_node.is_word:
             return True
         return False
@@ -102,33 +101,31 @@ class Trie:
         :type prefix: str
         :rtype: bool
         """
-        tmp_node = self.root
+        cur_node = self.root
         for char in prefix:
-            tmp_node = tmp_node.next[ord(char) - ord('a')]
-            if not tmp_node:
+            if char not in cur_node.next:
                 return []
-        self.ans = []
-        if tmp_node.is_word:
-            self.ans.append(prefix)
-        for i in range(len(tmp_node.next)):
-            if tmp_node.next[i] != None:
-                self.dfs(prefix + chr(ord('a') + i), tmp_node.next[i])
-        return self.ans
-
-    def dfs(self, prefix, cur_node):
+            cur_node = cur_node.next[char]
+        ans = []
         if cur_node.is_word:
-            self.ans.append(prefix)
-        for i in range(len(cur_node.next)):
-            if cur_node.next[i] != None:
-                self.dfs(prefix + chr(ord('a') + i), cur_node.next[i])
+            ans.append(prefix)
+        for key in cur_node.next.keys():
+            self.dfs(prefix + key, cur_node.next[key], ans)
+        return ans
 
-    def __find(self, word):
-        tmp_node = self.root
+    def dfs(self, prefix, cur_node, ans):
+        if cur_node.is_word:
+            ans.append(prefix)
+        for key in cur_node.next.keys():
+            self.dfs(prefix + key, cur_node.next[key], ans)
+
+    def __find_node(self, word):
+        cur_node = self.root
         for char in word:
-            tmp_node = tmp_node.next[ord(char) - ord('a')]
-            if not tmp_node:
-                break
-        return tmp_node
+            if char not in cur_node.next:
+                return None
+            cur_node = cur_node.next[char]
+        return cur_node
 
 
 class Solution(object):

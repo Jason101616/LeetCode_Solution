@@ -25,39 +25,27 @@ class Solution(object):
         """
         if not board or not board[0]:
             return False
-        self.find = False
-        self.board = board
-        self.word = word
-        row = len(board)
-        col = len(board[0])
+        row, col = len(board), len(board[0])
+        visited = [[False for _ in range(col)] for __ in range(row)]
         for i in range(row):
             for j in range(col):
-                visited = set()
-                self.find_path(0, i, j, visited)
-        return self.find
-
-    def find_path(self, index_word, row, col, visited):
-        if index_word >= len(
-                self.word) or self.word[index_word] != self.board[row][col]:
-            return
-        if index_word == len(
-                self.word
-        ) - 1 and self.word[index_word] == self.board[row][col]:
-            self.find = True
-            return
-        visited.add((row, col))
-        for i, j in self.can_visit_next(row, col, visited):
-            self.find_path(index_word + 1, i, j, visited)
-        visited.remove((row, col))
-
-    def can_visit_next(self, row, col, visited):
-        can_visit = []
-        if row - 1 >= 0 and (row - 1, col) not in visited:
-            can_visit.append((row - 1, col))
-        if row + 1 <= len(self.board) - 1 and (row + 1, col) not in visited:
-            can_visit.append((row + 1, col))
-        if col - 1 >= 0 and (row, col - 1) not in visited:
-            can_visit.append((row, col - 1))
-        if col + 1 <= len(self.board[0]) - 1 and (row, col + 1) not in visited:
-            can_visit.append((row, col + 1))
-        return can_visit
+                if self.search_word(visited, i, j, word, board, 0):
+                    return True
+        return False
+    
+    def search_word(self, visited, i, j, word, board, index):
+        if index == len(word):
+            return True
+        if i < 0 or i >= len(board) or j < 0 or j >= len(board[0]) or visited[i][j] or board[i][j] != word[index]:
+            return False
+        visited[i][j] = True
+        if self.search_word(visited, i + 1, j, word, board, index + 1):
+            return True
+        if self.search_word(visited, i - 1, j, word, board, index + 1):
+            return True
+        if self.search_word(visited, i, j + 1, word, board, index + 1):
+            return True
+        if self.search_word(visited, i, j - 1, word, board, index + 1):
+            return True
+        visited[i][j] = False
+        return False
