@@ -37,34 +37,49 @@ class Solution(object):
             self.find_permute(cur_ans, cur_nums[:i] + cur_nums[i + 1:])
 
 
-# Solution 2
-# idea: backtracing. Swap numbers and DFS.
-import copy
-
-
-class Solution:
+# Solution 2:
+# idea: swap with the first item every time, until cannot swap
+# time: O(n!) n factorial
+class Solution(object):
     def permute(self, nums):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        ret_list = []
-        self.per(nums, ret_list, 0)
-        return ret_list
-
-    def per(self, nums, ret_list, index):
-        if index >= len(nums):
-            ret_list.append(copy.deepcopy(nums))
+        if not nums:
+            return []
+        ans = []
+        self.find_permutation(ans, nums, 0)
+        return ans
+    
+    def find_permutation(self, ans, nums, start):
+        if start == len(nums) - 1:
+            ans.append(copy.deepcopy(nums))
             return
+        for i in range(start, len(nums)):
+            nums[start], nums[i] = nums[i], nums[start]
+            self.find_permutation(ans, nums, start + 1)
+            nums[start], nums[i] = nums[i], nums[start]
 
-        for i in range(index, len(nums)):
-            if i != index:
-                self.swap(nums, index, i)
-            self.per(nums, ret_list, index + 1)
-            if i != index:
-                self.swap(nums, index, i)
 
-    def swap(self, nums, i1, i2):
-        tmp = nums[i1]
-        nums[i1] = nums[i2]
-        nums[i2] = tmp
+class Solution(object):
+    def permute(self, nums):
+        if not nums:
+            return []
+        res = []
+        cur = []
+        used = [False for _ in range(len(nums))]
+        self.find_permutation(res, cur, nums, used)
+        return res
+
+    def find_permutation(self, res, cur, nums, used):
+        if len(cur) == len(nums):
+            res.append(list(cur))
+            return
+        for i in range(len(nums)):
+            if not used[i]:
+                cur.append(nums[i])
+                used[i] = True
+                self.find_permutation(res, cur, nums, used)
+                used[i] = False
+                cur.pop()

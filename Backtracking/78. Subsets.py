@@ -16,6 +16,7 @@
 #   []
 # ]
 
+# Solution 1:
 from copy import deepcopy
 
 
@@ -42,6 +43,7 @@ class Solution(object):
         prev_ans.pop()
 
 
+# Solution 2:
 class Solution(object):
     def subsets(self, nums):
         """
@@ -61,3 +63,23 @@ class Solution(object):
             return
         self.find_ans(prev_ans, prev_num + 1, nums)
         self.find_ans(prev_ans + [nums[prev_num]], prev_num + 1, nums)
+
+
+# Solution 3:
+# idea: backtracking
+# time: O(2^n)
+class Solution(object):
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        self.find_ans([], nums, 0, res)
+        return res
+
+    def find_ans(self, cur_res, nums, start, res):
+        res.append(cur_res)
+        for i in range(start, len(nums)):
+            self.find_ans(cur_res + [nums[i]], nums, i + 1, res)
+        

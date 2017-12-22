@@ -8,31 +8,34 @@
 #   [2,1,1]
 # ]
 
-# idea: backtracing, same idea as 46, except that use a set to record whether a permutation has been added to the list
-
-import copy
-class Solution:
+# idea: same idea as 46, except need sort first and two lines to delete duplicate.
+# key point is that when want to use a number, and its value is the same as the previous number, this number can only be used when the previous number  have been used
+# 先判断前面的一个数是否和自己相等，相等的时候则前面的数必须使用了，自己才能使用
+class Solution(object):
     def permuteUnique(self, nums):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        ret_list = []
-        per_set = set()
-        self.per(nums, ret_list, per_set, 0)
-        return ret_list
-            
-    
-    def per(self, nums, ret_list, per_set, begin):
-        if begin >= len(nums):
-            if tuple(nums) not in per_set:
-                ret_list.append(copy.deepcopy(nums))
-                per_set.add(tuple(nums))
+        if not nums:
+            return []
+        nums.sort()
+        res = []
+        cur = []
+        used = [False for _ in range(len(nums))]
+        self.find_permutation(res, cur, nums, used)
+        return res
+
+    def find_permutation(self, res, cur, nums, used):
+        if len(cur) == len(nums):
+            res.append(list(cur))
             return
-        
-        for i in range(begin, len(nums)):
-            if i != begin:
-                nums[i], nums[begin] = nums[begin], nums[i]
-            self.per(nums, ret_list, per_set, begin + 1)
-            if i != begin:
-                nums[i], nums[begin] = nums[begin], nums[i]
+        for i in range(len(nums)):
+            if not used[i]:
+                if i > 0 and nums[i] == nums[i - 1] and not used[i - 1]:
+                    continue
+                cur.append(nums[i])
+                used[i] = True
+                self.find_permutation(res, cur, nums, used)
+                used[i] = False
+                cur.pop()
