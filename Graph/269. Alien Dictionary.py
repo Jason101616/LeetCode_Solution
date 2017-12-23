@@ -37,7 +37,11 @@
 # If the order is invalid, return an empty string.
 # There may be multiple valid order of letters, return any one of them is fine.
 
-# the essence of this problem is topological sort
+# # idea: the essence of this problem is topological sort. if the topological sort exist, then answer exist.
+# Firstly, we need to find the all the valid pairs to calculate the in-degree of each character.
+# Secondly, push the character which has zero in-degree into a queue, also put these character into the answer
+# delete those zero-in-degree character from the queue. in the meantime, update the in-degree of each character. Then push those character into the queue.
+# finally, compare the length of the answer with the length of all the characters. If they are the same, return the answer, else return ''
 # time: O(V+E) + O(n*k), where n is the length of the words, k is the longest length of a word, V is the number of vertices, E is the number of edge in the graph
 class Solution(object):
     def alienOrder(self, words):
