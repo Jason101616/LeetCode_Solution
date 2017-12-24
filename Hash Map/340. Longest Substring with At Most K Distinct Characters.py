@@ -7,7 +7,7 @@
 
 # the same idea as 159 Longest Substring with At Most Two Distinct Characters
 # idea: maintain a hashtable, with key is character, value is the number of time it appear in the substring
-# also maintain a left pointer, if the number of element in the dictionary is larger than 2, the left pointer will be
+# also maintain a left pointer, if the number of element in the dictionary is larger than 2, the left pointer will be responsible for deleting some characters
 class Solution(object):
     def lengthOfLongestSubstringKDistinct(self, s, k):
         """
@@ -15,7 +15,7 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        char_cnt = collections.defaultdict(lambda: 0)
+        char_cnt = collections.defaultdict(lambda : 0)
         left = 0
         max_len = 0
         for i in range(len(s)):
@@ -27,3 +27,4 @@ class Solution(object):
                 left += 1
             max_len = max(max_len, i - left + 1)
         return max_len
+        
