@@ -15,16 +15,17 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        char_cnt = collections.defaultdict(lambda : 0)
+        s_cnt = collections.defaultdict(lambda: 0)
         left = 0
-        max_len = 0
-        for i in range(len(s)):
-            char_cnt[s[i]] += 1
-            while len(char_cnt) > k:
-                char_cnt[s[left]] -= 1
-                if char_cnt[s[left]] == 0:
-                    del char_cnt[s[left]]
+        longest = 0
+        for index, char in enumerate(s):
+            s_cnt[char] += 1
+            while len(s_cnt) > k:
+                s_cnt[s[left]] -= 1
+                if s_cnt[s[left]] == 0:
+                    del s_cnt[s[left]]
                 left += 1
-            max_len = max(max_len, i - left + 1)
-        return max_len
+            if index - left + 1 > longest:
+                longest = index - left + 1
+        return longest
         
