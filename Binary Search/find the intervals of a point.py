@@ -1,5 +1,5 @@
 # 给一堆区间，比如 [-1.1, 1.0], [-0.5, 3.5], [3.6, 4.0], ...，再给一个点target，比如0.1，要返回所有包含了这个点的区间。
-# 最简单的做法就是一个一个区间比较，返回所有包含了target的区间，这是linear time。.鐣欏璁哄潧-涓€浜�-涓夊垎鍦�
+# 最简单的做法就是一个一个区间比较，返回所有包含了target的区间，这是linear time
 # 又问，可以对这些区间做pre-processing，pre-processing只做一次所以复杂度不计。问怎么做可以比linear time更快。
 # 和面试官讨论的大致思路是，按照区间左端点做sorting，然后binary search。
 
@@ -20,8 +20,7 @@ def find_interval(intervals, point):
     critical_dict = defaultdict(lambda: [])
     for i in range(len(critical_point)):
         if i > 0:
-            critical_dict[critical_point[i]] = copy.deepcopy(
-                critical_dict[critical_point[i - 1]])
+            critical_dict[critical_point[i]] = copy.deepcopy(critical_dict[critical_point[i - 1]])
         for interval in intervals:
             if interval[0] == critical_point[i]:
                 critical_dict[critical_point[i]].append(interval)
