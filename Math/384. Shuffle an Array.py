@@ -15,6 +15,7 @@
 # // Returns the random shuffling of array [1,2,3].
 # solution.shuffle();
 
+# idea: Knuth shuffle
 import copy
 from random import randint
 class Solution:

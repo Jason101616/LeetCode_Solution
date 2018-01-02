@@ -59,16 +59,18 @@ class RandomizedSet(object):
         :type val: int
         :rtype: bool
         """
+        # idea is swap this item with the last item in my_list
         if val not in self.my_dict:
             return False
-        this_item_index = self.my_dict[val]
-        last_index = len(self.my_list) - 1
-        last_item = self.my_list[last_index]
+        remove_item_index = self.my_dict[val]
+        last_item_index = len(self.my_list) - 1
+        last_item = self.my_list[last_item_index]
         del self.my_dict[val]
-        if this_item_index != last_index:
-            self.my_list[this_item_index] = last_item
-            self.my_dict[last_item] = this_item_index
-        self.my_list = self.my_list[:-1]
+        # if the removed item is the last item, we don't need to re-insert it
+        if remove_item_index != last_item_index:
+            self.my_list[remove_item_index] = last_item
+            self.my_dict[last_item] = remove_item_index
+        self.my_list.pop()
         return True
 
     def getRandom(self):

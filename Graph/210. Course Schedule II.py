@@ -18,7 +18,7 @@
 # The input prerequisites is a graph represented by a list of edges, not adjacency matrices. Read more about how a graph is represented.
 # You may assume that there are no duplicate edges in the input prerequisites.
 
-# idea: use dfs to perform topological sort
+# approach 1: use dfs to perform topological sort
 from collections import defaultdict
 
 
@@ -71,3 +71,42 @@ class Solution(object):
         self.visited[node] = 1
         self.list.append(node)
         return True
+
+# approach 2: use BFS to perform topological sort
+# maintain a graph(dict) to store outbound and a dict to calculate in-degree
+# if need to output the answer, remember to add the node not show up in the edges
+class Solution(object):
+    def findOrder(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: List[int]
+        """
+        graph = collections.defaultdict(lambda: [])
+        in_degree = collections.defaultdict(lambda: 0)
+        for edge in prerequisites:
+            graph[edge[1]].append(edge[0])  # store outbound
+            in_degree[edge[0]] += 1         # count the number of inbound
+            in_degree[edge[1]] += 0         # a trick to put every node in in_degree
+        target = len(in_degree)
+        q = collections.deque()
+        all_nodes = set([i for i in range(numCourses)])
+        cnt = 0
+        res = []
+        for node in in_degree:
+            if in_degree[node] == 0:
+                cnt += 1
+                q.append(node)
+                res.append(node)
+                all_nodes.remove(node)
+        
+        while q:
+            cur_node = q.popleft()
+            for neighbor in graph[cur_node]:
+                in_degree[neighbor] -= 1
+                if in_degree[neighbor] == 0:
+                    cnt += 1
+                    q.append(neighbor)
+                    res.append(neighbor)
+                    all_nodes.remove(neighbor)
+        return res + list(all_nodes) if cnt == target else []

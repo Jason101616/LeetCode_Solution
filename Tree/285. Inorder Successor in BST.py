@@ -9,7 +9,7 @@
 #         self.left = None
 #         self.right = None
 
-# idea: Use in-order traversal, when find p, mark a global varible. Next time when detect that global variable,
+# Approach 1: Use in-order traversal, when find p, mark a global varible. Next time when detect that global variable,
 # return the current node directly.
 class Solution(object):
     def inorderSuccessor(self, root, p):
@@ -40,7 +40,9 @@ class Solution(object):
 #         self.left = None
 #         self.right = None
 
-# Solution 2: 当根节点值小于等于p节点值，说明p的后继节点一定在右子树中，所以对右子节点递归调用此函数，如果根节点值大于p节点值，那么有可能根节点就是p的后继节点，或者左子树中的某个节点是p的后继节点，所以先对左子节点递归调用此函数，如果返回空，说明根节点是后继节点，返回即可，如果不为空，则将那个节点返回
+# Approach 2: check recursively
+# 当根结点值小于等于p结点值，说明p的后继结点一定在右子树中，所以对右子结点递归调用此函数，如果根结点值大于p结点值，那么有可能根结点就是p的后继结点，或者左子树中的某个结点是p的后继结点，所以先对左子结点递归调用此函数，如果返回空，说明根结点是后继结点，返回即可，如果不为空，则将那个结点返回
+# time: O(logn), space: O(logn)
 class Solution(object):
     def inorderSuccessor(self, root, p):
         """
@@ -50,8 +52,29 @@ class Solution(object):
         """
         if not root:
             return None
-        if root.val <= p.val:
+        if p.val >= root.val:
             return self.inorderSuccessor(root.right, p)
-        else:
+        if p.val < root.val:
+            # in left subtree or root
             left = self.inorderSuccessor(root.left, p)
-            return root if not left else left
+            return left if left else root
+
+# Approach 3: check iteratively
+# time: O(logn), space: O(1)
+class Solution(object):
+    def inorderSuccessor(self, root, p):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :rtype: TreeNode
+        """
+        if not root:
+            return None
+        res = None
+        while root:
+            if p.val >= root.val:
+                root = root.right
+            else:
+                res = root
+                root = root.left
+        return res

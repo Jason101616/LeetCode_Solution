@@ -17,6 +17,7 @@
 # You may assume that there are no duplicate edges in the input prerequisites.
 
 
+# approach 1: dfs
 class Solution(object):
     def canFinish(self, numCourses, prerequisites):
         """
@@ -59,3 +60,34 @@ class Solution(object):
 
         visit[node] = 1
         return True
+
+# approach 2: topological sort/BFS
+class Solution(object):
+    def canFinish(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: bool
+        """
+        graph = collections.defaultdict(lambda: [])
+        in_degree = collections.defaultdict(lambda: 0)
+        for edge in prerequisites:
+            graph[edge[1]].append(edge[0])  # store outbound
+            in_degree[edge[0]] += 1         # count the number of inbound
+            in_degree[edge[1]] += 0         # a trick to put every node in in_degree
+        target = len(in_degree)
+        q = collections.deque()
+        cnt = 0
+        for node in in_degree:
+            if in_degree[node] == 0:
+                cnt += 1
+                q.append(node)
+        
+        while q:
+            cur_node = q.popleft()
+            for neighbor in graph[cur_node]:
+                in_degree[neighbor] -= 1
+                if in_degree[neighbor] == 0:
+                    cnt += 1
+                    q.append(neighbor)
+        return cnt == target
