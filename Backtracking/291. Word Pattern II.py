@@ -11,7 +11,7 @@
 
 # time: O(m * (n-1)Cm), where n is the length of pattern, m is the length of str
 # C means combination, (n-1)Cm = C(n-1)m
-# idea: see https://discuss.leetcode.com/topic/26750/share-my-java-backtracking-solution?page=1
+# idea: backtracking, use any length in the str to mapping one char
 class Solution(object):
     def wordPatternMatch(self, pattern, str):
         """
@@ -19,34 +19,33 @@ class Solution(object):
         :type str: str
         :rtype: bool
         """
-        char_string_dict = {}
+        mapping = {}
         string_set = set()
-        return self.isMatch(str, 0, pattern, 0, char_string_dict, string_set)
-
-    def isMatch(self, string, i, pattern, j, char_string_dict, string_set):
-        if i == len(string) and j == len(pattern):
+        return self.is_mapping(pattern, 0, str, 0, mapping, string_set)
+    
+    def is_mapping(self, pattern, p_i, str, s_i, mapping, string_set):
+        if p_i == len(pattern) and s_i == len(str):
             return True
-        if i == len(string) or j == len(pattern):
+        if p_i == len(pattern) or s_i == len(str):
             return False
-
-        if pattern[j] in char_string_dict:
-            map_s = char_string_dict[pattern[j]]
-            if string[i: i + len(map_s)] != map_s:
+        
+        if pattern[p_i] in mapping:
+            # check whether previous mapping equals to the current string snippet
+            len_str = len(mapping[pattern[p_i]])
+            if str[s_i: s_i + len_str] != mapping[pattern[p_i]]:
                 return False
             else:
-                return self.isMatch(string, i + len(map_s), pattern, j + 1, char_string_dict, string_set)
-
-        for k in range(i, len(string)):
-            sub_str = string[i: k + 1]
-            if sub_str in string_set:
-                continue
-            char_string_dict[pattern[j]] = sub_str
-            string_set.add(sub_str)
-            if self.isMatch(string, k + 1, pattern, j + 1, char_string_dict, string_set):
-                return True
-            del char_string_dict[pattern[j]]
-            string_set.remove(sub_str)
-
+                return self.is_mapping(pattern, p_i + 1, str, s_i + len_str, mapping, string_set)
+        else:
+            # backtracking
+            for i in range(s_i, len(str)):
+                sub_str = str[s_i:i + 1]
+                if sub_str in string_set:
+                    continue
+                mapping[pattern[p_i]] = sub_str
+                string_set.add(sub_str)
+                if self.is_mapping(pattern, p_i + 1, str, i + 1, mapping, string_set):
+                    return True
+                string_set.remove(sub_str)
+                del mapping[pattern[p_i]]
         return False
-
-    你写java就行

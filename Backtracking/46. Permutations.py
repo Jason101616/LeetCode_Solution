@@ -61,7 +61,8 @@ class Solution(object):
             self.find_permutation(ans, nums, start + 1)
             nums[start], nums[i] = nums[i], nums[start]
 
-
+# Solution 3:
+# backtracking, mark whether each element has been used
 class Solution(object):
     def permute(self, nums):
         if not nums:
