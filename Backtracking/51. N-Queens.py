@@ -22,6 +22,7 @@
 # ]
 
 # backtracking
+# time complexity: T(n) = n*T(n-1) + O(n^2) which translates to O(N!) time complexity in average.
 class Solution(object):
     def solveNQueens(self, n):
         """

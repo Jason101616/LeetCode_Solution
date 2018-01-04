@@ -27,6 +27,6 @@ class Solution(object):
             if ret_list[-1].end >= intervals[i].start and intervals[i].end > ret_list[-1].end:
                 # merge them
                 ret_list[-1].end = intervals[i].end
-            elif intervals[i].end > ret_list[-1].end:
+            elif ret_list[-1].end < intervals[i].start and intervals[i].end > ret_list[-1].end:
                 ret_list.append(intervals[i])
         return ret_list
