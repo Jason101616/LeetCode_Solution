@@ -71,7 +71,6 @@ class Solution(object):
         
 
 # BFS with proprocessing
-from collections import deque, defaultdict
 class Solution(object):
     def ladderLength(self, beginWord, endWord, wordList):
         """
@@ -79,35 +78,34 @@ class Solution(object):
         :type endWord: str
         :type wordList: List[str]
         :rtype: int
-        """
-        def pre_process(word_list):
-            word_dict = defaultdict(lambda: [])
+        """ 
+        wordDict = self.pre_process(wordList)
+        word_queue = collections.deque()
+        visited = set()
+        length = 0
+        word_queue.append(beginWord)
+        visited.add(beginWord)
+        while word_queue:
+            length += 1
+            size = len(word_queue)
+            for i in range(size):
+                cur_word = word_queue.popleft()
+                if cur_word == endWord:
+                    return length
+                for i in range(len(cur_word)):
+                    part_word = cur_word[:i] + '_' + cur_word[i + 1:]
+                    neighword_words = wordDict[part_word]
+                    for word in neighword_words:
+                        if word not in visited:
+                            visited.add(word)
+                            word_queue.append(word)
+        return 0
+
+    def pre_process(self, word_list):
+            word_dict = collections.defaultdict(lambda: [])
             for word in word_list:
                 for i in range(len(word)):
                     s = word[:i] + '_' + word[i + 1:]
                     word_dict[s].append(word)
             return word_dict
-            
-        self.wordDict = pre_process(wordList)
-        self.word_queue = deque()
-        self.memo = set()
-        length = 0
-        self.word_queue.append(beginWord)
-        self.memo.add(beginWord)
-        while self.word_queue:
-            length += 1
-            size = len(self.word_queue)
-            for i in range(size):
-                cur_word = self.word_queue.popleft()
-                if cur_word == endWord:
-                    return length
-                for i in range(len(cur_word)):
-                    part_word = cur_word[:i] + '_' + cur_word[i + 1:]
-                    neighword_words = self.wordDict[part_word]
-                    for word in neighword_words:
-                        if word not in self.memo:
-                            self.memo.add(word)
-                            self.word_queue.append(word)
-        return 0
-        
         
