@@ -22,47 +22,56 @@
 # UPDATE (2017/1/20):
 # The wordList parameter had been changed to a list of strings (instead of a set of strings). Please reload the code definition to get the latest changes.
 
-class Solution(object):
-    # Solution using double BFS
-    def findLadders(self, begin, end, words_list):
-        """
-        :type beginWord: str
-        :type endWord: str
-        :type wordList: List[str]
-        :rtype: List[List[str]]
-        """
-        def construct_paths(source, dest, tree):
-            if source == dest: 
-                return [[source]]
-            return [[source] + path for succ in tree[source] for path in construct_paths(succ, dest, tree)]
+from collections import defaultdict
+class Solution:
+    """
+    :type beginWord: str
+    :type endWord: str
+    :type wordList: List[str]
+    :rtype: List[List[str]]
+    """
+    def findLadders(self, start, end, words_list):
+        wordLen = len(start)
+        front, back = defaultdict(list), defaultdict(list)
+        front[start].append([start])
+        back[end].append([end])
+        # remove start from dict, add end to dict if it is not there
+        dict = set(words_list)
+        dict.discard(start)
+        if end not in dict:
+            dict.add(end)
+        forward, result = True, []
+        while front:
+            # get all valid transformations
+            nextSet = defaultdict(list)
+            for word, paths in front.items():
+                for index in range(wordLen):
+                    for ch in 'abcdefghijklmnopqrstuvwxyz':
+                        nextWord = word[:index] + ch + word[index+1:]
+                        if nextWord in dict:
+                            # update paths
+                            if forward:
+                                # append next word to path
+                                tmp = [path + [nextWord] for path in paths]
+                                nextSet[nextWord].extend(tmp)
+                            else:
+                                # add next word in front of path
+                                nextSet[nextWord].extend([[nextWord] + path for path in paths])
+            front = nextSet
+            common = set(front) & set(back)
+            if common:
+                # path is through
+                if not forward:
+                    # switch front and back if we were searching backward
+                    front, back = back, front
+                result.extend([head + tail[1:] for word in common for head in front[word] for tail in back[word]])
+                return result
 
-        def add_path(tree, word, neigh, is_forw):
-            if is_forw: 
-                tree[word] += neigh
-            else:       
-                tree[neigh] += word
+            if len(front) > len(back):
+                # swap front and back for better performance (smaller nextSet)
+                front, back, forward = back, front, not forward
 
-        def bfs_level(this_lev, oth_lev, tree, is_forw, words_set):
-            if not this_lev: 
-                return False
-            if len(this_lev) > len(oth_lev):
-                return bfs_level(oth_lev, this_lev, tree, not is_forw, words_set)
-            for word in (this_lev | oth_lev):
-                words_set.discard(word)
-            next_lev, done = set(), False
-            while this_lev:
-                word = this_lev.pop()
-                for c in string.ascii_lowercase:
-                    for index in range(len(word)):
-                        neigh = word[:index] + c + word[index+1:]
-                        if neigh in oth_lev:
-                            done = True
-                            add_path(tree, word, neigh, is_forw)                
-                        if not done and neigh in words_set:
-                            next_lev.add(neigh)
-                            add_path(tree, word, neigh, is_forw)
-            return done or bfs_level(next_lev, oth_lev, tree, is_forw, words_set)
-                            
-        tree, path, paths = collections.defaultdict(list), [begin], []
-        is_found = bfs_level({begin}, {end}, tree, True, set(words_list))
-        return construct_paths(begin, end, tree)
+            # remove transformations from wordDict to avoid cycles
+            dict -= set(front)
+
+        return []
