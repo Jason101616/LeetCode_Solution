@@ -9,11 +9,9 @@
 # UPDATE (2017/1/4):
 # The wordDict parameter had been changed to a list of strings (instead of a set of strings). Please reload the code definition to get the latest changes.
 
-# Time:  O(n^n)
+# Approach 1: recursion. Time Limit Exceeded. 
+# Time:  O(2^n)
 # Space: O(n)
-# idea: naive implementation. Just use recursion. Time Limit Exceeded. 
-# the recursion formula is: WB(S, Dict, start_index)
-# WB(S, Dict, 0) = (1<= i <= n) WB(i) && s[0:i] in Dict 
 class Solution(object):
     def wordBreak(self, s, wordDict):
         """
@@ -34,6 +32,7 @@ class Solution(object):
         
         return False
 
+# Approach 2: 
 # Time:  O(n^2)
 # Space: O(n)
 # idea: Recursion with memo. Top-down with memorization.
@@ -45,21 +44,20 @@ class Solution(object):
         :rtype: bool
         """
         wordSet = set(wordDict)
-        memo = [None for i in range(len(s))]
-        return self.recursion_wordBreak(s, wordSet, 0, memo)
-        
-    def recursion_wordBreak(self, s, wordSet, s_index, memo):
-        if s_index == len(s):
+        memo = [None for _ in range(len(s) + 1)]
+        return self.can_break(s, wordSet, memo)
+
+    def can_break(self, string, wordSet, memo):
+        if memo[len(string)] != None:
+            return memo[len(string)]
+        if string in wordSet:
+            memo[len(string)] = True
             return True
-        if memo[s_index] != None:
-            return memo[s_index]
-        
-        for e_index in range(s_index + 1, len(s) + 1):
-            if s[s_index: e_index] in wordSet and self.recursion_wordBreak(s, wordSet, e_index, memo):
-                memo[s_index] = True
+        for i in range(1, len(string)):
+            if string[:i] in wordSet and self.can_break(string[i:], wordSet, memo):
+                memo[len(string)] = True
                 return True
-        
-        memo[s_index] = False
+        memo[len(string)] = False
         return False
 
 # Time:  O(n^2)

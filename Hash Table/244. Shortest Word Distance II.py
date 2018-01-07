@@ -12,16 +12,16 @@
 # You may assume that word1 does not equal to word2, and word1 and word2 are both in the list.
 
 # idea: first use hash table, then use two pointers
-from collections import defaultdict
-class WordDistance(object):
 
+class WordDistance(object):
+    
     def __init__(self, words):
         """
         :type words: List[str]
         """
-        self.word_dict = defaultdict(lambda: [])
-        for index in range(len(words)):
-            self.word_dict[words[index]].append(index)
+        self.word_dict = collections.defaultdict(lambda: [])
+        for index, word in enumerate(words):
+            self.word_dict[word].append(index)
         
 
     def shortest(self, word1, word2):
@@ -31,17 +31,13 @@ class WordDistance(object):
         :rtype: int
         """
         pos_1, pos_2 = self.word_dict[word1], self.word_dict[word2]
-        len1, len2 = len(pos_1), len(pos_2)
         index1 = index2 = 0
         min_dis = float('inf')
-        while index1 < len1 and index2 < len2:
-            while index1 < len1 and index2 < len2 and pos_1[index1] < pos_2[index2]:
-                if pos_2[index2] - pos_1[index1] < min_dis:
-                    min_dis = pos_2[index2] - pos_1[index1]
+        while index1 < len(pos_1) and index2 < len(pos_2):
+            min_dis = min(min_dis, abs(pos_1[index1] - pos_2[index2]))
+            if pos_1[index1] < pos_2[index2]:
                 index1 += 1
-            while index1 < len1 and index2 < len2 and pos_1[index1] > pos_2[index2]:
-                if pos_1[index1] - pos_2[index2] < min_dis:
-                    min_dis = pos_1[index1] - pos_2[index2]
+            else:
                 index2 += 1
         return min_dis
                 

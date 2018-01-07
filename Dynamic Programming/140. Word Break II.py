@@ -12,10 +12,9 @@
 # The wordDict parameter had been changed to a list of strings (instead of a set of strings). Please reload the code definition to get the latest changes.
 
 
+# Approach 1: bottom-up. TLE.
 # Time:  O(n^2)
 # Space: O(n)
-# idea: bottom-up method. LTE don't know why.
-import copy
 class Solution(object):
     def wordBreak(self, s, wordDict):
         """
@@ -41,5 +40,38 @@ class Solution(object):
         for i in range(len(ret)):
             ret[i] = ' '.join(ret[i])
         return ret
-                    
-        
+
+# Approach 2: Recursion with memo
+# Time:  O(n^2)
+# Space: O(n)
+class Solution(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: List[str]
+        """
+        memo = collections.defaultdict(lambda: [])
+        memo[''] = [[]]
+        res = self.find_ans(s, set(wordDict), memo)
+        # process the res to fulfill the requirement
+        for i in range(len(res)):
+            res[i] = ' '.join(res[i])
+        return res
+
+    def find_ans(self, string, word_dict, memo):
+        if string in memo:
+            return memo[string]
+        find_ans = False
+        for i in range(1, len(string) + 1):
+            part_str = string[:i]
+            if part_str in word_dict and self.find_ans(string[i:], word_dict, memo) != []:
+                find_ans = True
+                prev_res = memo[string[i:]]
+                cur_res = []
+                for res in prev_res:
+                    cur_res.append([part_str] + res)
+                memo[string] += cur_res
+        if not find_ans:
+            memo[string] = []
+        return memo[string]
