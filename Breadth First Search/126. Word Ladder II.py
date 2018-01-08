@@ -22,56 +22,46 @@
 # UPDATE (2017/1/20):
 # The wordList parameter had been changed to a list of strings (instead of a set of strings). Please reload the code definition to get the latest changes.
 
-from collections import defaultdict
+# idea: BFS with marking the path
 class Solution:
-    """
-    :type beginWord: str
-    :type endWord: str
-    :type wordList: List[str]
-    :rtype: List[List[str]]
-    """
-    def findLadders(self, start, end, words_list):
-        wordLen = len(start)
-        front, back = defaultdict(list), defaultdict(list)
-        front[start].append([start])
-        back[end].append([end])
-        # remove start from dict, add end to dict if it is not there
-        dict = set(words_list)
-        dict.discard(start)
-        if end not in dict:
-            dict.add(end)
-        forward, result = True, []
-        while front:
-            # get all valid transformations
-            nextSet = defaultdict(list)
-            for word, paths in front.items():
-                for index in range(wordLen):
-                    for ch in 'abcdefghijklmnopqrstuvwxyz':
-                        nextWord = word[:index] + ch + word[index+1:]
-                        if nextWord in dict:
-                            # update paths
-                            if forward:
-                                # append next word to path
-                                tmp = [path + [nextWord] for path in paths]
-                                nextSet[nextWord].extend(tmp)
-                            else:
-                                # add next word in front of path
-                                nextSet[nextWord].extend([[nextWord] + path for path in paths])
-            front = nextSet
-            common = set(front) & set(back)
-            if common:
-                # path is through
-                if not forward:
-                    # switch front and back if we were searching backward
-                    front, back = back, front
-                result.extend([head + tail[1:] for word in common for head in front[word] for tail in back[word]])
-                return result
+    def findLadders(self, beginWord, endWord, wordList):
+        """
+        :type beginWord: str
+        :type endWord: str
+        :type wordList: List[str]
+        :rtype: List[List[str]]
+        """
+        wordDict = self.pre_process(wordList)
+        word_set = set(wordList)
+        word_queue = collections.deque()
+        word_queue.append((beginWord, [beginWord]))
+        find_ans = False
+        res = []
+        while word_queue:
+            if find_ans:
+                break
+            size = len(word_queue)
+            remove_set = set()
+            for i in range(size):
+                cur_word = word_queue.popleft()
+                if cur_word[0] == endWord:
+                    find_ans = True
+                    res.append(cur_word[1])
+                for j in range(len(cur_word[0])):
+                    part_word = cur_word[0][:j] + '_' + cur_word[0][j + 1:]
+                    neighword_words = wordDict[part_word]
+                    for word in neighword_words:
+                        if word in word_set:
+                            word_queue.append((word, cur_word[1] + [word]))
+                            remove_set.add(word)
+            word_set -= remove_set
+        return res
 
-            if len(front) > len(back):
-                # swap front and back for better performance (smaller nextSet)
-                front, back, forward = back, front, not forward
+    def pre_process(self, word_list):
+        word_dict = collections.defaultdict(lambda: [])
+        for word in word_list:
+            for i in range(len(word)):
+                s = word[:i] + '_' + word[i + 1:]
+                word_dict[s].append(word)
+        return word_dict
 
-            # remove transformations from wordDict to avoid cycles
-            dict -= set(front)
-
-        return []

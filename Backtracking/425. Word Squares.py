@@ -147,7 +147,7 @@ class Solution(object):
         def search(word, line):
             matrix.append(word)
             if line == n:
-                ans.append(matrix[:])
+                ans.append(matrix[:])   # this is actually copy the matrix
             else:
                 prefix = ''.join(matrix[x][line] for x in range(line))
                 for word in trie.find_words(prefix):
