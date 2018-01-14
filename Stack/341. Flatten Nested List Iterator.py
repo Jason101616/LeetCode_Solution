@@ -23,9 +23,7 @@
 #        :rtype List[NestedInteger]
 #        """
 
-# idea: use a stack to realize these helper function. Firstly, put all elements into the stack.
-# When call hasNext, preprocess the stack, make the top of the stack a integer.
-# When call next, just return the top of the stack
+# idea: use a deque to realize these helper function. 
 # space: O(n)
 class NestedIterator(object):
 
@@ -34,31 +32,32 @@ class NestedIterator(object):
         Initialize your data structure here.
         :type nestedList: List[NestedInteger]
         """
-        self.stack = []
-        for ele in nestedList[::-1]:
-            self.stack.append(ele)
+        self.deque = collections.deque(nestedList)
         
 
     def next(self):
         """
         :rtype: int
         """
-        return self.stack.pop().getInteger()
+        return self.deque.popleft().getInteger()
         
 
     def hasNext(self):
         """
         :rtype: bool
         """
-        while self.stack:
-            if self.stack[-1].isInteger():
+        while self.deque:
+            if self.deque[0].isInteger():
                 return True
-            self.fill_stack(self.stack.pop())
+            cur_object = self.deque.popleft()
+            cur_list = cur_object.getList()
+            self.deque.extendleft(cur_list[::-1])
         return False
-    
-    def fill_stack(self, node):
-        for ele in node.getList()[::-1]:
-            self.stack.append(ele)
+        
+
+# Your NestedIterator object will be instantiated and called as such:
+# i, v = NestedIterator(nestedList), []
+# while i.hasNext(): v.append(i.next())
 
         
 

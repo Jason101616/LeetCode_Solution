@@ -52,12 +52,11 @@ class Solution(object):
         """
         if not root:
             return None
-        if p.val >= root.val:
+        if root.val > p.val:
+            res = self.inorderSuccessor(root.left, p)
+            return res if res else root
+        elif root.val <= p.val:
             return self.inorderSuccessor(root.right, p)
-        if p.val < root.val:
-            # in left subtree or root
-            left = self.inorderSuccessor(root.left, p)
-            return left if left else root
 
 # Approach 3: check iteratively
 # time: O(logn), space: O(1)

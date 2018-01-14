@@ -44,4 +44,26 @@ class Solution(object):
                     res[j], res[i] = res[i], res[j]
                     return int(''.join(res))
         return int(''.join(res))
-                    
+
+# written by me:
+class Solution(object):
+    def maximumSwap(self, num):
+        """
+        :type num: int
+        :rtype: int
+        """
+        num = list(str(num))
+        larger_than = [0 for _ in range(len(num))]
+        larger_than[-1] = num[-1]
+        for i in range(len(num) - 2, -1, -1):
+            larger_than[i] = max(larger_than[i + 1], num[i])
+        for i in range(len(num)):
+            if num[i] < larger_than[i]:
+                left = i
+                for j in range(len(num) - 1, i, -1):
+                    if num[j] == larger_than[i]:
+                        right = j
+                        break
+                num[left], num[right] = num[right], num[left]
+                break
+        return int(''.join(num))

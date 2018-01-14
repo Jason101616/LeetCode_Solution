@@ -28,8 +28,6 @@
 # 1 <= n <= 100
 
 # idea: use a stack to jot down which task is being executed.
-# Each time encounter a log, update the execution time of the task in the top of the stack.
-# Also maintain two variables prev_end_time and prev_start_time to calculate the period of each time slot
 class Solution(object):
     def exclusiveTime(self, n, logs):
         """
@@ -37,21 +35,24 @@ class Solution(object):
         :type logs: List[str]
         :rtype: List[int]
         """
-        ret_time = [0 for _ in range(n)]
-        stack = []
-        prev_end_time = -1
-        prev_start_time = 0
-        
-        for log in logs:
-            task_id, action, time = log.split(':')
-            task_id, time = int(task_id), int(time)
+        if not logs:
+            return []
+        res = [0 for _ in range(n)]
+        prev_task, prev_action, prev_time = logs[0].split(':')
+        stack = [int(prev_task)]
+        for i in range(1, len(logs)):
+            task, action, time = logs[i].split(':')
+            spend_time = self.calculate_time(prev_action, int(prev_time), action, int(time))
+            if stack:
+                res[stack[-1]] += spend_time
             if action == 'start':
-                if stack:
-                    ret_time[stack[-1]] += time - max(prev_start_time, prev_end_time + 1)
-                stack.append(task_id)
-                prev_start_time = time
-            elif action == 'end':
-                ret_time[stack.pop()] += time + 1 - max(prev_start_time, prev_end_time + 1)
-                prev_end_time = time
-                
-        return ret_time
+                stack.append(int(task))
+            else:
+                stack.pop()
+            prev_task, prev_action, prev_time = task, action, time
+        return res
+
+    def calculate_time(self, prev_action, prev_time, action, time):
+        if action == prev_action:
+            return time - prev_time
+        return time - prev_time + 1 if action == 'end' else time - prev_time - 1
