@@ -12,7 +12,7 @@ Language: JavaScript
 ColumnLimit: 100
 ---
 Language: Java
-ColumnLimit: 100
+ColumnLimit: 200
 ---
 Language: Proto
 # Don't format .proto files.
