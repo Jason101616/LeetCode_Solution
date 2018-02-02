@@ -8,7 +8,7 @@
 #   [2,1,1]
 # ]
 
-# idea: same idea as 46, except need sort first and two lines to delete duplicate.
+# idea: same idea as 46, except need sort first and add two lines to delete duplicate.
 # key point is that when want to use a number, and its value is the same as the previous number, this number can only be used when the previous number  have been used
 # 先判断前面的一个数是否和自己相等，相等的时候则前面的数必须使用了，自己才能使用
 class Solution(object):

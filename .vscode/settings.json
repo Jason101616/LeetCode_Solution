@@ -1,5 +1,6 @@
 {
     "files.associations": {
         "ios": "cpp"
-    }
+    },
+    "python.pythonPath": "/Users/zhangdu/anaconda/bin/python"
 }
