@@ -10,14 +10,14 @@ class Solution(object):
         """
         if abs(len(s) - len(t)) > 1:
             return False
-        if len(s) < len(t):
+        if len(s) < len(t): # make sure s is the longer string
             s, t = t, s
         for i in range(len(t)):
             if s[i] != t[i]: 
                 if len(s) != len(t):
-                    return s[i + 1:] == t[i:]
+                    return s[i + 1:] == t[i:]   # delete
                 elif i + 1 <= len(t) - 1:
-                    return s[i + 1:] == t[i + 1:]
+                    return s[i + 1:] == t[i + 1:]   # replace
                 else:
                     return True
         return len(s) - len(t) == 1

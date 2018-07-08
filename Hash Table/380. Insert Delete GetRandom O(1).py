@@ -64,7 +64,7 @@ class RandomizedSet(object):
             return False
         remove_item_index = self.my_dict[val]
         last_item_index = len(self.my_list) - 1
-        last_item = self.my_list[last_item_index]
+        last_item = self.my_list[-1]
         del self.my_dict[val]
         # if the removed item is the last item, we don't need to re-insert it
         if remove_item_index != last_item_index:

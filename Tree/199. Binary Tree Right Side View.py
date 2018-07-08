@@ -16,7 +16,7 @@
 #         self.left = None
 #         self.right = None
 
-# idea: BFS
+# idea: BFS, time: O(n), space: O(n)
 from collections import deque
 
 

@@ -28,19 +28,16 @@ class Solution(object):
         """
         if not nums:
             return []
-        self.ans = []
-        self.total_num = len(nums)
-        self.find_ans([], 0, nums)
-        return self.ans
+        res = []
+        self.find_ans([], 0, nums, res)
+        return res
 
-    def find_ans(self, prev_ans, prev_num, nums):
-        if prev_num == self.total_num:
-            self.ans.append(deepcopy(prev_ans))
+    def find_ans(self, ans, index, nums, res):
+        if index == len(nums):
+            res.append(ans)
             return
-        self.find_ans(prev_ans, prev_num + 1, nums)
-        prev_ans.append(nums[prev_num])
-        self.find_ans(prev_ans, prev_num + 1, nums)
-        prev_ans.pop()
+        self.find_ans(ans, index + 1, nums, res)
+        self.find_ans(ans + [nums[index]], index + 1, nums, res)
 
 
 # Solution 2:

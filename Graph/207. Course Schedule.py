@@ -49,8 +49,6 @@ class Solution(object):
                 return False
             elif visit[node] == 1:
                 return True
-            else:
-                exit(2)
 
         for i in graph[node]:
             if i not in graph:

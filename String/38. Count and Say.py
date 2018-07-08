@@ -22,28 +22,28 @@
 # Output: "1211"
 
 # 思路：记录连续出现的char的次数以及char本身，每次都添加到一个list中，最后再join即可
-class Solution(object):
+class Solution:
     def countAndSay(self, n):
         """
         :type n: int
         :rtype: str
         """
-        string = '1'
-        for _ in range(n - 1):
-            ret_list = []
-            cnt = 1
-            cur = string[0]
-            for char in string[1:]:
-                if char == cur:
-                    cnt += 1
-                else:
-                    ret_list.append(str(cnt))
-                    ret_list.append(cur)
-                    cnt = 1
-                    cur = char
-            ret_list.append(str(cnt))
-            ret_list.append(cur)
-            string = ''.join(ret_list)
-        
-        return string
-        
+        cur = "1"
+        for i in range(n - 1):
+            cur = self.nextOne(cur)
+
+        return cur
+
+    def nextOne(self, cur):
+        res = []
+        tmp = cur[0]
+        prev = 0
+        for i in range(prev + 1, len(cur)):
+            if cur[i] != tmp:
+                res.append(str(i - prev))
+                res.append(tmp)
+                prev = i
+                tmp = cur[i]
+        res.append(str(len(cur) - prev))
+        res.append(tmp)
+        return ''.join(res)

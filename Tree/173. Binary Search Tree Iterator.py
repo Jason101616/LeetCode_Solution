@@ -14,7 +14,7 @@
 # use inorder traversal, print the answer one by one
 # the problem is that it use more than O(h) space
 
-# c. j=Just use a stack record the node in left subtree
+# c. Use a stack record the node in left subtree
 # if this stack is not empty, then hasNext is True
 # next is the top node of the stack
 # each time invoke next function, we should update the stack

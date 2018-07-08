@@ -31,8 +31,6 @@ class Solution(object):
         if len(cur) == k:
             ans.append(list(cur))
             return
-        if start == n + 1:
-            return
         for i in range(start, n + 1):
             cur.append(i)
             self.find_combine(ans, k, cur, i + 1, n)

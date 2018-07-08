@@ -7,7 +7,7 @@
 # Note:
 # Although the above answer is in lexicographical order, your answer could be in any order you want.
 
-# Iterative Solution
+# Approach 1: Iterative Solution
 # idea: maintain previous answer.
 # When read a new number. First, find all the characters with that number, and store the number of numbers n corresponding to it.
 # Then multiply the previous answer (n - 1) times. Just copy and paste.
@@ -37,4 +37,24 @@ class Solution(object):
         
         return ans
 
-               
+# Approach 2: backtracking
+class Solution(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        if not digits:
+            return []
+        res = []
+        self.choices = ['', '', 'abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz']
+        self.find_ans(digits, 0, res, '')
+        return res
+    
+    def find_ans(self, digits, pos, res, cur_ans):
+        if pos == len(digits):
+            res.append(cur_ans)
+            return
+        
+        for char in self.choices[int(digits[pos])]:
+            self.find_ans(digits, pos + 1, res, cur_ans + char)           

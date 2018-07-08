@@ -28,8 +28,6 @@ class Solution:
             return None
         new_node = TreeNode(preorder[0])
         in_order_index = inorder.index(preorder[0])
-        new_node.left = self.build_tree(preorder[1:1 + in_order_index],
-                                        inorder[:in_order_index])
-        new_node.right = self.build_tree(preorder[1 + in_order_index:],
-                                         inorder[in_order_index + 1:])
+        new_node.left = self.build_tree(preorder[1:1 + in_order_index], inorder[:in_order_index])
+        new_node.right = self.build_tree(preorder[1 + in_order_index:], inorder[in_order_index + 1:])
         return new_node

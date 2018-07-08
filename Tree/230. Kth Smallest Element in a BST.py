@@ -13,8 +13,7 @@
 #         self.left = None
 #         self.right = None
 
-
-# idea: use the attibute of BST, the node in the left tree of current node is smaller than current node
+# idea: iterative approach, the node in the left side of the root is smaller than root
 class Solution(object):
     def kthSmallest(self, root, k):
         """
@@ -22,21 +21,16 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
+        left_cnt = self.cnt_node(root.left)
+        if left_cnt == k - 1:
+            return root.val
+        elif left_cnt >= k:
+            return self.kthSmallest(root.left, k)
+        else:
+            return self.kthSmallest(root.right, k - left_cnt - 1)
+    
+    def cnt_node(self, root):
         if not root:
             return 0
-        self.ans = None
-        self.find = False
-        self.find_k_small(root, 0, k)
-        return self.ans
-
-    def find_k_small(self, node, cur_small, target):
-        if not node:
-            return cur_small
-        left_small = self.find_k_small(node.left, cur_small, target)
-        new_small = left_small + 1
-        if new_small == target and not self.find:
-            self.ans = node.val
-            self.find = True
-            return 0
-        right = self.find_k_small(node.right, new_small, target)
-        return right
+        return self.cnt_node(root.left) + self.cnt_node(root.right) + 1
+        

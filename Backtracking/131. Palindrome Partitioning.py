@@ -20,18 +20,16 @@ class Solution(object):
         """
         if not s:
             return []
-        self.ans = []
-        self.find_parlin([], s)
-        return self.ans
+        res = []
+        self.find_parlin([], s, res)
+        return res
 
-    def find_parlin(self, prev_ans, remain_s):
+    def find_parlin(self, prev_ans, remain_s, res):
         if remain_s == '':
-            self.ans.append(prev_ans)
-            return
-        len_s = len(remain_s)
-        for i in range(1, len_s + 1):
+            return res.append(prev_ans)
+        for i in range(1, len(remain_s) + 1):
             if self.is_palindrome(remain_s[:i]):
-                self.find_parlin(prev_ans + [remain_s[:i]], remain_s[i:])
+                self.find_parlin(prev_ans + [remain_s[:i]], remain_s[i:], res)
 
     def is_palindrome(self, string):
         if not string:

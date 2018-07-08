@@ -17,7 +17,7 @@
 
 # clarify: the subarray must be continious
 # idea: use a hash table in which current sum is the key, current index is the value.
-# If current value minus a previous one in the hash table, then we get one possible answer.
+# If current sum minus k in the hash table, then we get one possible answer.
 # Time:  O(n)
 # Space: O(n)
 class Solution(object):

@@ -18,6 +18,8 @@
 #         self.left = None
 #         self.right = None
 
+# this code can resolve the problem of cannot distinguish between p is a child of q and p is in the tree but q is not
+# return two values, one is the potential common ancester, the other is the flag indicating whether this node is the real LCA
 class Solution(object):
     def lowestCommonAncestor(self, root, p, q):
         """
@@ -30,11 +32,13 @@ class Solution(object):
         return node if res else None
     
     def LCAhelper(self, root, p, q):
+        # base case
         if not root:
             return None, False
         if root == p and root == q:
             return root, True
         
+        # already find the answer in one side
         l_node, is_left = self.LCAhelper(root.left, p , q)
         if is_left:
             return l_node, True
@@ -42,9 +46,11 @@ class Solution(object):
         if is_right:
             return r_node, True
         
+        # current node is p or q, we should check whether we have find q or p in one of the child
         if root == p or root == q:
             return (root, True) if l_node or r_node else (root, False)
 
+        # find one node in one or two sides or non of the sides
         if l_node and r_node:
             return root, True
         elif l_node or r_node:

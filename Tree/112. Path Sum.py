@@ -11,6 +11,7 @@
 #         7    2      1
 # return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
 
+
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
@@ -18,7 +19,7 @@
 #         self.left = None
 #         self.right = None
 
-# idea: dfs
+# idea: top to bottom dfs
 class Solution(object):
     def hasPathSum(self, root, sum):
         """
@@ -26,17 +27,13 @@ class Solution(object):
         :type sum: int
         :rtype: bool
         """
-        self.ans = False
-        self.find_path(root, None, sum)
-        return self.ans
+        return self.find_path(root, 0, sum)
     
     def find_path(self, cur_node, prev_sum, target):
         if not cur_node:
-            return
-        if not prev_sum:
-            prev_sum = 0
-        prev_sum += cur_node.val
-        if not cur_node.left and not cur_node.right and prev_sum == target:
-            self.ans = True
-        self.find_path(cur_node.left, prev_sum, target)
-        self.find_path(cur_node.right, prev_sum, target)
+            return False
+        cur_sum = prev_sum + cur_node.val
+        if not cur_node.left and not cur_node.right and cur_sum == target:
+            return True
+        return self.find_path(cur_node.left, cur_sum, target) or self.find_path(cur_node.right, cur_sum, target)
+        

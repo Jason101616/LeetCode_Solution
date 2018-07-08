@@ -22,7 +22,7 @@
 #         self.left = None
 #         self.right = None
 
-# idea: dfs
+# idea: dfs, top-bottom
 class Solution(object):
     def pathSum(self, root, sum):
         """
@@ -31,18 +31,16 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         res = []
-        self.find_path(root, None, sum, res, [])
+        self.find_path(root, 0, sum, res, [])
         return res
     
     def find_path(self, cur_node, prev_sum, target, res, cur_path):
         if not cur_node:
             return
-        if not prev_sum:
-            prev_sum = 0
-        prev_sum += cur_node.val
+        cur_sum = prev_sum + cur_node.val
         cur_path.append(cur_node.val)
-        if not cur_node.left and not cur_node.right and prev_sum == target:
+        if not cur_node.left and not cur_node.right and cur_sum == target:
             res.append(copy.deepcopy(cur_path))
-        self.find_path(cur_node.left, prev_sum, target, res, cur_path)
-        self.find_path(cur_node.right, prev_sum, target, res, cur_path)
+        self.find_path(cur_node.left, cur_sum, target, res, cur_path)
+        self.find_path(cur_node.right, cur_sum, target, res, cur_path)
         cur_path.pop()
