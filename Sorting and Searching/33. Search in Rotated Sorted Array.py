@@ -11,40 +11,24 @@ class Solution(object):
         """
         :type nums: List[int]
         :type target: int
-        :rtype: bool
+        :rtype: int
         """
-        res = self.search_rotate(nums, target, 0, len(nums) - 1)
-        return res if res is not False else -1
-    
-    def search_rotate(self, nums, target, left, right):
-        # [2, 2, 2, 3, 4, 2]
-        if left > right:
-            return False
-        mid = left + (right - left) // 2
-        if nums[mid] == target:
-            return mid
-        
-        if nums[left] < nums[mid]:  # left side is normal
-            # if target is in the left side, search on the left
-            if target < nums[mid] and target >= nums[left]:
-                return self.search_rotate(nums, target, left, mid - 1)
-            # else search on the right side
+        left, right = 0, len(nums) - 1
+        while left <= right:
+            mid = (left + right) / 2
+            if nums[mid] == target:
+                return mid
             else:
-                return self.search_rotate(nums, target, mid + 1, right)
-        elif nums[mid] < nums[right]:   # right side is normal
-            # if target is in the right side, search on the right side
-            if target > nums[mid] and target <= nums[right]:
-                return self.search_rotate(nums, target, mid + 1, right)
-            # else search on the left side
-            else:
-                return self.search_rotate(nums, target, left, mid - 1)
-        else:   # both side are not normal
-            # first search on the left side
-            res = self.search_rotate(nums, target, left, mid - 1)
-            # not find, search on the right side
-            if res is False:
-                return self.search_rotate(nums, target, mid + 1, right)
-            # return ans
-            else:
-                return res
-        
+                if nums[mid] < nums[right]:
+                    # right side is ascending
+                    if nums[mid] < target <= nums[right]:
+                        left = mid + 1
+                    else:
+                        right = mid - 1
+                else:
+                    # left side is ascending
+                    if nums[left] <= target < nums[mid]:
+                        right = mid - 1
+                    else:
+                        left = mid + 1
+        return -1

@@ -32,4 +32,30 @@ class Solution:
             else:
                 stack[-1][0] += char
         return stack[0][0]
-        
+
+# Solution 2: recursion
+class Solution(object):
+    def decodeString(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        return self.helper(s, 0, '')[0]
+
+    def helper(self, s, idx, curRes):
+        cnt = ''
+        while idx < len(s):
+            if s[idx].isdigit():
+                cnt += s[idx]
+                idx += 1
+            elif s[idx] == '[':
+                res, newIdx = self.helper(s, idx + 1, '')
+                curRes += int(cnt) * res
+                cnt = ''
+                idx = newIdx
+            elif s[idx] == ']':
+                return curRes, idx + 1
+            else:
+                curRes += s[idx]
+                idx += 1
+        return curRes, idx

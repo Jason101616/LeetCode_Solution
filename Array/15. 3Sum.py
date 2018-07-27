@@ -27,16 +27,14 @@ class Solution(object):
         for i, num in enumerate(nums):
             target = -num
             for j in range(i + 1, len_nums):
-                if target - nums[j] in nums_dict and nums_dict[target
-                                                               - nums[j]] > j:
-                    ans.add((nums[i], nums[j], nums[nums_dict[target
-                                                              - nums[j]]]))
+                if target - nums[j] in nums_dict and nums_dict[target - nums[j]] > j:
+                    ans.add((nums[i], nums[j], nums[nums_dict[target - nums[j]]]))
         ans = list(ans)
         for i, an in enumerate(ans):
             ans[i] = list(an)
         return ans
 
-# Approach 2: sort. Fix one number from the begining of the sorted array. Then the problem become 2 sum. Now I can use two pointer to finish the task of 2sum.
+# Approach 2: sort. Fix one number from the begining of the sorted array. Then the problem become 2 sum. Now I can use two pointers to finish the task of 2sum.
 class Solution(object):
     def threeSum(self, nums):
         """

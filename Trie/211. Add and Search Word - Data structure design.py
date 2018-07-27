@@ -16,7 +16,7 @@
 # Note:
 # You may assume that all words are consist of lowercase letters a-z.
 
-# idea: the same idea as 208. Implement Trie (Prefix Tree). Except that, in search, we should use backtracing.
+# idea: the same idea as 208. Implement Trie (Prefix Tree). Except that, for search, using backtracing.
 class TrieNode:
     def __init__(self, is_word=False):
         self.num_of_char = 26

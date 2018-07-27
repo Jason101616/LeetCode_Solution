@@ -23,7 +23,7 @@ class Solution(object):
         :type intervals: List[Interval]
         :type newInterval: Interval
         :rtype: List[Interval]
-        """        
+        """
         res = self.no_need_split(intervals, newInterval)
         if res:
             return res
@@ -37,12 +37,12 @@ class Solution(object):
                         break
                 break
         return self.merge(newInterval, intervals, start, end)
-    
+
     def is_interleave(self, interval1, interval2):
         if interval1.end < interval2.start or interval1.start > interval2.end:
             return False
         return True
-    
+
     def merge(self, newInterval, intervals, start, end):
         if end == None:
             end = len(intervals) - 1
@@ -53,7 +53,7 @@ class Solution(object):
         new_interval.end = max(newInterval.end, intervals[start].end, intervals[end].end)
         mid_part = [new_interval]
         return left_part + mid_part + right_part
-    
+
     def no_need_split(self, intervals, newInterval):
         if not intervals:
             return [newInterval]
@@ -78,7 +78,7 @@ class Solution(object):
 #         self.end = e
 
 # 两个interval有重合有很多种可能性，但判断它们不重合则比较简单直观。无非两种情况：
-# (1) [s1, e1]  [s2, e2]：即s2>e1 
+# (1) [s1, e1]  [s2, e2]：即s2>e1
 # (2) [s2, e2]  [s1, e1]：即s1>e2
 # 不重合的条件为：s2>e1 || s1>e2，反之则重合。
 

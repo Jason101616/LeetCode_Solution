@@ -1,6 +1,6 @@
 # Given an array of strings, group anagrams together.
 
-# For example, given: ["eat", "tea", "tan", "ate", "nat", "bat"], 
+# For example, given: ["eat", "tea", "tan", "ate", "nat", "bat"],
 # Return:
 
 # [
@@ -25,7 +25,7 @@ class Solution(object):
         for key, item in cnt_dict.items():
             ret_list.append(item)
         return ret_list
-    
+
 # Solution 2: simply use the sorted string as the key
 # Time Complexity: O(NKlog(K)), where N is the length of strs, and K is the maximum length of a string in strs. The outer loop has complexity O(N) as we iterate through each string. Then, we sort each string in O(KlogK) time.
 class Solution(object):
@@ -37,7 +37,4 @@ class Solution(object):
         cnt_dict = collections.defaultdict(lambda: [])
         for s in strs:
             cnt_dict[tuple(sorted(s))].append(s)
-        ret_list = []
-        for key, item in cnt_dict.items():
-            ret_list.append(item)
-        return ret_list
+        return cnt_dict.values()

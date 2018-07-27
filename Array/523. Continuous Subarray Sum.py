@@ -30,12 +30,12 @@ class Solution(object):
             if cur_sum not in sum_index_map:
                 sum_index_map[cur_sum] = i
             else:
-                if i - sum_index_map[cur_sum]> 1:
+                if i - sum_index_map[cur_sum] > 1:
                     return True
         return False
 
 # Solution 2: brute force
-
+# time: O(n^2)
 public class Solution {
     public boolean checkSubarraySum(int[] nums, int k) {
         int[] sum = new int[nums.length];

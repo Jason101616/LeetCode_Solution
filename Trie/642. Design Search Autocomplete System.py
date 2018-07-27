@@ -16,33 +16,33 @@
 
 
 # Example:
-# Operation: AutocompleteSystem(["i love you", "island","ironman", "i love leetcode"], [5,3,2,2]) 
-# The system have already tracked down the following sentences and their corresponding times: 
-# "i love you" : 5 times 
-# "island" : 3 times 
-# "ironman" : 2 times 
-# "i love leetcode" : 2 times 
-# Now, the user begins another search: 
+# Operation: AutocompleteSystem(["i love you", "island","ironman", "i love leetcode"], [5,3,2,2])
+# The system have already tracked down the following sentences and their corresponding times:
+# "i love you" : 5 times
+# "island" : 3 times
+# "ironman" : 2 times
+# "i love leetcode" : 2 times
+# Now, the user begins another search:
 
-# Operation: input('i') 
-# Output: ["i love you", "island","i love leetcode"] 
-# Explanation: 
-# There are four sentences that have prefix "i". Among them, "ironman" and "i love leetcode" have same hot degree. Since ' ' has ASCII code 32 and 'r' has ASCII code 114, "i love leetcode" should be in front of "ironman". Also we only need to output top 3 hot sentences, so "ironman" will be ignored. 
+# Operation: input('i')
+# Output: ["i love you", "island","i love leetcode"]
+# Explanation:
+# There are four sentences that have prefix "i". Among them, "ironman" and "i love leetcode" have same hot degree. Since ' ' has ASCII code 32 and 'r' has ASCII code 114, "i love leetcode" should be in front of "ironman". Also we only need to output top 3 hot sentences, so "ironman" will be ignored.
 
-# Operation: input(' ') 
-# Output: ["i love you","i love leetcode"] 
-# Explanation: 
-# There are only two sentences that have prefix "i ". 
+# Operation: input(' ')
+# Output: ["i love you","i love leetcode"]
+# Explanation:
+# There are only two sentences that have prefix "i ".
 
-# Operation: input('a') 
-# Output: [] 
-# Explanation: 
-# There are no sentences that have prefix "i a". 
+# Operation: input('a')
+# Output: []
+# Explanation:
+# There are no sentences that have prefix "i a".
 
-# Operation: input('#') 
-# Output: [] 
-# Explanation: 
-# The user finished the input, the sentence "i a" should be saved as a historical sentence in system. And the following input will be counted as a new search. 
+# Operation: input('#')
+# Output: []
+# Explanation:
+# The user finished the input, the sentence "i a" should be saved as a historical sentence in system. And the following input will be counted as a new search.
 
 # Note:
 # The input sentence will always start with a letter and end with '#', and only one blank space will exist between two words.
@@ -53,7 +53,8 @@
 # AutocompleteSystem() takes O(k*l) time. We need to iterate over l sentences each of average length k, to create the trie for the given set of sentencessentences.
 
 # input() takes O(p+q+mlog(m)) time. Here, p refers to the length of the sentence formed till now
-# q refers to the number of nodes in the trie considering the sentence formed till now as the root node. Again, we need to sort the list of length m indicating the options available for the hot sentences, which takes O(mlog(m)) time.
+# q refers to the number of nodes in the trie considering the sentence formed till now as the root node.
+# Again, we need to sort the list of length m indicating the options available for the hot sentences, which takes O(mlog(m)) time.
 class TrieNode:
     def __init__(self, is_word=False):
         self.next = {}
@@ -95,9 +96,9 @@ class Trie:
 
     def find_words(self, prefix):
         """
-        Returns if there is any word in the trie that starts with the given prefix.
+        Returns all the words in the trie that starts with the given prefix.
         :type prefix: str
-        :rtype: bool
+        :rtype: list
         """
         cur_node = self.root
         for char in prefix:

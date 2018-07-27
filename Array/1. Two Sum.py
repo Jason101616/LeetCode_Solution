@@ -9,7 +9,7 @@
 # return [0, 1].
 
 
-# idea: use a dictionary to record each element's value and position
+# idea: use Hash Table to store each element's value and position
 class Solution(object):
     def twoSum(self, nums, target):
         """
@@ -17,10 +17,9 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        nums_dict = {}
-        len_nums = len(nums)
-        for i in range(len_nums):
-            if target - nums[i] in nums_dict and nums_dict[target
-                                                           - nums[i]] != i:
-                return [i, nums_dict[target - nums[i]]]
-            nums_dict[nums[i]] = i
+        numToIdx = {}
+        for idx, num in enumerate(nums):
+            if target - num in numToIdx and numToIdx[target - num] != idx:
+                return [idx, numToIdx[target - num]]
+            numToIdx[num] = idx
+        

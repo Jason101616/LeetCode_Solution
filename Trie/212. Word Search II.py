@@ -16,45 +16,43 @@
 # You may assume that all inputs are consist of lowercase letters a-z.
 
 
-# idea: same idea as Word Search I, but use Trie to stop backtracking earlier
+# idea: same idea as Word Search I, but use Trie to stop backtracking earlier.
 class TrieNode:
-    def __init__(self, is_word=False):
-        self.num_of_char = 26
-        self.next = [None for _ in range(self.num_of_char)]
-        self.is_word = is_word
+    def __init__(self):
+        self.isWord = False
+        self.next = {}
 
-
+        
 class Trie:
     def __init__(self):
         self.root = TrieNode()
 
-    def add(self, word):
-        cur_node = self.root
+    def insert(self, word):
+        curNode = self.root
         for char in word:
-            if not cur_node.next[ord(char) - ord('a')]:
-                cur_node.next[ord(char) - ord('a')] = TrieNode()
-            cur_node = cur_node.next[ord(char) - ord('a')]
-        cur_node.is_word = True
+            if char not in curNode.next:
+                curNode.next[char] = TrieNode()
+            curNode = curNode.next[char]
+        curNode.isWord = True
 
-    def start_with(self, prefix):
-        return self.__find_node(prefix) != None
+    def startWith(self, prefix):
+        node = self.traverseHelper(prefix)
+        return node != None
 
-    def search(self, word):
-        end_node = self.__find_node(word)
-        if end_node and end_node.is_word:
-            return True
-        return False
+    def isInTrie(self, word):
+        node = self.traverseHelper(word)
+        return node != None and node.isWord
 
-    def __find_node(self, word):
-        cur_node = self.root
+    def traverseHelper(self, word):
+        curNode = self.root
         for char in word:
-            cur_node = cur_node.next[ord(char) - ord('a')]
-            if not cur_node:
-                break
-        return cur_node
+            if char not in curNode.next:
+                return None
+            curNode = curNode.next[char]
+        return curNode
 
 
-class Solution:
+class Solution(object):
     def findWords(self, board, words):
         """
         :type board: List[List[str]]
@@ -62,41 +60,38 @@ class Solution:
         :rtype: List[str]
         """
         if not board or not board[0]:
-            return False
-        self.board = board
-        # construct the trie
-        self.trie = Trie()
+            return []
+        trie = Trie()
         for word in words:
-            self.trie.add(word)
-        # use dfs to find the answer
-        self.ans = []
-        row = len(board)
-        col = len(board[0])
+            trie.insert(word)
+        row, col = len(board), len(board[0])
+        res = set()
+        visited = [[False for _ in range(col)] for __ in range(row)]
         for i in range(row):
             for j in range(col):
-                visited = set()
-                self.find_path(i, j, visited, board[i][j])
-        return self.ans
+                visited[i][j] = True
+                self.searchWords(i, j, trie, board, res, visited, board[i][j])
+                visited[i][j] = False
+        return list(res)
 
-    def find_path(self, row, col, visited, cur_string):
-        if not self.trie.start_with(cur_string):
+    def searchWords(self, i, j, trie, board, res, visited, curRes):
+        if not trie.startWith(curRes):
             return
-        if self.trie.search(cur_string) and cur_string not in self.ans:
-            self.ans.append(cur_string)
-        visited.add((row, col))
-        can_visit_next = self.can_visit_next(row, col, visited)
-        for i, j in can_visit_next:
-            self.find_path(i, j, visited, cur_string + self.board[i][j])
-        visited.remove((row, col))
-
-    def can_visit_next(self, row, col, visited):
-        can_visit = []
-        if row - 1 >= 0 and (row - 1, col) not in visited:
-            can_visit.append((row - 1, col))
-        if row + 1 <= len(self.board) - 1 and (row + 1, col) not in visited:
-            can_visit.append((row + 1, col))
-        if col - 1 >= 0 and (row, col - 1) not in visited:
-            can_visit.append((row, col - 1))
-        if col + 1 <= len(self.board[0]) - 1 and (row, col + 1) not in visited:
-            can_visit.append((row, col + 1))
-        return can_visit
+        if trie.isInTrie(curRes):
+            res.add(curRes)
+        if i - 1 >= 0 and not visited[i - 1][j]:
+            visited[i - 1][j] = True
+            self.searchWords(i - 1, j, trie, board, res, visited, curRes + board[i - 1][j])
+            visited[i - 1][j] = False
+        if i + 1 < len(board) and not visited[i + 1][j]:
+            visited[i + 1][j] = True
+            self.searchWords(i + 1, j, trie, board, res, visited, curRes + board[i + 1][j])
+            visited[i + 1][j] = False
+        if j - 1 >= 0 and not visited[i][j - 1]:
+            visited[i][j - 1] = True
+            self.searchWords(i, j - 1, trie, board, res, visited, curRes + board[i][j - 1])
+            visited[i][j - 1] = False
+        if j + 1 < len(board[0]) and not visited[i][j + 1]:
+            visited[i][j + 1] = True
+            self.searchWords(i, j + 1, trie, board, res, visited, curRes + board[i][j + 1])
+            visited[i][j + 1] = False

@@ -7,29 +7,28 @@
 # Follow up:
 # Could you solve it with constant space complexity? (Note: The output array does not count as extra space for the purpose of space complexity analysis.)
 
-# cur_ans = prev_ans / cur * prev_num
+# curAns = prevAns / cur * prevNum
 class Solution(object):
     def productExceptSelf(self, nums):
         """
         :type nums: List[int]
         :rtype: List[int]
         """
-        ret_list = copy.deepcopy(nums)
-        prev_num = nums[0]
-        ret_list[0] = self.cal_product(nums[1:])
+        res = [0 for _ in range(len(nums))]
+        prevNum = nums[0]
+        res[0] = self.calProduct(nums[1:])
         for i in range(1, len(nums)):
-            tmp = nums[i]
             if nums[i] != 0:
-                ret_list[i] = ret_list[i - 1] / ret_list[i] * prev_num
+                res[i] = res[i - 1] / nums[i] * prevNum
             else:
                 if i + 1 < len(nums):
-                    ret_list[i] = self.cal_product(nums[:i] + nums[i + 1:])
+                    res[i] = self.calProduct(nums[:i] + nums[i + 1:])
                 else:
-                    ret_list[i] = self.cal_product(nums[:i])
-            prev_num = tmp
-        return ret_list
-    
-    def cal_product(self, nums):
+                    res[i] = self.calProduct(nums[:i])
+            prevNum = nums[i]
+        return res
+
+    def calProduct(self, nums):
         ans = 1
         for i in range(len(nums)):
             ans *= nums[i]

@@ -10,9 +10,15 @@
 #         self.start = s
 #         self.end = e
 
-# idea: start from the left interval, if the end of a interval is less than or equal to than the start of the next interval,
+# idea: start from the left interval, if the end of a interval is less than or equal to the start of the next interval,
 # then merge them and put them into a new list.
 # time: O(n * logn)
+# Definition for an interval.
+# class Interval(object):
+#     def __init__(self, s=0, e=0):
+#         self.start = s
+#         self.end = e
+
 class Solution(object):
     def merge(self, intervals):
         """
@@ -22,11 +28,12 @@ class Solution(object):
         if not intervals:
             return []
         intervals.sort(key=lambda x: (x.start, x.end))
-        ret_list = [intervals[0]]
+        mergeIntervals = [intervals[0]]
         for i in range(1, len(intervals)):
-            if ret_list[-1].end >= intervals[i].start and intervals[i].end > ret_list[-1].end:
-                # merge them
-                ret_list[-1].end = intervals[i].end
-            elif ret_list[-1].end < intervals[i].start and intervals[i].end > ret_list[-1].end:
-                ret_list.append(intervals[i])
-        return ret_list
+            if intervals[i].start <= mergeIntervals[-1].end and intervals[i].end > mergeIntervals[-1].end:
+                # merge interval
+                mergeIntervals[-1].end = intervals[i].end
+            elif intervals[i].start > mergeIntervals[-1].end:
+                mergeIntervals.append(intervals[i])
+        return mergeIntervals
+        

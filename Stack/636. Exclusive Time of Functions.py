@@ -27,7 +27,7 @@
 # Functions could be called recursively, and will always end.
 # 1 <= n <= 100
 
-# idea: use a stack to jot down which task is being executed.
+# idea: use a stack to store which task is being executed.
 class Solution(object):
     def exclusiveTime(self, n, logs):
         """

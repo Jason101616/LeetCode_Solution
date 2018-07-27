@@ -12,12 +12,14 @@ class Solution(object):
             return False
         if len(s) < len(t): # make sure s is the longer string
             s, t = t, s
+
         for i in range(len(t)):
-            if s[i] != t[i]: 
-                if len(s) != len(t):
-                    return s[i + 1:] == t[i:]   # delete
-                elif i + 1 <= len(t) - 1:
-                    return s[i + 1:] == t[i + 1:]   # replace
+            if s[i] != t[i]:
+                if len(s) == len(t):
+                    if i == len(t) - 1:
+                        return True
+                    else:
+                        return s[i + 1:] == t[i + 1:]
                 else:
-                    return True
+                    return s[i + 1:] == t[i:]
         return len(s) - len(t) == 1

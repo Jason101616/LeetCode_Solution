@@ -9,7 +9,7 @@
 # UPDATE (2017/1/4):
 # The wordDict parameter had been changed to a list of strings (instead of a set of strings). Please reload the code definition to get the latest changes.
 
-# Approach 1: recursion. Time Limit Exceeded. 
+# Approach 1: recursion. Time Limit Exceeded.
 # Time:  O(2^n)
 # Space: O(n)
 class Solution(object):
@@ -20,19 +20,18 @@ class Solution(object):
         :rtype: bool
         """
         wordSet = set(wordDict)
-        return self.recursion_wordBreak(s, wordSet, 0)
-        
-    def recursion_wordBreak(self, s, wordSet, s_index):
-        if s_index == len(s):
+        return self.helper(s, 0, wordSet)
+
+    def helper(self, s, idx, wordSet):
+        if idx == len(s):
             return True
-        
-        for e_index in range(s_index + 1, len(s) + 1):
-            if s[s_index: e_index] in wordSet and self.recursion_wordBreak(s, wordSet, e_index):
-                return True
-        
+        for i in range(idx + 1, len(s) + 1):
+            if s[idx: i] in wordSet:
+                if self.helper(s, i, wordSet):
+                    return True
         return False
 
-# Approach 2: 
+# Approach 2:
 # Time:  O(n^2)
 # Space: O(n)
 # idea: Recursion with memo. Top-down with memorization.
@@ -44,22 +43,23 @@ class Solution(object):
         :rtype: bool
         """
         wordSet = set(wordDict)
-        memo = [None for _ in range(len(s) + 1)]
-        return self.can_break(s, wordSet, memo)
+        memo = {}
+        return self.helper(s, 0, wordSet, memo)
 
-    def can_break(self, string, wordSet, memo):
-        if memo[len(string)] != None:
-            return memo[len(string)]
-        if string in wordSet:
-            memo[len(string)] = True
+    def helper(self, s, idx, wordSet, memo):
+        if idx in memo:
+            return memo[idx]
+        if idx == len(s):
             return True
-        for i in range(1, len(string)):
-            if string[:i] in wordSet and self.can_break(string[i:], wordSet, memo):
-                memo[len(string)] = True
-                return True
-        memo[len(string)] = False
+        for i in range(idx + 1, len(s) + 1):
+            if s[idx: i] in wordSet:
+                if self.helper(s, i, wordSet, memo):
+                    memo[idx] = True
+                    return True
+        memo[idx] = False
         return False
 
+# Approach 3:
 # Time:  O(n^2)
 # Space: O(n)
 # idea: bottom-up method. Nearly the same time with the previous method.
@@ -78,6 +78,5 @@ class Solution(object):
                 if memo[j] and s[j: i] in wordSet:
                     memo[i] = True
                     break
-        
+
         return memo[len(s)]
-        

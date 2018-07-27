@@ -25,6 +25,7 @@
 
 # idea: use a deque to realize these helper function. 
 # space: O(n)
+from collections import deque
 class NestedIterator(object):
 
     def __init__(self, nestedList):
@@ -32,26 +33,24 @@ class NestedIterator(object):
         Initialize your data structure here.
         :type nestedList: List[NestedInteger]
         """
-        self.deque = collections.deque(nestedList)
+        self.q = deque(nestedList)
         
 
     def next(self):
         """
         :rtype: int
         """
-        return self.deque.popleft().getInteger()
+        return self.q.popleft().getInteger()
         
 
     def hasNext(self):
         """
         :rtype: bool
         """
-        while self.deque:
-            if self.deque[0].isInteger():
+        while self.q:
+            if self.q[0].isInteger():
                 return True
-            cur_object = self.deque.popleft()
-            cur_list = cur_object.getList()
-            self.deque.extendleft(cur_list[::-1])
+            self.q.extendleft(self.q.popleft().getList()[::-1])
         return False
         
 

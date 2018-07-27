@@ -33,7 +33,7 @@ class Solution(object):
         for i in range(len(A)):
             for j in range(len(A[0])):
                 if A[i][j] != 0:
-                    for k in range(col):
+                    for k in range(len(B[0])):
                         if B[j][k] != 0:
                             ret_matrix[i][k] += A[i][j] * B[j][k];
         return ret_matrix
