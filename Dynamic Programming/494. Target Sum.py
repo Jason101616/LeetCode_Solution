@@ -51,8 +51,7 @@ class Solution:
         :type S: int
         :rtype: int
         """
-        len_sum = len(nums)
-        self.memo = [[None for _ in range(2001)] for __ in range(len_sum)]
+        self.memo = [[None for _ in range(2001)] for __ in range(len(nums))]
         return self.findTarget(nums, S, 0, 0)
     
     def findTarget(self, nums, S, index, prev_ans):
@@ -111,4 +110,4 @@ class Solution:
                     dp_next[j + 1000 - nums[i]] += dp[j + 1000]
             dp = dp_next
             dp_next = [0 for _ in range(2001)]  # this line is important, otherwise dp and dp_next point to the same memory
-        return dp[S + 1000] if S <= 1000 else 0v
+        return dp[S + 1000] if S <= 1000 else 0

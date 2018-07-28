@@ -16,7 +16,7 @@
 #   1  -1   2  -1
 #   0  -1   3   4
 
-# start BFS from all gates
+# BFS. EZ.
 class Solution(object):
     def wallsAndGates(self, rooms):
         """
@@ -25,29 +25,28 @@ class Solution(object):
         """
         if not rooms or not rooms[0]:
             return
-        can_visit = [[-1, 0], [1, 0], [0, 1], [0, -1]]
-        queue = collections.deque()
+        
+        INF = 2147483647
+        q = collections.deque()
         row, col = len(rooms), len(rooms[0])
-        # push all gates into queue
         for i in range(row):
             for j in range(col):
                 if rooms[i][j] == 0:
-                    queue.append([i, j])
-        # use BFS to calculate the distance
-        visited = [[False for _ in range(col)] for __ in range(row)]
+                    q.append((i, j))
         distance = 0
-        while queue:
+        while q:
+            curLen = len(q)
+            for i in range(curLen):
+                x, y = q.popleft()
+                if rooms[x][y] == INF:
+                    rooms[x][y] = distance
+                if x + 1 < row and rooms[x + 1][y] == INF:
+                    q.append((x + 1, y))
+                if x - 1 >= 0 and rooms[x - 1][y] == INF:
+                    q.append((x - 1, y))
+                if y + 1 < col and rooms[x][y + 1] == INF:
+                    q.append((x, y + 1))
+                if y - 1 >= 0 and rooms[x][y - 1] == INF:
+                    q.append((x, y - 1))
             distance += 1
-            cur_len = len(queue)
-            for i in range(cur_len):
-                cur_point = queue.popleft()
-                x_pos, y_pos = cur_point[0], cur_point[1]
-                for direction in can_visit:
-                    new_x_pos, new_y_pos = x_pos + direction[0], y_pos + direction[1]
-                    # prune some invalid edge case
-                    if new_x_pos < 0 or new_x_pos >= row or new_y_pos < 0 or new_y_pos >= col or rooms[new_x_pos][new_y_pos] == -1 or visited[new_x_pos][new_y_pos]:
-                        continue
-                    if rooms[new_x_pos][new_y_pos] > distance:
-                        rooms[new_x_pos][new_y_pos] = distance
-                    visited[new_x_pos][new_y_pos] = True
-                    queue.append([new_x_pos, new_y_pos])
+            

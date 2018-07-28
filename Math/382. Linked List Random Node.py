@@ -20,7 +20,6 @@
 #         self.val = x
 #         self.next = None
 
-# classical Reservoir Sampling problem
 class Solution(object):
 
     def __init__(self, head):
@@ -36,15 +35,16 @@ class Solution(object):
         Returns a random node's value.
         :rtype: int
         """
-        res = None
-        tmp_node = self.head
-        cnt = -1
-        while tmp_node:
+        node = self.head
+        res = node.val
+        cnt = 0
+        while node.next:
+            curNode = node.next
             cnt += 1
-            rand_num = random.randint(0, cnt)
-            if rand_num == 0:
-                res = tmp_node.val
-            tmp_node = tmp_node.next
+            ranNum = random.randint(0, cnt)
+            if ranNum == 0:
+                res = curNode.val
+            node = node.next
         return res
 
 

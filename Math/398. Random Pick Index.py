@@ -29,8 +29,7 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        cnt = -1
-        res = None
+        cnt, res = -1, None
         for index, num in enumerate(self.nums):
             if num == target:
                 cnt += 1
