@@ -51,42 +51,43 @@ class Solution(object):
         """
         res = ''
         # put all the pairs into the set
-        pair_set = set()
+        rules = set()
         for i in range(len(words) - 1):
             min_len = min(len(words[i]), len(words[i + 1]))
             cannot_compare = False
             for j in range(min_len):
                 if words[i][j] != words[i + 1][j]:
-                    pair_set.add((words[i][j], words[i + 1][j]))
+                    rules.add((words[i][j], words[i + 1][j]))
                     break
                 if j == min_len - 1:
                     cannot_compare = True
             if cannot_compare and len(words[i]) > min_len:
+                # cannot compare and the length of the first work is longer than the second word, this is paradoxical
                 return ''
-
-        # put all the character into the char_dict, value is the in-degree
-        char_dict = collections.defaultdict(lambda: 0)
+        
+        inDegree = collections.defaultdict(lambda: 0)
         for word in words:
             for char in word:
-                char_dict[char] = 0
-        # calculate the in-degree of all the character
-        for pair in pair_set:
-            char_dict[pair[1]] += 1
-        # maintain a queue
-        queue = collections.deque()
-        for char in char_dict.keys():
-            if char_dict[char] == 0:
-                queue.append(char)
-                res += char
-        # use topological sort to calculate the order
-        while queue:
-            cur_char = queue.popleft()
-            for pair in pair_set.copy():
-                if pair[0] == cur_char:
-                    char_dict[pair[1]] -= 1
-                    if char_dict[pair[1]] == 0:
-                        pair_set.remove(pair)
-                        res += pair[1]
-                        queue.append(pair[1])
-
-        return res if len(res) == len(char_dict) else ''
+                inDegree[char] = 0
+        
+        for rule in rules:
+            inDegree[rule[1]] += 1
+        
+        res = ''
+        q = collections.deque()
+        for key, val in inDegree.items():
+            if val == 0:
+                res += key
+                q.append(key)
+        
+        while q:
+            curChar = q.popleft()
+            for rule in rules.copy():
+                if rule[0] == curChar:
+                    inDegree[rule[1]] -= 1
+                    if inDegree[rule[1]] == 0:
+                        res += rule[1]
+                        q.append(rule[1])
+                        rules.remove(rule)
+        
+        return res if len(res) == len(inDegree) else ''

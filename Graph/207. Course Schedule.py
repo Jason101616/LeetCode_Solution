@@ -60,6 +60,7 @@ class Solution(object):
         return True
 
 # approach 2: topological sort/BFS
+from collections import defaultdict, deque
 class Solution(object):
     def canFinish(self, numCourses, prerequisites):
         """
@@ -67,25 +68,25 @@ class Solution(object):
         :type prerequisites: List[List[int]]
         :rtype: bool
         """
-        graph = collections.defaultdict(lambda: [])
-        in_degree = collections.defaultdict(lambda: 0)
-        for edge in prerequisites:
-            graph[edge[1]].append(edge[0])  # store outbound
-            in_degree[edge[0]] += 1         # count the number of inbound
-            in_degree[edge[1]] += 0         # a trick to put every node in in_degree
-        target = len(in_degree)
-        q = collections.deque()
-        cnt = 0
-        for node in in_degree:
-            if in_degree[node] == 0:
-                cnt += 1
-                q.append(node)
+        edges = defaultdict(lambda: [])
+        inDegree = defaultdict(lambda: 0)
+        for prerequisite in prerequisites:
+            edges[prerequisite[1]].append(prerequisite[0]) # store the outbound
+            inDegree[prerequisite[0]] += 1
+            inDegree[prerequisite[1]] += 0
         
+        # Use a queue to do BFS
+        q = deque()
+        cnt = 0
+        for course in inDegree:
+            if inDegree[course] == 0:
+                q.append(course)
+                cnt += 1
         while q:
-            cur_node = q.popleft()
-            for neighbor in graph[cur_node]:
-                in_degree[neighbor] -= 1
-                if in_degree[neighbor] == 0:
+            curCourse = q.popleft()
+            for course in edges[curCourse]:
+                inDegree[course] -= 1
+                if inDegree[course] == 0:
+                    q.append(course)
                     cnt += 1
-                    q.append(neighbor)
-        return cnt == target
+        return cnt == len(inDegree)
