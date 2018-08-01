@@ -31,7 +31,7 @@ class Solution(object):
         if not root:
             return root
         s, b = sorted([p.val, q.val])
-        if s <= root.val and b >= root.val:
+        if s <= root.val <= b:
             return root
         elif b < root.val:
             return self.lowestCommonAncestor(root.left, p, q)

@@ -72,7 +72,6 @@ class Solution:
 # 2. for each string(node), create a PathNode class to store its previous node
 # 3. To find all the path during BFS, we should not stop searching when we find one answer in the current layer.
 # 4. When there is at least one intersection in the two BFS queue, we find the answer.
-
 class PathNode:
     def __init__(self, string, previous):
         self.string = string
@@ -106,7 +105,7 @@ class Solution(object):
         forward_queue = BFSQueue([PathNode(beginWord, None)])
         backward_queue = BFSQueue([PathNode(endWord, None)])
         while not self.is_intersect(forward_queue, backward_queue) and (forward_queue.size() > 0 or backward_queue.size() > 0):
-            if (forward_queue.size() < backward_queue.size() and forward_queue.size() > 0) or backward_queue.size() == 0:
+            if 0 < forward_queue.size() <= backward_queue.size():
                 self.search(forward_queue, neighbors)
             else:
                 self.search(backward_queue, neighbors)
@@ -148,24 +147,17 @@ class Solution(object):
         tmp_visited = {}  # in order to get all the paths, we should update visited at the end
         for i in range(length):
             cur_word = bfs_q.queue.popleft()
-            cur_neighbors = self.find_neighbors(cur_word.string, neighbors)
-            for word in cur_neighbors:
-                if word not in bfs_q.visited:
-                    if word not in tmp_visited:
-                        tmp_visited[word] = PathNode(word, cur_word)
-                    else:
-                        tmp_visited[word].previous.append(cur_word)
+            for i in range(len(cur_word.string)):
+                next_words = neighbors[cur_word.string[:i] + '_' + cur_word.string[i + 1:]]
+                for word in next_words:
+                    if word not in bfs_q.visited:
+                        if word not in tmp_visited:
+                            tmp_visited[word] = PathNode(word, cur_word)
+                        else:
+                            tmp_visited[word].previous.append(cur_word)
         for word in tmp_visited:
             bfs_q.queue.append(tmp_visited[word])
         bfs_q.visited.update(tmp_visited)
-
-    def find_neighbors(self, string, neighbors):
-        res = []
-        for i in range(len(string)):
-            tmp = string[:i] + '_' + string[i + 1:]
-            if tmp in neighbors:
-                res.extend(neighbors[tmp])
-        return list(set(res))
 
     def preprocess(self, wordList):
         word_dict = collections.defaultdict(lambda: [])

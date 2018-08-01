@@ -31,15 +31,15 @@
 
 # idea: use list to store the val, use dictionary to store the index of the val
 from random import randint
-
-
 class RandomizedSet(object):
+
     def __init__(self):
         """
         Initialize your data structure here.
         """
-        self.my_dict = {}
-        self.my_list = []
+        self.numList = [] # store the inserted value
+        self.numDict = {} # mapping for val -> index
+
 
     def insert(self, val):
         """
@@ -47,11 +47,12 @@ class RandomizedSet(object):
         :type val: int
         :rtype: bool
         """
-        if val in self.my_dict:
+        if val in self.numDict:
             return False
-        self.my_list.append(val)
-        self.my_dict[val] = len(self.my_list) - 1
+        self.numList.append(val)
+        self.numDict[val] = len(self.numList) - 1
         return True
+
 
     def remove(self, val):
         """
@@ -59,28 +60,31 @@ class RandomizedSet(object):
         :type val: int
         :rtype: bool
         """
-        # idea is swap this item with the last item in my_list
-        if val not in self.my_dict:
+        if val not in self.numDict:
             return False
-        remove_item_index = self.my_dict[val]
-        last_item_index = len(self.my_list) - 1
-        last_item = self.my_list[-1]
-        del self.my_dict[val]
-        # if the removed item is the last item, we don't need to re-insert it
-        if remove_item_index != last_item_index:
-            self.my_list[remove_item_index] = last_item
-            self.my_dict[last_item] = remove_item_index
-        self.my_list.pop()
+        removeNumIdx = self.numDict[val]
+        if removeNumIdx != len(self.numList) - 1:
+            self.numList[removeNumIdx] = self.numList[-1]
+            self.numDict[self.numList[-1]] = removeNumIdx
+        del self.numDict[val]
+        self.numList.pop()
         return True
+
 
     def getRandom(self):
         """
         Get a random element from the set.
         :rtype: int
         """
-        len_list = len(self.my_list)
-        index = randint(0, len_list - 1)
-        return self.my_list[index]
+        return self.numList[randint(0, len(self.numList) - 1)]
+
+
+
+# Your RandomizedSet object will be instantiated and called as such:
+# obj = RandomizedSet()
+# param_1 = obj.insert(val)
+# param_2 = obj.remove(val)
+# param_3 = obj.getRandom()
 
 
 # Your RandomizedSet object will be instantiated and called as such:

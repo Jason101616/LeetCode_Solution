@@ -25,6 +25,7 @@
 # Credits:
 # Special thanks to @pbrother for adding this problem and creating all test cases.
 
+# bottom-up dp
 class Solution(object):
     def combinationSum4(self, nums, target):
         """
@@ -39,3 +40,24 @@ class Solution(object):
                 if i >= num:
                     dp[i] += dp[i - num]
         return dp[-1]
+
+# top-bottom dp with memo
+class Solution(object):
+    def combinationSum4(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        memo = {0: 1}
+        return self.helper(nums, target, memo)
+
+    def helper(self, nums, target, memo):
+        if target in memo:
+            return memo[target]
+        res = 0
+        for num in nums:
+            if num <= target:
+                res += self.helper(nums, target - num, memo)
+        memo[target] = res
+        return res

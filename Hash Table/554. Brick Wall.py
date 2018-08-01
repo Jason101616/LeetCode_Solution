@@ -7,7 +7,7 @@
 # You cannot draw a line just along one of the two vertical edges of the wall, in which case the line will obviously cross no bricks.
 
 # Example:
-# Input: 
+# Input:
 # [[1,2,2,1],
 #  [3,1,2],
 #  [1,3,2],
@@ -15,7 +15,7 @@
 #  [3,1,2],
 #  [1,3,1,1]]
 # Output: 2
-# Explanation: 
+# Explanation:
 
 # Note:
 # The width sum of bricks in different rows are the same and won't exceed INT_MAX.
@@ -30,14 +30,10 @@ class Solution(object):
         :type wall: List[List[int]]
         :rtype: int
         """
-        cnt_dict = collections.defaultdict(lambda: 0)
+        cntDict = collections.defaultdict(lambda: 0)
         for layer in wall:
-            cur_sum = 0
+            curSum = 0
             for i in range(len(layer) - 1):
-                cur_sum += layer[i]
-                cnt_dict[cur_sum] += 1
-        ans = []
-        for key in cnt_dict.keys():
-            ans.append(cnt_dict[key])
-        return len(wall) - max(ans) if ans else len(wall)
-                
+                curSum += layer[i]
+                cntDict[curSum] += 1
+        return len(wall) - max(cntDict.values()) if len(cntDict) else len(wall)

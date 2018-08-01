@@ -28,15 +28,17 @@
 # collection.getRandom();
 
 from collections import defaultdict
+from random import randint
 
 
 class RandomizedCollection(object):
+
     def __init__(self):
         """
         Initialize your data structure here.
         """
-        self.my_list = []
-        self.my_dict = defaultdict(lambda: set())
+        self.numList = []
+        self.numDict = defaultdict(lambda: set())
 
     def insert(self, val):
         """
@@ -44,12 +46,10 @@ class RandomizedCollection(object):
         :type val: int
         :rtype: bool
         """
-        is_contain = False
-        if val in self.my_dict:
-            is_contain = True
-        self.my_list.append(val)
-        self.my_dict[val].add(len(self.my_list) - 1)
-        return is_contain
+        res = False if val in self.numDict else True
+        self.numList.append(val)
+        self.numDict[val].add(len(self.numList) - 1)
+        return res
 
     def remove(self, val):
         """
@@ -57,20 +57,17 @@ class RandomizedCollection(object):
         :type val: int
         :rtype: bool
         """
-        if not self.my_dict[val]:
+        if not self.numDict[val]:
             return False
-        for index in self.my_dict[val]:
-            deleted_item_index = index
+        for removeItemIdx in self.numDict[val]:
             break
-        last_index = len(self.my_list) - 1
-        last_item = self.my_list[last_index]
-
-        self.my_dict[val].remove(deleted_item_index)
-        if not last_index == deleted_item_index:
-            self.my_list[deleted_item_index] = last_item
-            self.my_dict[last_item].remove(last_index)
-            self.my_dict[last_item].add(deleted_item_index)
-        self.my_list = self.my_list[:-1]
+        self.numDict[val].remove(removeItemIdx)
+        if removeItemIdx != len(self.numList) - 1:
+            lastEle = self.numList[-1]
+            self.numList[removeItemIdx] = lastEle
+            self.numDict[lastEle].remove(len(self.numList) - 1)
+            self.numDict[lastEle].add(removeItemIdx)
+        self.numList.pop()
         return True
 
     def getRandom(self):
@@ -78,6 +75,4 @@ class RandomizedCollection(object):
         Get a random element from the collection.
         :rtype: int
         """
-        len_list = len(self.my_list)
-        index = random.randint(0, len_list - 1)
-        return self.my_list[index]
+        return self.numList[randint(0, len(self.numList) - 1)]

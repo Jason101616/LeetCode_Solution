@@ -20,56 +20,6 @@
 # UPDATE (2017/1/20):
 # The wordList parameter had been changed to a list of strings (instead of a set of strings). Please reload the code definition to get the latest changes.
 
-# naive BFS solution, TLE
-from collections import deque
-class Solution(object):
-    def ladderLength(self, beginWord, endWord, wordList):
-        """
-        :type beginWord: str
-        :type endWord: str
-        :type wordList: List[str]
-        :rtype: int
-        """
-            
-        self.wordDict = set(wordList)
-        word_queue = deque()
-        self.memo = set()
-        length = 0
-        word_queue.append(beginWord)
-        self.memo.add(beginWord)
-        while word_queue:
-            length += 1
-            size = len(word_queue)
-            for i in range(size):
-                cur_word = word_queue.popleft()
-                if cur_word == endWord:
-                    return length
-                possible_next = self.find_next(cur_word)
-                for word in possible_next:
-                    word_queue.append(word)
-                    self.memo.add(word)
-        
-        return 0
-    
-    def find_next(self, cur_word):
-        def one_char_diff(word1, word2):
-            if len(word1) != len(word2):
-                return False
-            diff_cnt = 0
-            for i in range(len(word1)):
-                if word1[i] != word2[i]:
-                    diff_cnt += 1
-                if diff_cnt >= 2:
-                    return False
-            return True
-        
-        poss_list = []
-        for word in self.wordDict:
-            if word not in self.memo and one_char_diff(cur_word, word):
-                poss_list.append(word)
-        return poss_list
-        
-
 # BFS with proprocessing
 class Solution(object):
     def ladderLength(self, beginWord, endWord, wordList):
@@ -78,7 +28,7 @@ class Solution(object):
         :type endWord: str
         :type wordList: List[str]
         :rtype: int
-        """ 
+        """
         wordDict = self.pre_process(wordList)
         word_queue = collections.deque()
         visited = set()
@@ -108,4 +58,48 @@ class Solution(object):
                     s = word[:i] + '_' + word[i + 1:]
                     word_dict[s].append(word)
             return word_dict
-        
+
+# Bi-direction BFS
+from collections import deque
+
+class Solution(object):
+    def ladderLength(self, beginWord, endWord, wordList):
+        """
+        :type beginWord: str
+        :type endWord: str
+        :type wordList: List[str]
+        :rtype: int
+        """
+        if endWord not in wordList:
+            return 0
+        wordDict = self.preProcess(wordList)
+        beginQ, endQ = deque([beginWord]), deque([endWord])
+        beginVisited, endVisited = {beginWord}, {endWord}
+        step = 1
+        while beginQ or endQ:
+            if beginVisited & endVisited:
+                return step
+            step += 1
+            if 0 < len(beginQ) <= len(endQ):
+                self.queueHelper(beginQ, beginVisited, wordDict)
+            else:
+                self.queueHelper(endQ, endVisited, wordDict)
+        return 0
+
+    def queueHelper(self, q, visited, wordDict):
+        curLen = len(q)
+        for i in range(curLen):
+            curWord = q.popleft()
+            for i in range(len(curWord)):
+                nextWords = wordDict[curWord[:i] + '_' + curWord[i + 1:]]
+                for word in nextWords:
+                    if word not in visited:
+                        visited.add(word)
+                        q.append(word)
+
+    def preProcess(self, wordList):
+        wordDict = collections.defaultdict(lambda: [])
+        for word in wordList:
+            for i in range(len(word)):
+                wordDict[word[:i] + '_' + word[i + 1:]].append(word)
+        return wordDict
