@@ -19,7 +19,7 @@ class Solution(object):
         :rtype: bool
         """
         return self.search_rotate(nums, target, 0, len(nums) - 1)
-    
+
     def search_rotate(self, nums, target, left, right):
         # [2, 2, 2, 3, 4, 2]
         if left > right:
@@ -27,7 +27,7 @@ class Solution(object):
         mid = left + (right - left) // 2
         if nums[mid] == target:
             return True
-        
+
         if nums[left] < nums[mid]:  # left side is normal
             # if target is in the left side, search on the left
             if target < nums[mid] and target >= nums[left]:
@@ -35,14 +35,14 @@ class Solution(object):
             # else search on the right side
             else:
                 return self.search_rotate(nums, target, mid + 1, right)
-        elif nums[mid] < nums[right]:   # right side is normal
+        elif nums[mid] < nums[right]:  # right side is normal
             # if target is in the right side, search on the right side
             if target > nums[mid] and target <= nums[right]:
                 return self.search_rotate(nums, target, mid + 1, right)
             # else search on the left side
             else:
                 return self.search_rotate(nums, target, left, mid - 1)
-        else:   # both side are not normal
+        else:  # both side are not normal
             # first search on the left side
             res = self.search_rotate(nums, target, left, mid - 1)
             # not find, search on the right side
@@ -51,4 +51,3 @@ class Solution(object):
             # return ans
             else:
                 return res
-        

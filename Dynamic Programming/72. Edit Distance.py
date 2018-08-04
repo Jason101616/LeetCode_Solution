@@ -16,7 +16,7 @@ class Solution(object):
         """
         memo = [[None for _ in range(len(word2) + 1)] for __ in range(len(word1) + 1)]
         return self.find_dis(word1, 0, word2, 0, memo)
-    
+
     def find_dis(self, word1, i, word2, j, memo):
         if i == len(word1) or j == len(word2):
             if i == len(word1):
@@ -24,10 +24,10 @@ class Solution(object):
             else:
                 res = len(word1) - i
             memo[i][j] = res
-        
+
         if memo[i][j] != None:
             return memo[i][j]
-        
+
         if word1[i] == word2[j]:
             res = self.find_dis(word1, i + 1, word2, j + 1, memo)
             memo[i][j] = res
@@ -36,9 +36,10 @@ class Solution(object):
             ans1 = self.find_dis(word1, i + 1, word2, j, memo)
             ans2 = self.find_dis(word1, i, word2, j + 1, memo)
             memo[i][j] = min(ans0, ans1, ans2) + 1
-            
+
         return memo[i][j]
-        
+
+
 # approach 2: bottom-up dp
 # let dp[i][j] denote edit distance between word1[0, i - 1] and word2[0, j - 1]
 # if word1[i - 1] == word2[j - 1], then p[i][j] = p[i - 1][j - 1]

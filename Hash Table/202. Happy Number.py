@@ -22,7 +22,7 @@ class Solution(object):
             see_before.add(n)
             n = self.sum_digits(n)
         return False
-    
+
     def sum_digits(self, n):
         res = 0
         while n > 0:

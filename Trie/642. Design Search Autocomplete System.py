@@ -177,7 +177,6 @@ class AutocompleteSystem(object):
             self.cur_sentence = ''
             return []
 
-
 # Your AutocompleteSystem object will be instantiated and called as such:
 # obj = AutocompleteSystem(sentences, times)
 # param_1 = obj.input(c)

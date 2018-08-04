@@ -13,7 +13,7 @@ class Solution(object):
         # if char is right symbol. validate whether the top of the stack is its corresponding left symbol
         # in the end, the stack must be empty
         stack = []
-        dict_symbol = {']': '[', '}':'{', ')':'('}
+        dict_symbol = {']': '[', '}': '{', ')': '('}
         for char in s:
             if char in dict_symbol.values():
                 stack.append(char)
@@ -21,4 +21,3 @@ class Solution(object):
                 if stack == [] or stack.pop() != dict_symbol[char]:
                     return False
         return stack == []
-    

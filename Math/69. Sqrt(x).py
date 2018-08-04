@@ -6,7 +6,7 @@
 # Space: O(1)
 # 思路：确定左右范围，暴力二分查找。
 
-import math
+
 class Solution(object):
     def mySqrt(self, x):
         """
@@ -25,5 +25,5 @@ class Solution(object):
                 left = mid + 1
             else:
                 right = mid - 1
-        
+
         return left - 1

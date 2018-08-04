@@ -10,11 +10,11 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        char2int = {'I': 1, 'V' : 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+        char2int = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
         index = len(s) - 1
         prev = 0
         result = 0
-        
+
         for i in range(index, -1, -1):
             tmp = char2int[s[i]]
             if tmp >= prev:
@@ -22,6 +22,5 @@ class Solution(object):
             else:
                 result -= tmp
             prev = tmp
-            
+
         return result
-    

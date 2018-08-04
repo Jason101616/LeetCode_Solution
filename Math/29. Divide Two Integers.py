@@ -11,7 +11,7 @@ class Solution(object):
         """
         if not divisor or (dividend == (-1) * (1 << 31) and divisor == -1):
             return (1 << 31) - 1
-        sign = (dividend < 0) ^ (divisor < 0)   # 1 is negative, 0 is positive
+        sign = (dividend < 0) ^ (divisor < 0)  # 1 is negative, 0 is positive
         dividend, divisor = abs(dividend), abs(divisor)
         res = 0
         while dividend >= divisor:
@@ -22,4 +22,3 @@ class Solution(object):
             res += tmp_res
             dividend -= tmp_divisor
         return res if not sign else -res
-        

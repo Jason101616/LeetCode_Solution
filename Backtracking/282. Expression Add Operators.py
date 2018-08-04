@@ -31,13 +31,13 @@ class Solution(object):
         res = []
         self.findAns(num, target, res, 0, '', 0, 0)
         return res
-    
+
     def findAns(self, num, target, res, idx, curPath, curAns, mulVal):
         if idx == len(num):
             if curAns == target:
                 res.append(curPath)
             return
-        
+
         for i in range(idx, len(num)):
             if i != idx and num[idx] == '0':
                 break
@@ -48,5 +48,5 @@ class Solution(object):
             else:
                 self.findAns(num, target, res, i + 1, curPath + '+' + curNum, curAns + curVal, curVal)
                 self.findAns(num, target, res, i + 1, curPath + '-' + curNum, curAns - curVal, -curVal)
-                self.findAns(num, target, res, i + 1, curPath + '*' + curNum, curAns - mulVal + mulVal * curVal, mulVal * curVal)
-        
+                self.findAns(num, target, res, i + 1, curPath + '*' + curNum, curAns - mulVal + mulVal * curVal,
+                             mulVal * curVal)

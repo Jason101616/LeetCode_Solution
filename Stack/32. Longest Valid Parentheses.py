@@ -23,7 +23,7 @@ class Solution:
                     if not stack:
                         longest = max(longest, index - left + 1)
                     else:
-                        longest = max(longest, index - stack[-1])   # still has element in the stack when traverse over
+                        longest = max(longest, index - stack[-1])  # still has element in the stack when traverse over
                 else:
                     stack = []
                     left = index + 1

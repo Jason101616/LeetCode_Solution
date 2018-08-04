@@ -20,13 +20,12 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
-        smallest = sec_smallest = float('inf')
+        smallest = secSmallest = float('inf')
         for num in nums:
             if num <= smallest:
                 smallest = num
-            elif num <= sec_smallest:
-                sec_smallest = num
+            elif num <= secSmallest:
+                secSmallest = num
             else:
                 return True
         return False
-                

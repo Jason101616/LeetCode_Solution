@@ -41,6 +41,8 @@
 # Space: O(row * col)
 # idea: Sort the node and perform BFS from start node to end node. Add up the path.
 import collections
+
+
 class Solution(object):
     def cutOffTree(self, G):
         """
@@ -64,8 +66,7 @@ class Solution(object):
             step += length
             sx, sy, G[x][y] = x, y, 1
         return step
-    
-    
+
     def BFS(self, G, sx, sy, tx, ty):
         row, col = len(G), len(G[0])
         # visited = [[False] * col] * row

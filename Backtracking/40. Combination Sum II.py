@@ -15,7 +15,6 @@
 # ]
 
 # Solution 1: use a set to delete the duplication. TLE.
-from copy import deepcopy
 
 
 class Solution(object):

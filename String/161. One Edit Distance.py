@@ -10,7 +10,7 @@ class Solution(object):
         """
         if abs(len(s) - len(t)) > 1:
             return False
-        if len(s) < len(t): # make sure s is the longer string
+        if len(s) < len(t):  # make sure s is the longer string
             s, t = t, s
 
         for i in range(len(t)):

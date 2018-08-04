@@ -22,6 +22,7 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
+
 class Solution(object):
     def buildTree(self, inorder, postorder):
         """

@@ -29,7 +29,7 @@ class Codec:
             self.__preorder_serial(root.right, serial_list)
         else:
             serial_list.append('None')
-        
+
     def serialize(self, root):
         """Encodes a tree to a single string.
         
@@ -37,7 +37,7 @@ class Codec:
         :rtype: str
         """
         serial_list = []
-        self.__preorder_serial(root, serial_list) 
+        self.__preorder_serial(root, serial_list)
         return ' '.join(serial_list)
 
     def deserialize(self, data):
@@ -54,8 +54,7 @@ class Codec:
                 deserial_list[i] = int(deserial_list[i])
         index = -1
         return self.__preorder_deserial(deserial_list, index)[0]
-        
-    
+
     def __preorder_deserial(self, tree_list, index):
         index += 1
         if index >= len(tree_list) or tree_list[index] == None:
@@ -64,8 +63,6 @@ class Codec:
         new_node.left, index = self.__preorder_deserial(tree_list, index)
         new_node.right, index = self.__preorder_deserial(tree_list, index)
         return new_node, index
-        
-        
 
 # Your Codec object will be instantiated and called as such:
 # codec = Codec()

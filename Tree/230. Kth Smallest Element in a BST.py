@@ -28,9 +28,8 @@ class Solution(object):
             return self.kthSmallest(root.left, k)
         else:
             return self.kthSmallest(root.right, k - left_cnt - 1)
-    
+
     def cnt_node(self, root):
         if not root:
             return 0
         return self.cnt_node(root.left) + self.cnt_node(root.right) + 1
-        

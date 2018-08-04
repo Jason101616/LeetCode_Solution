@@ -24,4 +24,3 @@ class Solution(object):
                 index2 -= 1
             elif numbers[index1 - 1] + numbers[index2 - 1] < target:
                 index1 += 1
-        

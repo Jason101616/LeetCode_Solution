@@ -22,7 +22,6 @@ class Solution(object):
         :type nums: List[int]
         """
         self.nums = nums
-        
 
     def pick(self, target):
         """

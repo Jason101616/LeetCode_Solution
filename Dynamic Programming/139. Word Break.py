@@ -31,6 +31,7 @@ class Solution(object):
                     return True
         return False
 
+
 # Approach 2:
 # Time:  O(n^2)
 # Space: O(n)
@@ -58,6 +59,7 @@ class Solution(object):
                     return True
         memo[idx] = False
         return False
+
 
 # Approach 3:
 # Time:  O(n^2)

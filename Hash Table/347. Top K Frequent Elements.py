@@ -12,14 +12,17 @@
 # idea: simple priority queue
 
 import Queue
+
+
 class number:
     def __init__(self, num):
         self.num = num
         self.freq = 1
-        
+
     def __lt__(self, other):
         return self.freq > other.freq
-        
+
+
 class Solution(object):
     def topKFrequent(self, nums, k):
         """

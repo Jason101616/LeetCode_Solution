@@ -29,6 +29,7 @@ class Solution(object):
             l = r
         return res
 
+
 # approach2: binary search
 class Solution(object):
     def summaryRanges(self, nums):

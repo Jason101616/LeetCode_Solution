@@ -27,13 +27,14 @@ class UndirectedGraphNode:
         self.label = x
         self.neighbors = []
 
+
 # DFS
 class Solution:
     # @param node, a undirected graph node
     # @return a undirected graph node
     def __init__(self):
-        self.visit={}
-        
+        self.visit = {}
+
     def cloneGraph(self, node):
         if not node:
             return None
@@ -43,7 +44,8 @@ class Solution:
         for new_node in node.neighbors:
             self.visit[node.label].neighbors.append(self.cloneGraph(new_node))
         return self.visit[node.label]
-        
+
+
 # BFS
 # Definition for a undirected graph node
 # class UndirectedGraphNode:
@@ -51,13 +53,15 @@ class Solution:
 #         self.label = x
 #         self.neighbors = []
 from collections import deque
+
+
 class Solution:
     # @param node, a undirected graph node
     # @return a undirected graph node
     def __init__(self):
         self.visit = {}
         self.address = {}
-        
+
     def cloneGraph(self, node):
         if not node:
             return None
@@ -84,5 +88,5 @@ class Solution:
                 if n.label not in self.visit and not append:
                     queue.append(n)
                     append = True
-        
+
         return clone

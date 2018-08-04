@@ -42,7 +42,7 @@ class Solution:
             return False
         return self.is_valid_BST(node.left, low_bound,
                                  node.val) and self.is_valid_BST(
-                                     node.right, node.val, high_bound)
+            node.right, node.val, high_bound)
 
 
 # Solution 2: check whether the inorder traversal is ascending

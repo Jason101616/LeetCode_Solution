@@ -38,10 +38,10 @@ class Solution(object):
         dp = [[float('inf') for _ in range(m + 1)] for __ in range(len(nums) + 1)]
         dp[0][0] = 0
         for i in range(1, len(nums) + 1):
-            for j in range(1, min(i + 1, m + 1)): # at most divided into i parts
+            for j in range(1, min(i + 1, m + 1)):  # at most divided into i parts
                 for k in range(j - 1, i):
                     dp[i][j] = min(dp[i][j], max(dp[k][j - 1], sub_sum[i] - sub_sum[k]))
-        return dp[-1][-1]                
+        return dp[-1][-1]
 
-# solution 2: binary search + Greedy. don't know how to write.
+    # solution 2: binary search + Greedy. don't know how to write.
 # see the answer

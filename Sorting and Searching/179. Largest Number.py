@@ -7,11 +7,12 @@
 class Str_compare(str):
     def __lt__(self, other):
         return self + other > other + self
-    
+
+
 class Solution:
     # @param {integer[]} nums
     # @return {string}
-    
+
     def largestNumber(self, nums):
         nums = ''.join(sorted(map(str, nums), key=Str_compare))
         return '0' if nums[0] == '0' else nums

@@ -1,7 +1,5 @@
 # Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
 
-from Queue import PriorityQueue
-
 # Definition for singly-linked list.
 # class ListNode(object):
 #     def __init__(self, x):
@@ -18,6 +16,7 @@ from Queue import PriorityQueue
 #         self.val = x
 #         self.next = None
 import Queue
+
 
 class Solution(object):
     def mergeKLists(self, lists):
@@ -37,6 +36,7 @@ class Solution(object):
             if cur[1].next:
                 q.put((cur[1].next.val, cur[1].next))
         return dummy.next
+
 
 # Approach 2: use divide and conquer. Most optimized approach.
 # time: O(Nlogk)
@@ -63,7 +63,7 @@ class Solution(object):
                 lists[i] = self.mergeTwoLists(lists[i], lists[i + interval])
             interval *= 2
         return lists[0]
-    
+
     def mergeTwoLists(self, l1, l2):
         prev = dummy = ListNode(None)
         while l1 and l2:

@@ -18,6 +18,8 @@
 # idea: Knuth shuffle
 import copy
 from random import randint
+
+
 class Solution:
 
     def __init__(self, nums):
@@ -32,7 +34,6 @@ class Solution:
         Resets the array to its original configuration and return it.
         :rtype: List[int]
         """
-        
 
     def shuffle(self):
         """
@@ -44,8 +45,6 @@ class Solution:
             shuffle_pos = randint(0, i)
             ret[i], ret[shuffle_pos] = ret[shuffle_pos], ret[i]
         return ret
-        
-
 
 # Your Solution object will be instantiated and called as such:
 # obj = Solution(nums)

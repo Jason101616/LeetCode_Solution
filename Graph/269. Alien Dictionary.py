@@ -64,22 +64,22 @@ class Solution(object):
             if cannot_compare and len(words[i]) > min_len:
                 # cannot compare and the length of the first work is longer than the second word, this is paradoxical
                 return ''
-        
+
         inDegree = collections.defaultdict(lambda: 0)
         for word in words:
             for char in word:
                 inDegree[char] = 0
-        
+
         for rule in rules:
             inDegree[rule[1]] += 1
-        
+
         res = ''
         q = collections.deque()
         for key, val in inDegree.items():
             if val == 0:
                 res += key
                 q.append(key)
-        
+
         while q:
             curChar = q.popleft()
             for rule in rules.copy():
@@ -89,5 +89,5 @@ class Solution(object):
                         res += rule[1]
                         q.append(rule[1])
                         rules.remove(rule)
-        
+
         return res if len(res) == len(inDegree) else ''

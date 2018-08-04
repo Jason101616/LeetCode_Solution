@@ -22,13 +22,13 @@ class Solution(object):
         mapping = {}
         string_set = set()
         return self.is_mapping(pattern, 0, str, 0, mapping, string_set)
-    
+
     def is_mapping(self, pattern, p_i, str, s_i, mapping, string_set):
         if p_i == len(pattern) and s_i == len(str):
             return True
         if p_i == len(pattern) or s_i == len(str):
             return False
-        
+
         if pattern[p_i] in mapping:
             # check whether previous mapping equals to the current string snippet
             len_str = len(mapping[pattern[p_i]])

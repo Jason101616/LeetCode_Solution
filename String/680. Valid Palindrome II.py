@@ -19,14 +19,14 @@ class Solution(object):
         """
         if self.isValidPalindrome(s):
             return True
-        
+
         for index in range(len(s)):
             substr = s[0: index] + s[index + 1:]
             if self.isValidPalindrome(substr):
                 return True
-        
+
         return False
-        
+
     def isValidPalindrome(self, s):
         left = 0
         right = len(s) - 1
@@ -35,8 +35,9 @@ class Solution(object):
                 return False
             left += 1
             right -= 1
-        
+
         return True
+
 
 # 思路2：判断回文蕴含着这样一个递归关系式
 
@@ -60,9 +61,9 @@ class Solution(object):
             else:
                 i += 1
                 j -= 1
-        
+
         return True
-        
+
     def isValidPalindrome(self, s, i, j):
         left = i
         right = j
@@ -71,5 +72,5 @@ class Solution(object):
                 return False
             left += 1
             right -= 1
-        
+
         return True

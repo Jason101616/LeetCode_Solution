@@ -49,6 +49,7 @@ class Solution(object):
                     return int(''.join(res))
         return int(''.join(res))
 
+
 # written by me:
 class Solution(object):
     def maximumSwap(self, num):

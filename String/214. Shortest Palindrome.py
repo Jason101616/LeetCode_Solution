@@ -18,4 +18,3 @@ class Solution(object):
             if s[:i] == re_s[len(s) - i:]:
                 return s[i:][::-1] + s
         return ''
-        

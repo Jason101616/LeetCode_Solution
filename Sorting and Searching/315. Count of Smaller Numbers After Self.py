@@ -14,10 +14,11 @@
 class TreeNode:
     def __init__(self, val):
         self.val = val
-        self.smaller = 0 # number of number smaller than current number
-        self.left = None    # binary tree
+        self.smaller = 0  # number of number smaller than current number
+        self.left = None  # binary tree
         self.right = None
-        
+
+
 class Solution(object):
     def countSmaller(self, nums):
         """
@@ -29,7 +30,7 @@ class Solution(object):
         for i in range(len(nums) - 1, -1, -1):
             root = self.insert(root, nums[i], res, i, 0)
         return res
-    
+
     def insert(self, root, val, res, index, pre_sum):
         if not root:
             root = TreeNode(val)
@@ -38,7 +39,7 @@ class Solution(object):
         if root.val > val:
             root.smaller += 1
             root.left = self.insert(root.left, val, res, index, pre_sum)
-        else:   # root.val <= val
+        else:  # root.val <= val
             plus = 0
             if root.val < val:
                 plus = 1

@@ -30,6 +30,5 @@ class Solution(object):
                 smallest = price
             elif price - smallest > max_profit:
                 max_profit = price - smallest
-        
+
         return max_profit
-                

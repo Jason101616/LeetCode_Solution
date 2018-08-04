@@ -28,4 +28,3 @@ class Solution(object):
             if index - left + 1 > longest:
                 longest = index - left + 1
         return longest
-        

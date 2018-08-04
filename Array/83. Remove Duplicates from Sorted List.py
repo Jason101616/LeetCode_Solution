@@ -28,4 +28,3 @@ class Solution(object):
             prev = prev.next
         left.next = prev
         return dummy.next
-        

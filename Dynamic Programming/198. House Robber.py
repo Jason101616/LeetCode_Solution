@@ -26,6 +26,7 @@ class Solution(object):
             answer[i] = max(answer[i - 1], answer[i - 2] + nums[i])
         return answer[len_num - 1]
 
+
 # time: O(n)
 # space: O(1)
 class Solution(object):
@@ -42,4 +43,3 @@ class Solution(object):
             prev2 = prev1
             prev1 = cur
         return cur
-        

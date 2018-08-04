@@ -28,7 +28,7 @@ class Solution(object):
         :rtype: bool
         """
         return self.find_path(root, 0, sum)
-    
+
     def find_path(self, cur_node, prev_sum, target):
         if not cur_node:
             return False
@@ -36,4 +36,3 @@ class Solution(object):
         if not cur_node.left and not cur_node.right and cur_sum == target:
             return True
         return self.find_path(cur_node.left, cur_sum, target) or self.find_path(cur_node.right, cur_sum, target)
-        

@@ -23,7 +23,7 @@ class Solution(object):
         res = []
         self.helper(res, S, 0, '')
         return res
-    
+
     def helper(self, res, S, idx, curStr):
         if idx == len(S):
             res.append(curStr)

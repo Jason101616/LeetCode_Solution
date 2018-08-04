@@ -5,6 +5,7 @@
 
 # idea: very like the idea as problem 30. sliding window
 import collections
+
 if __name__ == '__main__':
     s = 'abbc'
     b = 'cbabadcbbabbcbabaabccbabc'

@@ -14,7 +14,7 @@
 # idea: first use hash table, then use two pointers
 
 class WordDistance(object):
-    
+
     def __init__(self, words):
         """
         :type words: List[str]
@@ -22,7 +22,6 @@ class WordDistance(object):
         self.word_dict = collections.defaultdict(lambda: [])
         for index, word in enumerate(words):
             self.word_dict[word].append(index)
-        
 
     def shortest(self, word1, word2):
         """
@@ -40,7 +39,7 @@ class WordDistance(object):
             else:
                 index2 += 1
         return min_dis
-                
+
 # Your WordDistance object will be instantiated and called as such:
 # obj = WordDistance(words)
 # param_1 = obj.shortest(word1,word2)

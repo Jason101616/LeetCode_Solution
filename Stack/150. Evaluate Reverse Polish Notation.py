@@ -31,4 +31,3 @@ class Solution(object):
                     cur_res = int(op2 / op1)
                 stack.append(cur_res)
         return stack[0]
-                

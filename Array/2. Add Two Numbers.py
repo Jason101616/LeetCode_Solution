@@ -44,6 +44,7 @@ class Solution(object):
             cur_node.next = ListNode(carry)
         return dummy.next
 
+
 # approach 2: recursively
 class Solution(object):
     def addTwoNumbers(self, l1, l2):
@@ -53,14 +54,14 @@ class Solution(object):
         :rtype: ListNode
         """
         return self.add_num(l1, l2, 0)
-    
+
     def add_num(self, l1, l2, carry):
         if not l1 and not l2 and carry == 0:
             return None
         res = 0
         res += carry
         if l1:
-            res += l1.val 
+            res += l1.val
         if l2:
             res += l2.val
         new_node = ListNode(res % 10)

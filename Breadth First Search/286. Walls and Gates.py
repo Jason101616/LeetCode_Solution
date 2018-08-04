@@ -25,7 +25,7 @@ class Solution(object):
         """
         if not rooms or not rooms[0]:
             return
-        
+
         INF = 2147483647
         q = collections.deque()
         row, col = len(rooms), len(rooms[0])
@@ -49,4 +49,3 @@ class Solution(object):
                 if y - 1 >= 0 and rooms[x][y - 1] == INF:
                     q.append((x, y - 1))
             distance += 1
-            

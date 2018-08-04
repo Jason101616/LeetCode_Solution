@@ -34,6 +34,7 @@ class Solution(object):
             ans[i] = list(an)
         return ans
 
+
 # Approach 2: sort. Fix one number from the begining of the sorted array. Then the problem become 2 sum. Now I can use two pointers to finish the task of 2sum.
 class Solution(object):
     def threeSum(self, nums):

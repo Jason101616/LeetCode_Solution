@@ -30,7 +30,7 @@ class Solution(object):
         """
         if not nums:
             return 0
-        num_dict = collections.defaultdict(lambda : 0)
+        num_dict = collections.defaultdict(lambda: 0)
         for num in nums:
             num_dict[num] += 1
         unique_num = sorted(num_dict.keys())

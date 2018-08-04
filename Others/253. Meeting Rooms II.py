@@ -19,12 +19,13 @@ class Room(object):
         self.start = start
         self.end = end
         self.occupied = occupied
-    
+
     def is_occupied(self, time):
         if time >= self.end:
             self.occupied = False
         return self.occupied
-            
+
+
 class Solution(object):
     def minMeetingRooms(self, intervals):
         """
@@ -45,6 +46,7 @@ class Solution(object):
                 Rooms.append(new_room)
         return len(Rooms)
 
+
 # Time:  O(n*log(n))
 # Space: O(n)
 # idea: a start time means I need a room at that time.
@@ -55,7 +57,7 @@ class Solution(object):
 #     def __init__(self, s=0, e=0):
 #         self.start = s
 #         self.end = e
-            
+
 class Solution(object):
     def minMeetingRooms(self, intervals):
         """
@@ -67,7 +69,7 @@ class Solution(object):
         for i in intervals:
             starts.append(i.start)
             ends.append(i.end)
-        
+
         starts.sort()
         ends.sort()
         start_index, end_index = 0, 0

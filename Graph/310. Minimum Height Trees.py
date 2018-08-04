@@ -84,36 +84,42 @@ class Solution(object):
             return 1
         return max(height_list) + 1
 
+
 # Solution 2:
 # 类似于剥洋葱。我们开始将所有只有一个连接边的节点(叶节点)都存入到一个队列queue中，然后我们遍历每一个叶节点，通过图来找到和其相连的节点，并且在其相连节点的集合中将该叶节点删去，如果删完后此节点也也变成一个叶节点了，加入队列中，再下一轮删除。那么我们删到什么时候呢，当节点数小于等于2时候停止，此时剩下的一个或两个节点就是我们要求的最小高度树的根节点.
 class Solution {
 public:
-    vector<int> findMinHeightTrees(int n, vector<pair<int, int> >& edges) {
-        if (n == 1) return {0};
-        vector<int> res;
-        vector<unordered_set<int>> adj(n);
-        queue<int> q;
-        for (auto edge : edges) {
-            adj[edge.first].insert(edge.second);
-            adj[edge.second].insert(edge.first);
-        }
-        for (int i = 0; i < n; ++i) {
-            if (adj[i].size() == 1) q.push(i);
-        }
-        while (n > 2) {
-            int size = q.size();
-            n -= size;
-            for (int i = 0; i < size; ++i) {
-                int t = q.front(); q.pop();
-                for (auto a : adj[t]) {
-                    adj[a].erase(t);
-                    if (adj[a].size() == 1) q.push(a);
-                }
-            }
-        }
-        while (!q.empty()) {
-            res.push_back(q.front()); q.pop();
-        }
-        return res;
-    }
+    vector < int > findMinHeightTrees(int
+
+
+n, vector < pair < int, int > > & edges) {
+if (n == 1)
+return {0};
+vector < int > res;
+vector < unordered_set < int >> adj(n);
+queue < int > q;
+for (auto edge: edges) {
+    adj[edge.first].insert(edge.second);
+adj[edge.second].insert(edge.first);
+}
+for (int i = 0; i < n; ++i) {
+if (adj[i].size() == 1) q.push(i);
+}
+while (n > 2) {
+int size = q.size();
+n -= size;
+for (int i = 0; i < size; ++i) {
+int t = q.front(); q.pop();
+for (auto a: adj[t]) {
+    adj[a].erase(t);
+if (adj[a].size() == 1)
+q.push(a);
+}
+}
+}
+while (!q.empty()) {
+res.push_back(q.front()); q.pop();
+}
+return res;
+}
 };

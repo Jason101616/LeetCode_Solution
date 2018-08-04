@@ -10,14 +10,13 @@
 # You may assume that all operations are valid (for example, no pop or peek operations will be called on an empty queue).
 
 class MyQueue:
-    
+
     def __init__(self):
         """
         Initialize your data structure here.
         """
         self.push_stack = []
         self.pop_stack = []
-        
 
     def push(self, x):
         """
@@ -26,7 +25,6 @@ class MyQueue:
         :rtype: void
         """
         self.push_stack.append(x)
-        
 
     def pop(self):
         """
@@ -37,7 +35,6 @@ class MyQueue:
             while self.push_stack:
                 self.pop_stack.append(self.push_stack.pop())
         return self.pop_stack.pop()
-        
 
     def peek(self):
         """
@@ -48,7 +45,6 @@ class MyQueue:
             while self.push_stack:
                 self.pop_stack.append(self.push_stack.pop())
         return self.pop_stack[-1]
-        
 
     def empty(self):
         """
@@ -56,7 +52,6 @@ class MyQueue:
         :rtype: bool
         """
         return not self.push_stack and not self.pop_stack
-
 
 # Your MyQueue object will be instantiated and called as such:
 # obj = MyQueue()

@@ -28,7 +28,7 @@ class Solution(object):
         self.ans = []
         self.find_combination(k, n, 0, [])
         return self.ans
-    
+
     def find_combination(self, k, n, index, cur_ans):
         if len(cur_ans) == k:
             if sum(cur_ans) == n:

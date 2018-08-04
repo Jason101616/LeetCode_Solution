@@ -8,6 +8,7 @@ def add(a, b):
     carry = (a & b) << 1
     return add(sum, carry)
 
+
 # approach 2: iterate
 def add(a, b):
     while b:

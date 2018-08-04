@@ -38,6 +38,8 @@
 # Space: O(n)
 # idea: Sort the node and perform BFS from start node to end node. Add up the path.
 import collections
+
+
 class Solution(object):
     def minMutation(self, start, end, bank):
         """
@@ -65,7 +67,7 @@ class Solution(object):
                         queue.append(gene)
 
         return -1
-    
+
     def possible_mutation(self, current, bank):
         poss_mut = []
         for gene in bank:
@@ -77,6 +79,5 @@ class Solution(object):
                         break
             if diff == 1:
                 poss_mut.append(gene)
-                
+
         return poss_mut
-        

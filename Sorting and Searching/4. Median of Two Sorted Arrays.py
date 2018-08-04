@@ -30,7 +30,7 @@ class Solution(object):
             return self.find_kth_num(nums1, nums2, total // 2 + 1)
         else:
             return (self.find_kth_num(nums1, nums2, total // 2) + self.find_kth_num(nums1, nums2, total // 2 + 1)) / 2.0
-        
+
     def find_kth_num(self, nums1, nums2, k):
         i1 = i2 = cnt = 0
         while i1 < len(nums1) and i2 < len(nums2):
@@ -47,7 +47,7 @@ class Solution(object):
             return nums2[i2 + k - cnt - 1]
         else:
             return nums1[i1 + k - cnt - 1]
-            
+
 
 # Approach 2: binary search
 # time: O(log(m + n))
@@ -65,8 +65,9 @@ class Solution(object):
         if total % 2 != 0:
             return self.find_kth_num(nums1, m, nums2, n, total // 2 + 1)
         else:
-            return (self.find_kth_num(nums1, m, nums2, n, total // 2) + self.find_kth_num(nums1, m, nums2, n, total // 2 + 1)) / 2.0
-        
+            return (self.find_kth_num(nums1, m, nums2, n, total // 2) + self.find_kth_num(nums1, m, nums2, n,
+                                                                                          total // 2 + 1)) / 2.0
+
     def find_kth_num(self, nums1, m, nums2, n, k):
         if m > n:
             return self.find_kth_num(nums2, n, nums1, m, k)

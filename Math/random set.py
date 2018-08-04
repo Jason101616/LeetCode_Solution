@@ -1,6 +1,8 @@
 # generate a set of m integers from an array of size n.
 
 import random
+
+
 def pickMRecursively(original, m, i):
     if i + 1 == m:
         return original[:m]
@@ -11,6 +13,7 @@ def pickMRecursively(original, m, i):
             subset[k] = original[i]
         return subset
     return None
+
 
 def pickMIteratively(original, m):
     subset = original[:m]

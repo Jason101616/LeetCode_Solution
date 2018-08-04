@@ -32,7 +32,7 @@
 # twitter.getNewsFeed(1);
 
 class Twitter(object):
-    
+
     def __init__(self):
         """
         Initialize your data structure here.
@@ -42,7 +42,6 @@ class Twitter(object):
         # also maintain a hash map for each user to store the people they follow, key is userId, value is a set.
         # when invoke getNewsFeed. put the first tweet which was tweeted by the users this user followed into the priority queue
         # put the newest tweet into the result, then put the next tweet into the priority queue
-        
 
     def postTweet(self, userId, tweetId):
         """
@@ -51,7 +50,6 @@ class Twitter(object):
         :type tweetId: int
         :rtype: void
         """
-        
 
     def getNewsFeed(self, userId):
         """
@@ -59,7 +57,6 @@ class Twitter(object):
         :type userId: int
         :rtype: List[int]
         """
-        
 
     def follow(self, followerId, followeeId):
         """
@@ -68,7 +65,6 @@ class Twitter(object):
         :type followeeId: int
         :rtype: void
         """
-        
 
     def unfollow(self, followerId, followeeId):
         """
@@ -77,8 +73,6 @@ class Twitter(object):
         :type followeeId: int
         :rtype: void
         """
-        
-
 
 # Your Twitter object will be instantiated and called as such:
 # obj = Twitter()

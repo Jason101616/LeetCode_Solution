@@ -22,4 +22,3 @@ class Solution(object):
             if target - num in numToIdx and numToIdx[target - num] != idx:
                 return [idx, numToIdx[target - num]]
             numToIdx[num] = idx
-        

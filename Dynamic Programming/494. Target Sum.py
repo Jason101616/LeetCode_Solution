@@ -32,7 +32,7 @@ class Solution:
         self.num = 0
         self.findTarget(nums, S, 0, 0)
         return self.num
-    
+
     def findTarget(self, nums, S, index, prev_ans):
         if index == len(nums):
             if prev_ans == S:
@@ -40,6 +40,7 @@ class Solution:
             return
         self.findTarget(nums, S, index + 1, prev_ans + nums[index])
         self.findTarget(nums, S, index + 1, prev_ans - nums[index])
+
 
 # Solution: top-down with memory
 # time: O(2001 * len(nums))
@@ -53,7 +54,7 @@ class Solution:
         """
         self.memo = [[None for _ in range(2001)] for __ in range(len(nums))]
         return self.findTarget(nums, S, 0, 0)
-    
+
     def findTarget(self, nums, S, index, prev_ans):
         if index == len(nums):
             if prev_ans == S:
@@ -65,9 +66,11 @@ class Solution:
         plus_ans = self.findTarget(nums, S, index + 1, prev_ans + nums[index])
         minus_ans = self.findTarget(nums, S, index + 1, prev_ans - nums[index])
         self.memo[index][prev_ans + 1000] = plus_ans + minus_ans
-        return self.memo[index][prev_ans + 1000] 
+        return self.memo[index][prev_ans + 1000]
 
-# Solution: 2D Dynamic Programming
+    # Solution: 2D Dynamic Programming
+
+
 # time: O(2001 * len(nums))
 # result: TLE
 class Solution:
@@ -87,6 +90,7 @@ class Solution:
                     dp[i][j + 1000 + nums[i]] += dp[i - 1][j + 1000]
                     dp[i][j + 1000 - nums[i]] += dp[i - 1][j + 1000]
         return dp[len_sum - 1][S + 1000] if S <= 1000 else 0
+
 
 # Solution: 1D Dynamic Programming
 # time: O(2001 * len(nums))
@@ -109,5 +113,6 @@ class Solution:
                     dp_next[j + 1000 + nums[i]] += dp[j + 1000]
                     dp_next[j + 1000 - nums[i]] += dp[j + 1000]
             dp = dp_next
-            dp_next = [0 for _ in range(2001)]  # this line is important, otherwise dp and dp_next point to the same memory
+            dp_next = [0 for _ in
+                       range(2001)]  # this line is important, otherwise dp and dp_next point to the same memory
         return dp[S + 1000] if S <= 1000 else 0

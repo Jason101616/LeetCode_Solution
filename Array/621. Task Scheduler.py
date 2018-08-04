@@ -13,6 +13,8 @@
 # The integer n is in the range [0, 100].
 
 import queue
+
+
 class Solution(object):
     def leastInterval(self, tasks, n):
         """
@@ -27,13 +29,13 @@ class Solution(object):
                 count_freq[task] = 1
             else:
                 count_freq[task] += 1
-        
+
         # put the frequency of each task into a priority queue. largest frequency should be in the front of the queue.
         # use '-' here because PriorityQueue in python can only sort ascendingly. We want it decendingly.
         freq_queue = queue.PriorityQueue()
         for task in count_freq.keys():
             freq_queue.put(-count_freq[task])
-            
+
         intervals = 0
         cycle = n + 1
         while not freq_queue.empty():
@@ -51,8 +53,7 @@ class Solution(object):
                 freq += 1
                 if freq:
                     freq_queue.put(freq)
-            
+
             intervals += cycle if not freq_queue.empty() else time
-        
+
         return intervals
-          

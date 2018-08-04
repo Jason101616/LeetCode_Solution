@@ -42,6 +42,8 @@ class Solution(object):
 # solution 2: use heap
 # time: O(N * log(k))
 import queue  # python 3
+
+
 class Solution:
     def findKthLargest(self, nums, k):
         """

@@ -60,7 +60,6 @@ class TicTacToe(object):
         self.cols = [0 for _ in range(n)]
         self.diagonal = 0
         self.anti_diagonal = 0
-        
 
     def move(self, row, col, player):
         """
@@ -84,12 +83,11 @@ class TicTacToe(object):
             self.diagonal += add
         if row + col == len(self.rows) - 1:
             self.anti_diagonal += add
-        if abs(self.rows[row]) == len(self.rows) or abs(self.cols[col]) == len(self.rows) or abs(self.diagonal) == len(self.rows) or abs(self.anti_diagonal) == len(self.rows):
+        if abs(self.rows[row]) == len(self.rows) or abs(self.cols[col]) == len(self.rows) or abs(self.diagonal) == len(
+                self.rows) or abs(self.anti_diagonal) == len(self.rows):
             return player
         else:
             return 0
-        
-
 
 # Your TicTacToe object will be instantiated and called as such:
 # obj = TicTacToe(n)

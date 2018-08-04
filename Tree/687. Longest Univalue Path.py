@@ -47,7 +47,7 @@ class Solution:
         self.longest_path = 0
         self.find_longest(root)
         return self.longest_path - 1
-    
+
     def find_longest(self, node):
         if not node:
             return 0
@@ -60,4 +60,3 @@ class Solution:
             cur_len_1 += right_len
         self.longest_path = max(self.longest_path, cur_len_0 + cur_len_1 - 1)
         return max(cur_len_0, cur_len_1)
-        

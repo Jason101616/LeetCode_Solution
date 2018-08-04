@@ -9,7 +9,8 @@ class TrieNode:
         self.num_of_char = 26
         self.next = [None] * self.num_of_char
         self.is_word = is_word
-    
+
+
 class Trie:
 
     def __init__(self):
@@ -30,7 +31,6 @@ class Trie:
                 tmp_node.next[ord(char) - ord('a')] = TrieNode()
             tmp_node = tmp_node.next[ord(char) - ord('a')]
         tmp_node.is_word = True
-        
 
     def search(self, word):
         """
@@ -42,7 +42,6 @@ class Trie:
         if end_node and end_node.is_word:
             return True
         return False
-        
 
     def startsWith(self, prefix):
         """
@@ -51,7 +50,7 @@ class Trie:
         :rtype: bool
         """
         return self.__find(prefix) != None
-    
+
     def __find(self, word):
         tmp_node = self.root
         for char in word:
@@ -59,8 +58,6 @@ class Trie:
             if not tmp_node:
                 break
         return tmp_node
-        
-
 
 # Your Trie object will be instantiated and called as such:
 # obj = Trie()

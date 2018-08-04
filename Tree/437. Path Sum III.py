@@ -41,11 +41,11 @@ class Solution(object):
         :type sum: int
         :rtype: int
         """
-        sum_dict = collections.defaultdict(lambda :0)
+        sum_dict = collections.defaultdict(lambda: 0)
         self.res = 0
         self.find_path(sum_dict, None, root, sum)
         return self.res
-    
+
     def find_path(self, sum_dict, cur_sum, cur_node, target):
         if not cur_node:
             return
@@ -59,5 +59,3 @@ class Solution(object):
         self.find_path(sum_dict, cur_sum, cur_node.left, target)
         self.find_path(sum_dict, cur_sum, cur_node.right, target)
         sum_dict[cur_sum] -= 1
-        
-        

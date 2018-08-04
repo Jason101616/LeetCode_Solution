@@ -27,6 +27,6 @@ class Solution(object):
             num1 = 0
             for num in nums:
                 if num & (1 << i):
-                    num1 +=1
+                    num1 += 1
             res += num1 * (len(nums) - num1)
         return res

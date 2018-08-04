@@ -52,15 +52,17 @@ class Solution(object):
         return 0
 
     def pre_process(self, word_list):
-            word_dict = collections.defaultdict(lambda: [])
-            for word in word_list:
-                for i in range(len(word)):
-                    s = word[:i] + '_' + word[i + 1:]
-                    word_dict[s].append(word)
-            return word_dict
+        word_dict = collections.defaultdict(lambda: [])
+        for word in word_list:
+            for i in range(len(word)):
+                s = word[:i] + '_' + word[i + 1:]
+                word_dict[s].append(word)
+        return word_dict
+
 
 # Bi-direction BFS
 from collections import deque
+
 
 class Solution(object):
     def ladderLength(self, beginWord, endWord, wordList):

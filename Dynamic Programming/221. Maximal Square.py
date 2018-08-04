@@ -28,7 +28,7 @@ class Solution(object):
             for j in range(1, col):
                 dp[i][j] = min(dp[i - 1][j],
                                dp[i][j - 1], dp[i - 1][j - 1]) + 1 if int(
-                                   matrix[i][j]) == 1 else 0
+                    matrix[i][j]) == 1 else 0
         ans = 0
         for i in range(row):
             ans = max(ans, max(dp[i]))

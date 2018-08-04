@@ -44,7 +44,7 @@ class Solution:
             return False
         return self.is_symmetric(node1.left,
                                  node2.right) and self.is_symmetric(
-                                     node1.right, node2.left)
+            node1.right, node2.left)
 
 
 # Solution 2: iteratively

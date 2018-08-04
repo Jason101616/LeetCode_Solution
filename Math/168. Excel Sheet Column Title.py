@@ -12,6 +12,8 @@
 
 # idea: The essence of this problem is a conversion between 26 base. But we should deal with some edge case.
 from collections import deque
+
+
 class Solution(object):
     def convertToTitle(self, n):
         """
@@ -23,6 +25,5 @@ class Solution(object):
             tmp_char = chr((n - 1) % 26 + ord('a'))
             ret.appendleft(tmp_char.upper())
             n = (n - 1) // 26
-        
+
         return ''.join(ret)
-    

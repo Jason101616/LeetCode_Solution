@@ -62,6 +62,5 @@ class Solution(object):
                 new_tri[i][j] += min(new_tri[i - 1][j - 1], new_tri[i - 1][j])
         return min(new_tri[len_tri - 1])
 
-
 # Solution 3: DP. buttom-up
 # not easy to think. see http://www.cnblogs.com/grandyang/p/4286274.html

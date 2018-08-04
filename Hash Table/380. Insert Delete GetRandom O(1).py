@@ -31,15 +31,16 @@
 
 # idea: use list to store the val, use dictionary to store the index of the val
 from random import randint
+
+
 class RandomizedSet(object):
 
     def __init__(self):
         """
         Initialize your data structure here.
         """
-        self.numList = [] # store the inserted value
-        self.numDict = {} # mapping for val -> index
-
+        self.numList = []  # store the inserted value
+        self.numDict = {}  # mapping for val -> index
 
     def insert(self, val):
         """
@@ -52,7 +53,6 @@ class RandomizedSet(object):
         self.numList.append(val)
         self.numDict[val] = len(self.numList) - 1
         return True
-
 
     def remove(self, val):
         """
@@ -70,15 +70,12 @@ class RandomizedSet(object):
         self.numList.pop()
         return True
 
-
     def getRandom(self):
         """
         Get a random element from the set.
         :rtype: int
         """
         return self.numList[randint(0, len(self.numList) - 1)]
-
-
 
 # Your RandomizedSet object will be instantiated and called as such:
 # obj = RandomizedSet()

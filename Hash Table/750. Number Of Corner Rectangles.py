@@ -46,4 +46,3 @@ class Solution(object):
                             res += cnt_dict[(i, j)]
                             cnt_dict[(i, j)] += 1
         return res
-                

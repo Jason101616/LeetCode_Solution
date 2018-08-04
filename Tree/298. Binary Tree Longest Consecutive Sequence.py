@@ -37,7 +37,7 @@ class Solution:
         self.longest = 0
         self.find_longest(root)
         return self.longest
-    
+
     def find_longest(self, node):
         if not node:
             return 0
@@ -52,4 +52,3 @@ class Solution:
         if cur_longest > self.longest:
             self.longest = cur_longest
         return max(cur_len_left, cur_right_len)
-    

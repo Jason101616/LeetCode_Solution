@@ -12,6 +12,8 @@
 
 # idea: just use dict to count. Too easy.
 from collections import Counter
+
+
 class Solution(object):
     def isAnagram(self, s, t):
         """

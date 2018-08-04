@@ -33,6 +33,7 @@ class Solution(object):
         self.find_min_depth(node.left, cur_depth + 1)
         self.find_min_depth(node.right, cur_depth + 1)
 
+
 # Approach 2: bottom to top
 class Solution(object):
     def minDepth(self, root):

@@ -21,7 +21,7 @@ class Solution(object):
         if n == 0:
             return 1
         if n < 0:
-            return self.myPow(1/x, -n)
+            return self.myPow(1 / x, -n)
         if n == 2:
             return x * x
         if n % 2 == 0:

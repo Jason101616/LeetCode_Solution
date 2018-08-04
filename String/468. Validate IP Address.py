@@ -39,6 +39,7 @@ class Solution(object):
                 if not (char in hex_digits):
                     return False
             return True
+
         ary = IP.split('.')
         if len(ary) == 4:
             for i in xrange(len(ary)):
@@ -48,7 +49,7 @@ class Solution(object):
         ary = IP.split(':')
         if len(ary) == 8:
             for i in xrange(len(ary)):
-                if len(ary[i]) == 0 or not len(ary[i]) <= 4 or not is_hex(ary[i]):    
+                if len(ary[i]) == 0 or not len(ary[i]) <= 4 or not is_hex(ary[i]):
                     return "Neither"
             return "IPv6"
         return "Neither"

@@ -13,6 +13,8 @@
 # Then multiply the previous answer (n - 1) times. Just copy and paste.
 # After that, add each section with one of the same new choices.
 from copy import deepcopy
+
+
 class Solution(object):
     def letterCombinations(self, digits):
         """
@@ -23,7 +25,7 @@ class Solution(object):
             return []
         ans = ['']
         choices = ['', '', 'abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz']
-        
+
         for digit in digits:
             cur_choice = choices[int(digit)]
             multiply = len(cur_choice)
@@ -34,8 +36,9 @@ class Solution(object):
                     ans.append(i)
             for i in range(len(ans)):
                 ans[i] += cur_choice[i // divisor]
-        
+
         return ans
+
 
 # Approach 2: backtracking
 class Solution(object):
@@ -50,11 +53,11 @@ class Solution(object):
         self.choices = ['', '', 'abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz']
         self.find_ans(digits, 0, res, '')
         return res
-    
+
     def find_ans(self, digits, pos, res, cur_ans):
         if pos == len(digits):
             res.append(cur_ans)
             return
-        
+
         for char in self.choices[int(digits[pos])]:
-            self.find_ans(digits, pos + 1, res, cur_ans + char)           
+            self.find_ans(digits, pos + 1, res, cur_ans + char)

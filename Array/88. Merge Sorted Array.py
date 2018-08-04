@@ -37,6 +37,7 @@ class Solution(object):
         for i in range(m + n):
             nums1[i] = tmp[i]
 
+
 # inplace solution:
 # 思路：从大的数开始比较，先插入到nums1的后面。
 def merge(self, nums1, m, nums2, n):

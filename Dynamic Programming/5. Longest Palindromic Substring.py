@@ -40,6 +40,5 @@ class Solution(object):
                 if memo[j][i] and i - j + 1 > max:
                     max, left, right = i - j + 1, j, i + 1
             memo[i][i] = True
-                
+
         return s[left:right]
-        

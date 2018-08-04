@@ -54,21 +54,18 @@ class MaxStack(object):
         """
         self.max_stack.pop()
         return self.stack.pop()
-        
 
     def top(self):
         """
         :rtype: int
         """
         return self.stack[-1]
-        
 
     def peekMax(self):
         """
         :rtype: int
         """
         return self.max_stack[-1]
-        
 
     def popMax(self):
         """
@@ -84,7 +81,6 @@ class MaxStack(object):
         while tmp_stack:
             self.push(tmp_stack.pop())
         return cur_max
-
 
 # Your MaxStack object will be instantiated and called as such:
 # obj = MaxStack()

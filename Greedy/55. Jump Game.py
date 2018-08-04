@@ -16,7 +16,7 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
-        max_jump = 0    # the longest points can be reached from current point
+        max_jump = 0  # the longest points can be reached from current point
         for index, num in enumerate(nums):
             max_jump = max(max_jump - 1, num)
             if max_jump + index >= len(nums) - 1:

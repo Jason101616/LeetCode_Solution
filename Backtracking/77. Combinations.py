@@ -36,8 +36,11 @@ class Solution(object):
             self.find_combine(ans, k, cur, i + 1, n)
             cur.pop()
 
+
 # Approach 2: use itertools
 import itertools
+
+
 class Solution(object):
     def combine(self, n, k):
         """
@@ -45,4 +48,4 @@ class Solution(object):
         :type k: int
         :rtype: List[List[int]]
         """
-        return list(itertools.combinations(range(1, n+1), k))
+        return list(itertools.combinations(range(1, n + 1), k))

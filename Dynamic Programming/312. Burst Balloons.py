@@ -38,6 +38,7 @@ class Solution(object):
             res = max(res, tmp + self.maxCoins(nums[:i] + nums[i + 1:]))
         return res
 
+
 # baseline2: Brute forece with memo. Still TLE.
 class Solution(object):
     def maxCoins(self, nums):
@@ -47,7 +48,7 @@ class Solution(object):
         """
         memo = {}
         return self.find_max_coins(nums, memo)
-        
+
     def find_max_coins(self, nums, memo):
         if tuple(nums) in memo:
             return memo[tuple(nums)]
@@ -66,6 +67,7 @@ class Solution(object):
             res = max(res, tmp + self.maxCoins(nums[:i] + nums[i + 1:]))
         memo[tuple(nums)] = res
         return res
+
 
 # thinking process: Regard balloon i as the last balloon of all to burst, the left and right section now has well defined boundary and do not affect each other.
 # Solution 1: up-bottom dp with memo
@@ -86,9 +88,12 @@ class Solution(object):
             return memo[left][right]
         res = 0
         for i in range(left + 1, right):
-            res = max(res, nums[left] * nums[i] * nums[right] + self.find_max_coins(nums, memo, left, i) + self.find_max_coins(nums, memo, i, right))
+            res = max(res, nums[left] * nums[i] * nums[right] + self.find_max_coins(nums, memo, left,
+                                                                                    i) + self.find_max_coins(nums, memo,
+                                                                                                             i, right))
         memo[left][right] = res
         return res
+
 
 # Solution 2: bottom-up dp
 class Solution(object):
@@ -99,9 +104,10 @@ class Solution(object):
         """
         nums = [1] + nums[:] + [1]
         dp = [[0 for _ in range(len(nums))] for __ in range(len(nums))]
-        for k in range(2, len(nums)):   # interval length
+        for k in range(2, len(nums)):  # interval length
             for left in range(len(nums) - k):
                 right = left + k
                 for i in range(left + 1, right):
-                    dp[left][right] = max(dp[left][right], nums[left] * nums[i] * nums[right] + dp[left][i] + dp[i][right])
+                    dp[left][right] = max(dp[left][right],
+                                          nums[left] * nums[i] * nums[right] + dp[left][i] + dp[i][right])
         return dp[0][len(nums) - 1]

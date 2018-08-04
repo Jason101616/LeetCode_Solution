@@ -16,7 +16,7 @@
 
 # Solution 1: Brute force
 class WordFilter(object):
-    
+
     def __init__(self, words):
         """
         :type words: List[str]
@@ -36,8 +36,6 @@ class WordFilter(object):
         :rtype: int
         """
         return self.pre_suf_dict[prefix + '#' + suffix] if (prefix + '#' + suffix) in self.pre_suf_dict else -1
-        
-
 
 # Your WordFilter object will be instantiated and called as such:
 # obj = WordFilter(words)

@@ -35,7 +35,7 @@ class Solution(object):
         nums.sort()
         self.find_subsets(nums, 0, res, [])
         return res
-    
+
     def find_subsets(self, nums, start, res, cur_res):
         res.append(cur_res)
         for i in range(start, len(nums)):

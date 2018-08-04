@@ -52,7 +52,8 @@ class Solution:
                     neighword_words = wordDict[part_word]
                     for word in neighword_words:
                         if word in word_set:
-                            word_queue.append((word, cur_word[1] + [word])) # use a very high space complexity to store the path
+                            word_queue.append(
+                                (word, cur_word[1] + [word]))  # use a very high space complexity to store the path
                             remove_set.add(word)
             word_set -= remove_set
         return res
@@ -64,6 +65,7 @@ class Solution:
                 s = word[:i] + '_' + word[i + 1:]
                 word_dict[s].append(word)
         return word_dict
+
 
 # Approach 2: Bi-directional BFS
 # bi-directional BFS
@@ -104,7 +106,8 @@ class Solution(object):
         neighbors = self.preprocess(wordList)
         forward_queue = BFSQueue([PathNode(beginWord, None)])
         backward_queue = BFSQueue([PathNode(endWord, None)])
-        while not self.is_intersect(forward_queue, backward_queue) and (forward_queue.size() > 0 or backward_queue.size() > 0):
+        while not self.is_intersect(forward_queue, backward_queue) and (
+                forward_queue.size() > 0 or backward_queue.size() > 0):
             if 0 < forward_queue.size() <= backward_queue.size():
                 self.search(forward_queue, neighbors)
             else:
@@ -125,6 +128,7 @@ class Solution(object):
                     for i in range(len(helper_res)):
                         helper_res[i].append(path_node.string)
                 return helper_res
+
             return helper(BFS_Q.visited[string])
 
         def merge_path(forward, backward):

@@ -14,6 +14,7 @@ def findKthSmallest(nums, k):
         else:
             left = pos + 1
 
+
 def partition(nums, left, right):
     pivot_pos, pivot_val = left, nums[left]
     for i in range(left + 1, right + 1):
@@ -24,6 +25,7 @@ def partition(nums, left, right):
     nums[left] = nums[pivot_pos]
     nums[pivot_pos] = pivot_val
     return pivot_pos
+
 
 # idea: Manhattan Distance can be computed by x axis and y axis respectively. Then the problem goes down to 1 dimension.
 # In 1-d, just pick the middle number as the meeting point
@@ -46,14 +48,13 @@ class Solution(object):
         mid_index_x = len(x_coor) // 2
         for x in x_coor:
             res += abs(x - x_coor[mid_index_x])
-            
+
         # y_coor.sort()
         # mid_index_y = len(y_coor) // 2
         # for y in y_coor:
         #     res += abs(y - y_coor[mid_index_y])
         mid_index_y = len(y_coor) // 2 + 1
-        mid_y = findKthSmallest(y_coor, mid_index_y)    # avoid sort in the place, use divide and conquer
+        mid_y = findKthSmallest(y_coor, mid_index_y)  # avoid sort in the place, use divide and conquer
         for y in y_coor:
             res += abs(y - mid_y)
         return res
-        

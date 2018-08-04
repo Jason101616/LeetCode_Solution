@@ -24,11 +24,13 @@
 # idea: simply use priority queue
 
 import queue
+
+
 class Word:
     def __init__(self, word):
         self.word = word
         self.freq = 1
-    
+
     def __lt__(self, other):
         # words with low frequency and high alphabetical order have high priority, as we need to delete them
         return (self.freq, other.word) < (other.freq, self.word)
@@ -57,5 +59,3 @@ class Solution:
         for i in range(k):
             ret_list[k - 1 - i] = word_queue.get().word
         return ret_list
-        
-        

@@ -21,6 +21,8 @@
 # use the top item of the queue and calculate the average of them.
 
 import Queue
+
+
 class MedianFinder(object):
 
     def __init__(self):
@@ -51,7 +53,6 @@ class MedianFinder(object):
             return self.min_q.queue[0]
         else:
             return (-self.max_q.queue[0] + self.min_q.queue[0]) / 2.0
-
 
 # Your MedianFinder object will be instantiated and called as such:
 # obj = MedianFinder()

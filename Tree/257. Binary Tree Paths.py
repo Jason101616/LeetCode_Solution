@@ -36,7 +36,7 @@ class Solution(object):
         res = []
         self.findPath(root, res, [])
         return res
-    
+
     def findPath(self, node, res, prevPath):
         if not node.left and not node.right:
             res.append('->'.join(prevPath + [str(node.val)]))
@@ -45,4 +45,3 @@ class Solution(object):
             self.findPath(node.left, res, prevPath + [str(node.val)])
         if node.right:
             self.findPath(node.right, res, prevPath + [str(node.val)])
-        

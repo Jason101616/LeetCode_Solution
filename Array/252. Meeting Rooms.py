@@ -19,7 +19,7 @@ class Solution(object):
         :type intervals: List[Interval]
         :rtype: bool
         """
-        intervals.sort(key=lambda x:(x.start, x.end))
+        intervals.sort(key=lambda x: (x.start, x.end))
         for i in range(len(intervals) - 1):
             if intervals[i].end > intervals[i + 1].start:
                 return False

@@ -26,13 +26,18 @@ def hammingDistance2(self, x, y):
     """
     return bin(x ^ y).count('1')
 
+
 # Go version:
-func hammingDistance(x int, y int) int {
-	tmp := x ^ y
-	res := 0
-	for ;tmp != 0; {
-		res += 1
-		tmp = tmp &(tmp - 1)
-	}
-	return res
+func
+hammingDistance(x
+int, y
+int) int
+{
+    tmp: = x ^ y
+res: = 0
+for ;tmp != 0; {
+res += 1
+tmp = tmp & (tmp - 1)
+}
+return res
 }

@@ -39,6 +39,6 @@ class solution:
         for cell in next_steps:
             self.dfs(cell, cur_ans)
         self.visited.remove(cur_cell)
-    
+
     def find_possible_next(self, node):
-        # check four directions...
+# check four directions...

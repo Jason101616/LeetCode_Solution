@@ -13,6 +13,8 @@
 # space: O(n)
 # idea: traverse it one time and calculate the number
 import collections
+
+
 class Solution(object):
     def firstUniqChar(self, s):
         """

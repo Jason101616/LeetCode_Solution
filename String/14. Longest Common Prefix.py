@@ -12,7 +12,7 @@ class Solution(object):
         for i in range(1, len(strs)):
             res = self.get_common_prefix_two_strings(res, strs[i])
         return res
-    
+
     def get_common_prefix_two_strings(self, string1, string2):
         res = []
         if len(string2) > len(string1):
@@ -22,4 +22,3 @@ class Solution(object):
                 break
             res.append(string2[i])
         return ''.join(res)
-        

@@ -30,10 +30,10 @@ class Solution(object):
         row, col = len(obstacleGrid), len(obstacleGrid[0])
         memo = [[0 for _ in range(col + 1)] for __ in range(row + 1)]
         memo[0][1] = 1
-        
+
         for i in range(1, row + 1):
             for j in range(1, col + 1):
                 if not obstacleGrid[i - 1][j - 1]:
-                    memo[i][j] =  memo[i - 1][j] + memo[i][j - 1]
-        
+                    memo[i][j] = memo[i - 1][j] + memo[i][j - 1]
+
         return memo[row][col]

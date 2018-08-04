@@ -37,5 +37,5 @@ class Solution(object):
                 max_len = i + 1
             elif (cur_sum - k) in sums:
                 max_len = max(max_len, i - sums[cur_sum - k])
-            
+
         return max_len

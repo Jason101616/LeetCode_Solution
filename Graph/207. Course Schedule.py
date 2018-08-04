@@ -59,8 +59,11 @@ class Solution(object):
         visit[node] = 1
         return True
 
+
 # approach 2: topological sort/BFS
 from collections import defaultdict, deque
+
+
 class Solution(object):
     def canFinish(self, numCourses, prerequisites):
         """
@@ -71,10 +74,10 @@ class Solution(object):
         edges = defaultdict(lambda: [])
         inDegree = defaultdict(lambda: 0)
         for prerequisite in prerequisites:
-            edges[prerequisite[1]].append(prerequisite[0]) # store the outbound
+            edges[prerequisite[1]].append(prerequisite[0])  # store the outbound
             inDegree[prerequisite[0]] += 1
             inDegree[prerequisite[1]] += 0
-        
+
         # Use a queue to do BFS
         q = deque()
         cnt = 0

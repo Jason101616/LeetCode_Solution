@@ -35,6 +35,7 @@ class Solution(object):
         else:
             return first_char_match and self.isMatch(s[1:], p[1:])
 
+
 # Solution 2: DP
 # idea: dp, top-down
 # RecursionError: maximum recursion depth exceeded in comparison...
@@ -62,7 +63,7 @@ class Solution:
                 ans = first_char_match and self.match(s, i + 1, p, j + 1, memo)
         memo[(i, j)] = ans
         return ans
-            
+
 # Solution 3: DP
 # idea: dp, botton-up...
 # see: https://discuss.leetcode.com/topic/6183/my-concise-recursive-and-dp-solutions-with-full-explanation-in-c

@@ -31,5 +31,3 @@ class Solution(object):
             if s[i - 2] == '1' or s[i - 2] == '2' and s[i - 1] <= '6':
                 dp[i] += dp[i - 2]
         return dp[-1]
-            
-        

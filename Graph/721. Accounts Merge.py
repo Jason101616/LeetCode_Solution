@@ -32,7 +32,7 @@ class Graph:
         self.edges = collections.defaultdict(lambda: set())
         self.email_2_user = {}
         self.find_adj_undirected()
-    
+
     def find_adj_undirected(self):
         for account in self.accounts:
             user_name = account[0]
@@ -40,6 +40,7 @@ class Graph:
                 self.edges[account[1]].add(email)
                 self.edges[email].add(account[1])
                 self.email_2_user[email] = user_name
+
 
 class Solution(object):
     def accountsMerge(self, accounts):
@@ -68,7 +69,8 @@ class Solution(object):
                 component.sort()
                 res.append([graph.email_2_user[node]] + component)
         return res
-                    
+
+
 # Approach 2: build the graph during union find. One trick is to convert the email to id
 # parse the accounts to make a graph
 # find the connected component of the graph (use disjoint set union)
@@ -98,8 +100,7 @@ class DSU(object):
             self.rnk[xr] += 1
         return True
 
-        
-        
+
 class Solution(object):
     def accountsMerge(self, accounts):
         """
@@ -130,4 +131,3 @@ class Solution(object):
             emails = sorted(ans[email_id])
             res.append([user_name] + emails)
         return res
-        

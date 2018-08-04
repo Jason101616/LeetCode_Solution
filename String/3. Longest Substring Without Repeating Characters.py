@@ -12,6 +12,8 @@
 # space: O(n)
 # idea: use dictionary and two pointers to calculate the number of each character
 from collections import defaultdict
+
+
 class Solution(object):
     def lengthOfLongestSubstring(self, s):
         """
@@ -20,7 +22,7 @@ class Solution(object):
         """
         cnt_num = defaultdict(lambda: 0)
         left, right, max_len = 0, 0, 0
-        
+
         while right < len(s):
             cnt_num[s[right]] += 1
             while cnt_num[s[right]] > 1:

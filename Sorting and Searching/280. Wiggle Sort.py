@@ -14,4 +14,3 @@ class Solution(object):
             if less and nums[i] > nums[i + 1] or not less and nums[i] < nums[i + 1]:
                 nums[i], nums[i + 1] = nums[i + 1], nums[i]
             less = not less
-            

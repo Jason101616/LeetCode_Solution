@@ -21,7 +21,7 @@
 # Shortest Path is 11
 
 # idea: use BFS to traverse each node
-from collections import defaultdict, deque
+from collections import deque
 
 
 def find_next(map, node):

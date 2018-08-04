@@ -18,6 +18,8 @@ Now making 2 as the root node , there will be 1 in left subtree and 1 node in ri
 Now making 3 as root node. There will be 2 nodes in left subtree and 0 nodes in right subtree. We know 2 will give 2 BST and zero will give 1 BST.
 Totalling the result of all the 3 nodes as root will give 5. Same process can be applied for more numbers.
 '''
+
+
 class Solution(object):
     def numTrees(self, n):
         """
@@ -35,5 +37,3 @@ class Solution(object):
                 cur += numLeftNode * numRightNode
             res[numNode] = cur
         return res[-1]
-    
-        

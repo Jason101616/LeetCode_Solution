@@ -27,13 +27,13 @@ class Solution(object):
             return []
         memo = [[None for _ in range(n)] for __ in range(n)]
         return self.helper(1, n, memo)
-    
+
     def helper(self, l, r, memo):
         if l > r:
             return [None]
         if memo[l - 1][r - 1] != None:
             return memo[l - 1][r - 1]
-        
+
         res = []
         for i in range(l, r + 1):
             leftSubTree = self.helper(l, i - 1, memo)

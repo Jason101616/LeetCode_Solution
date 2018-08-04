@@ -43,6 +43,7 @@ class Solution(object):
                 return False
         return True
 
+
 # Solution 2: Top-bottom DP
 class Solution(object):
     def isMatch(self, s, p):
@@ -53,7 +54,7 @@ class Solution(object):
         """
         memo = [[None for _ in range(len(p))] for __ in range(len(s))]
         return self.helper(s, 0, p, 0, memo)
-    
+
     def helper(self, s, i, p, j, memo):
         if j == len(p):
             return i == len(s)
@@ -65,15 +66,17 @@ class Solution(object):
             memo[i][j] = self.helper(s, i + 1, p, j + 1, memo)
             return memo[i][j]
         elif p[j] == '*':
-            memo[i][j] = self.helper(s, i + 1, p, j, memo) or self.helper(s, i + 1, p, j + 1, memo) or self.helper(s, i, p, j + 1, memo)
+            memo[i][j] = self.helper(s, i + 1, p, j, memo) or self.helper(s, i + 1, p, j + 1, memo) or self.helper(s, i,
+                                                                                                                   p,
+                                                                                                                   j + 1,
+                                                                                                                   memo)
             return memo[i][j]
         else:
             memo[i][j] = False
             return False
-        
+
     def isAllAsterisk(self, p, j):
         for i in range(j, len(p)):
             if p[i] != '*':
                 return False
         return True
-        

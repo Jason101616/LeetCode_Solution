@@ -48,7 +48,7 @@ class Solution(object):
             has_read += cur_read
             if cur_read < 4:
                 return has_read
-        
+
         tmp_buf = [''] * 4
         cur_read = read4(tmp_buf)
 

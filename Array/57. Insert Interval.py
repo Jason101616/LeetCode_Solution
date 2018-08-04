@@ -70,6 +70,7 @@ class Solution(object):
                 return intervals
             prev = intervals[i]
 
+
 # Approach 2: written by other person
 # Definition for an interval.
 # class Interval(object):

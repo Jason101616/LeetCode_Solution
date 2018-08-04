@@ -24,6 +24,5 @@ class Solution(object):
                 right = middle
             else:
                 left = middle + 1
-                
+
         return left
-        

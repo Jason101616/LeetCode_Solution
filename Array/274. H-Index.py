@@ -24,7 +24,8 @@ class Solution(object):
                 break
         return i if find_ans else i + 1
 
-# Solution 2: counting sort 
+
+# Solution 2: counting sort
 class Solution(object):
     def hIndex(self, citations):
         """
@@ -44,4 +45,3 @@ class Solution(object):
             if cnt_sum >= i:
                 break
         return i
-            

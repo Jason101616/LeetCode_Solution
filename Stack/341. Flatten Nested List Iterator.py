@@ -2,7 +2,7 @@
 # This is the interface that allows for creating nested lists.
 # You should not implement it, or speculate about its implementation
 # """
-#class NestedInteger(object):
+# class NestedInteger(object):
 #    def isInteger(self):
 #        """
 #        @return True if this NestedInteger holds a single integer, rather than a nested list.
@@ -26,6 +26,8 @@
 # idea: use a deque to realize these helper function. 
 # space: O(n)
 from collections import deque
+
+
 class NestedIterator(object):
 
     def __init__(self, nestedList):
@@ -34,14 +36,12 @@ class NestedIterator(object):
         :type nestedList: List[NestedInteger]
         """
         self.q = deque(nestedList)
-        
 
     def next(self):
         """
         :rtype: int
         """
         return self.q.popleft().getInteger()
-        
 
     def hasNext(self):
         """
@@ -52,13 +52,11 @@ class NestedIterator(object):
                 return True
             self.q.extendleft(self.q.popleft().getList()[::-1])
         return False
-        
 
 # Your NestedIterator object will be instantiated and called as such:
 # i, v = NestedIterator(nestedList), []
 # while i.hasNext(): v.append(i.next())
 
-        
 
 # Your NestedIterator object will be instantiated and called as such:
 # i, v = NestedIterator(nestedList), []

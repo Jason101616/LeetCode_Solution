@@ -35,6 +35,7 @@ class ListNode:
         self.next = nextNode
         nextNode.prev = self
 
+
 class doubly_linked_list_LRU:
     def __init__(self, freq):
         self.freq = freq
@@ -43,7 +44,7 @@ class doubly_linked_list_LRU:
         self.sentinel_LRU.next = self.sentinel_LRU
         self.prev = None
         self.next = None
-    
+
     def add(self, key, val):
         # add in the front
         new_node = ListNode(key, val)
@@ -52,17 +53,17 @@ class doubly_linked_list_LRU:
         self.sentinel_LRU.next.prev = new_node
         self.sentinel_LRU.next = new_node
         return ListNode
-    
+
     def delete_node(self, node):
         # delete the node in the list
         node.prev.next = node.next
         node.next.prev = node.prev
-    
+
     def delete_last(self):
         self.sentinel_LRU.prev.prev.next = self.sentinel_LRU
         self.sentinel_LRU.prev = self.sentinel_LRU.prev.prev
-        
-            
+
+
 class LFUCache:
     def __init__(self, capacity):
         self.capacity = capacity
@@ -73,7 +74,7 @@ class LFUCache:
 
     def get(self, key):
         pass
-    
+
     def set(self, key, value):
         if key not in self.keys:
             if len(self.keys.keys()) >= capacity:
@@ -88,10 +89,8 @@ class LFUCache:
         else:
             LFU_addr, LRU_addr = self.keys[key]
             # ...... too many edge case, if i have time, keep writing
-            
-            
-            
-        
+
+
 # another solution, written by https://discuss.leetcode.com/topic/69249/python-shitty-o-1-solution-with-two-dict-and-one-linkedlist
 class ListNode(object):
     def __init__(self, key, val):
@@ -104,6 +103,7 @@ class ListNode(object):
         self.next = nextNode
         nextNode.prev = self
 
+
 class LFUCache(object):
 
     def __init__(self, capacity):
@@ -115,10 +115,10 @@ class LFUCache(object):
         self.head = ListNode(None, None)
         self.tail = ListNode(None, None)
         self.head.connect(self.tail)
-        #use to record the first ListNode of this count number
+        # use to record the first ListNode of this count number
         self.cnt = {0: self.tail}
         # key: key , value:[ListNode, visit count]
-        self.kv = {None:[self.tail, 0]}
+        self.kv = {None: [self.tail, 0]}
 
     def moveforward(self, key):
         node, cnt = self.kv[key]
@@ -154,7 +154,6 @@ class LFUCache(object):
             self.remove(self.tail.prev.key)
         self.add(key, value, 0)
 
-
     def remove(self, key):
         node, cnt = self.kv[key]
         if self.cnt[cnt] != node:
@@ -177,8 +176,6 @@ class LFUCache(object):
         node.connect(loc)
         self.cnt[cnt] = node
         self.kv[key] = [node, cnt]
-        
-
 
 # Your LFUCache object will be instantiated and called as such:
 # obj = LFUCache(capacity)

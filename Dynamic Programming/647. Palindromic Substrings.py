@@ -38,6 +38,5 @@ class Solution:
                     cnt += 1
             memo[i][i] = True
             cnt += 1
-            
+
         return cnt
-        

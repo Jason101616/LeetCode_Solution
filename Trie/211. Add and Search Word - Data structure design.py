@@ -22,7 +22,8 @@ class TrieNode:
         self.num_of_char = 26
         self.next = [None] * self.num_of_char
         self.is_word = is_word
-        
+
+
 class WordDictionary:
 
     def __init__(self):
@@ -30,7 +31,6 @@ class WordDictionary:
         Initialize your data structure here.
         """
         self.root = TrieNode()
-        
 
     def addWord(self, word):
         """
@@ -44,7 +44,6 @@ class WordDictionary:
                 tmp_node.next[ord(char) - ord('a')] = TrieNode()
             tmp_node = tmp_node.next[ord(char) - ord('a')]
         tmp_node.is_word = True
-        
 
     def search(self, word):
         """
@@ -53,11 +52,11 @@ class WordDictionary:
         :rtype: bool
         """
         return self.__search_from_node(word, self.root)
-    
+
     def __search_from_node(self, string, node):
         if not node:
             return False
-        
+
         tmp_node = node
         for i in range(len(string)):
             if string[i] != '.':
@@ -66,12 +65,11 @@ class WordDictionary:
                     break
             else:
                 for nxt in tmp_node.next:
-                    if self.__search_from_node(string[i+1:], nxt):
+                    if self.__search_from_node(string[i + 1:], nxt):
                         return True
                 return False
-                    
+
         return bool(tmp_node and tmp_node.is_word)
-                
 
 # Your WordDictionary object will be instantiated and called as such:
 # obj = WordDictionary()

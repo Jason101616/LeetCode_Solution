@@ -32,7 +32,7 @@ class Solution(object):
                 if self.search_word(visited, i, j, word, board, 0):
                     return True
         return False
-    
+
     def search_word(self, visited, i, j, word, board, index):
         if index == len(word):
             return True
@@ -49,4 +49,3 @@ class Solution(object):
             return True
         visited[i][j] = False
         return False
-        

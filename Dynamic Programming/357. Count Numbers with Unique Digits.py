@@ -34,7 +34,6 @@ class Solution(object):
             cur_remain_num.append(num)
             cur_remain_num.sort()
 
-
 # Solution 2: count the number directly
 # Let f(n) = count of number with unique digits of length n.
 

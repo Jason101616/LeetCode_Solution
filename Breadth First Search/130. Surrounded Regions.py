@@ -47,11 +47,11 @@ class Solution(object):
             cur_node = q.popleft()
             for direction in directions:
                 new_x, new_y = cur_node[0] + direction[0], cur_node[1] + direction[1]
-                if new_x >= 0 and new_x < m and new_y >= 0 and new_y < n and board[new_x][new_y] == 'O' and (new_x, new_y) not in visited:
+                if new_x >= 0 and new_x < m and new_y >= 0 and new_y < n and board[new_x][new_y] == 'O' and (
+                new_x, new_y) not in visited:
                     visited.add((new_x, new_y))
                     q.append((new_x, new_y))
         for i in range(1, m - 1):
             for j in range(1, n - 1):
                 if board[i][j] == 'O' and (i, j) not in visited:
                     board[i][j] = 'X'
-            

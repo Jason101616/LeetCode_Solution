@@ -12,6 +12,8 @@
 # What if elements of nums2 are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?
 
 from collections import Counter
+
+
 class Solution(object):
     def intersect(self, nums1, nums2):
         """
@@ -27,5 +29,5 @@ class Solution(object):
                 num = min(cnt1[key], cnt2[key])
                 tmp = [key] * num
                 ret_list.extend(tmp)
-        
+
         return ret_list

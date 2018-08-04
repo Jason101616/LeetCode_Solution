@@ -44,4 +44,3 @@ class Solution(object):
             top += 1
             preorder[top] = num
         return True
-        

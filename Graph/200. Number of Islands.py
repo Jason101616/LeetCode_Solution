@@ -20,7 +20,8 @@
 # Time:  O(m * n)
 # Space: O(m * n)
 # idea: for each node use bfs, count the connected area of the graph
-import collections
+
+
 class Solution(object):
     def numIslands(self, grid):
         """
@@ -36,7 +37,7 @@ class Solution(object):
             for j in range(col):
                 cnt += self.bfs(i, j, grid, visited, row, col)
         return cnt
-    
+
     def bfs(self, sx, sy, grid, visited, row, col):
         # is sea or has been visited
         if not int(grid[sx][sy]) or visited[sx][sy]:
@@ -51,12 +52,14 @@ class Solution(object):
                     visited[nx][ny] = True
                     queue.append((nx, ny))
         return 1
-                    
-        
+
+
 # Time:  O(m * n)
 # Space: O(m * n)
 # idea: for each node use dfs, count the connected area of the graph
 import collections
+
+
 class Solution(object):
     def numIslands(self, grid):
         """
@@ -72,8 +75,7 @@ class Solution(object):
             for j in range(col):
                 cnt += self.dfs(i, j, grid, visited, row, col)
         return cnt
-    
-    
+
     def dfs(self, sx, sy, grid, visited, row, col):
         # is sea or has been visited
         if not int(grid[sx][sy]) or visited[sx][sy]:

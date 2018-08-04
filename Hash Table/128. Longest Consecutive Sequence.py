@@ -33,7 +33,8 @@ class Solution(object):
                 longestConsec = leftConsec + rightConsec + 1
             setNums.remove(num)
         return longestConsec
-        
+
+
 # Another Version:
 class Solution:
     def longestConsecutive(self, nums):

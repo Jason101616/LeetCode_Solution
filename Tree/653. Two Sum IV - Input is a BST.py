@@ -39,7 +39,7 @@ class Solution(object):
         """
         memo = set()
         return self.helper(root, k, memo)
-    
+
     def helper(self, node, k, memo):
         if not node:
             return False
@@ -47,4 +47,3 @@ class Solution(object):
             return True
         memo.add(node.val)
         return self.helper(node.left, k, memo) or self.helper(node.right, k, memo)
-        

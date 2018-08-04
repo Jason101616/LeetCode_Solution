@@ -27,7 +27,7 @@ class Solution(object):
         if row < 0:
             return False
         return self.find_element(matrix[row], target, 0, len(matrix[row]) - 1)
-    
+
     def find_row(self, matrix, target, left, right):
         while right >= left:
             mid = left + (right - left) // 2
@@ -38,7 +38,7 @@ class Solution(object):
             else:
                 left = mid + 1
         return -1
-    
+
     def find_element(self, nums, target, left, right):
         while right >= left:
             mid = left + (right - left) // 2

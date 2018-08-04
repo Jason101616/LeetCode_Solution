@@ -45,6 +45,7 @@ class Solution(object):
             step += 1
         return step
 
+
 # Approach 2: Greedy
 class Solution(object):
     def jump(self, nums):
@@ -54,7 +55,7 @@ class Solution(object):
         """
         if len(nums) == 1:
             return 0
-        step, max_pos, next_max_pos = 1, nums[0], nums[0] 
+        step, max_pos, next_max_pos = 1, nums[0], nums[0]
         for i in range(1, len(nums)):
             if max_pos >= len(nums) - 1:
                 return step

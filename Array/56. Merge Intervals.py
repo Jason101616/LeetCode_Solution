@@ -36,4 +36,3 @@ class Solution(object):
             elif intervals[i].start > mergeIntervals[-1].end:
                 mergeIntervals.append(intervals[i])
         return mergeIntervals
-        

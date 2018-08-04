@@ -1,7 +1,7 @@
 {
-    "files.associations": {
-        "ios": "cpp"
-    },
-    "python.pythonPath": "/Users/zhangdu/anaconda/bin/python",
-    "python.linting.enabled": false
+  "files.associations": {
+    "ios": "cpp"
+  },
+  "python.pythonPath": "/Users/zhangdu/anaconda/bin/python",
+  "python.linting.enabled": false
 }

@@ -30,22 +30,22 @@ class Solution(object):
         """
         node, res = self.LCAhelper(root, p, q)
         return node if res else None
-    
+
     def LCAhelper(self, root, p, q):
         # base case
         if not root:
             return None, False
         if root == p and root == q:
             return root, True
-        
+
         # already find the answer in one side
-        l_node, is_left = self.LCAhelper(root.left, p , q)
+        l_node, is_left = self.LCAhelper(root.left, p, q)
         if is_left:
             return l_node, True
         r_node, is_right = self.LCAhelper(root.right, p, q)
         if is_right:
             return r_node, True
-        
+
         # current node is p or q, we should check whether we have find q or p in one of the child
         if root == p or root == q:
             return (root, True) if l_node or r_node else (root, False)

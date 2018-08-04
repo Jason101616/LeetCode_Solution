@@ -11,12 +11,13 @@ class Solution(object):
         :type s: str
         :rtype: str
         """
+
         def reverse(string, left, right):
             while left < right:
                 string[left], string[right] = string[right], string[left]
                 left += 1
                 right -= 1
-                
+
         if not s:
             return s
         s = list(s)

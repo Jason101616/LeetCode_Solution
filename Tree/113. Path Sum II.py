@@ -33,7 +33,7 @@ class Solution(object):
         res = []
         self.find_path(root, 0, sum, res, [])
         return res
-    
+
     def find_path(self, cur_node, prev_sum, target, res, cur_path):
         if not cur_node:
             return

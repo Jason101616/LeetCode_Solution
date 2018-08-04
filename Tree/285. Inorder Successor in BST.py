@@ -22,7 +22,7 @@ class Solution(object):
         self.suc = None
         self.inorder(root, p)
         return self.suc
-    
+
     def inorder(self, node, target):
         if node:
             self.inorder(node.left, target)
@@ -32,6 +32,7 @@ class Solution(object):
             if node == target:
                 self.find_node = True
             self.inorder(node.right, target)
+
 
 # Definition for a binary tree node.
 # class TreeNode(object):
@@ -57,6 +58,7 @@ class Solution(object):
             return res if res else root
         elif root.val <= p.val:
             return self.inorderSuccessor(root.right, p)
+
 
 # Approach 3: check iteratively
 # time: O(logn), space: O(1)

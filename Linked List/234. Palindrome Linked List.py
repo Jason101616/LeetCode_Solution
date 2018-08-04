@@ -36,17 +36,17 @@ class Solution(object):
             prev = cur
             cur = nxt
             nxt = nxt.next
-            
+
         if fast:
             head_2half = cur.next
         else:
             head_2half = cur
-        
+
         nxt = prev.next
         tmp = cur
         cur = prev
         prev = tmp
-        
+
         while cur:
             if cur.val != head_2half.val:
                 return False

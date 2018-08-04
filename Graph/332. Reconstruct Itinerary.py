@@ -16,6 +16,8 @@
 # Special thanks to @dietpepsi for adding this problem and creating all test cases.
 
 from collections import defaultdict
+
+
 class Solution(object):
     def __init__(self):
         self.route = ["JFK"]

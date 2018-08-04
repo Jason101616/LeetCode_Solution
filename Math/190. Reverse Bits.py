@@ -18,6 +18,7 @@ class Solution:
                 res <<= 1
         return res
 
+
 # Follow up:
 # use cache to store results
 class Solution:
@@ -25,7 +26,7 @@ class Solution:
     # @return an integer
     def __init__(self):
         self.cache = {}
-        
+
     def reverseBits(self, n):
         if n in self.cache:
             return self.cache[n]

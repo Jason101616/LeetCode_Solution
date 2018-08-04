@@ -1,5 +1,4 @@
-from collections import defaultdict, deque
-import random
+from collections import deque
 
 
 class TreeNode:
@@ -63,7 +62,6 @@ def countNodes(root):
 
 # This function checks if binary tree is complete or not
 def isComplete(root, index, number_nodes):
-
     # An empty is complete
     if root is None:
         return True

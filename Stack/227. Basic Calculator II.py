@@ -37,4 +37,3 @@ class Solution(object):
         for num in stack:
             res += num
         return res
-               

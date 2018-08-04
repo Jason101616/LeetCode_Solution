@@ -17,7 +17,7 @@ class Codec:
         self.code2url = {}
         self.cnt = 1
         self.choice = string.ascii_letters + string.digits
-        
+
     def encode(self, longUrl):
         """Encodes a URL to a shortened URL.
         
@@ -26,21 +26,19 @@ class Codec:
         """
         if longUrl in self.url2code:
             return self.url2code[longUrl]
-        
+
         # encode the url
         tmp = self.cnt
         answer = ""
         while tmp:
             answer += self.choice[tmp % len(self.choice)]
-            tmp = int(tmp/len(self.choice))
+            tmp = int(tmp / len(self.choice))
         self.cnt += 1
         # add it to the dict
         self.url2code[longUrl] = answer
         self.code2url[answer] = longUrl
         # return the answer
         return answer
-        
-        
 
     def decode(self, shortUrl):
         """Decodes a shortened URL to its original URL.

@@ -10,6 +10,8 @@
 # You may assume that all operations are valid (for example, no pop or top operations will be called on an empty stack).
 
 import collections
+
+
 class MyStack:
 
     def __init__(self):
@@ -27,7 +29,6 @@ class MyStack:
         self.queue.append(x)
         for i in range(len(self.queue) - 1):
             self.queue.append(self.queue.popleft())
-        
 
     def pop(self):
         """
@@ -49,7 +50,6 @@ class MyStack:
         :rtype: bool
         """
         return not len(self.queue)
-
 
 # Your MyStack object will be instantiated and called as such:
 # obj = MyStack()

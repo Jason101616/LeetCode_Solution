@@ -36,11 +36,10 @@ class LRUCache(object):
         """
         self.capacity = capacity
         self.size = 0
-        self.dummy = ListNode(None, None) # the node in the front is the most recently used data
+        self.dummy = ListNode(None, None)  # the node in the front is the most recently used data
         self.dummy.next = self.dummy
         self.dummy.prev = self.dummy
-        self.mapping = {}   # key is the key, value is the address of the ListNode
-        
+        self.mapping = {}  # key is the key, value is the address of the ListNode
 
     def get(self, key):
         """
@@ -52,7 +51,6 @@ class LRUCache(object):
             return self.mapping[key].val
         else:
             return -1
-        
 
     def put(self, key, value):
         """
@@ -76,7 +74,7 @@ class LRUCache(object):
             new_node = ListNode(key, value)
             self.mapping[key] = new_node
             self.insert_front(key)
-    
+
     def move_front(self, key):
         # move the node forward
         node = self.mapping[key]
@@ -85,7 +83,7 @@ class LRUCache(object):
         front_n.next = next_n
         next_n.prev = front_n
         self.insert_front(key)
-        
+
     def insert_front(self, key):
         # insert the node front
         node = self.mapping[key]
@@ -94,14 +92,12 @@ class LRUCache(object):
         node.next = next_n
         next_n.prev = node
         node.prev = self.dummy
-        
+
     def delete_back(self):
         # delete the last node
         prev_prev = self.dummy.prev.prev
         prev_prev.next = self.dummy
         self.dummy.prev = prev_prev
-        
-
 
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)

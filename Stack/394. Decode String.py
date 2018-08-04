@@ -33,6 +33,7 @@ class Solution:
                 stack[-1][0] += char
         return stack[0][0]
 
+
 # Solution 2: recursion
 class Solution(object):
     def decodeString(self, s):

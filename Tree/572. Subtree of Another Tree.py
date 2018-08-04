@@ -18,7 +18,7 @@ class Solution(object):
         if self.isIdentical(s, t):
             return True
         return self.isSubtree(s.left, t) or self.isSubtree(s.right, t)
-    
+
     def isIdentical(self, node0, node1):
         if not node0 and not node1:
             return True

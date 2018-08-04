@@ -40,7 +40,7 @@ class Solution(object):
         """
         if len(s) < len(p):
             return []
-        
+
         ret = []
         orda = ord('a')
         cnt_s, cnt_p = [0 for i in range(26)], [0 for i in range(26)]
@@ -48,7 +48,7 @@ class Solution(object):
             cnt_s[ord(s[i]) - orda] += 1
             cnt_p[ord(p[i]) - orda] += 1
         cnt_p[ord(p[len(p) - 1]) - orda] += 1
-        
+
         for i in range((len(p) - 1), len(s)):
             cnt_s[ord(s[i]) - orda] += 1
             if cnt_s == cnt_p:
@@ -56,10 +56,13 @@ class Solution(object):
             cnt_s[ord(s[i + 1 - len(p)]) - orda] -= 1
         return ret
 
+
 # a more concise solution, use Count in Python. But slower than previous solution.
 # A Counter is a dict subclass for counting hashable objects. 
 # It is an unordered collection where elements are stored as dictionary keys and their counts are stored as dictionary values.
 from collections import Counter
+
+
 class Solution(object):
     def findAnagrams(self, s, p):
         """
@@ -70,12 +73,11 @@ class Solution(object):
         res = []
         pCounter = Counter(p)
         sCounter = Counter(s[:len(p) - 1])
-        for i in range(len(p)-1,len(s)):
-            sCounter[s[i]] += 1   # include a new char in the window
-            if sCounter == pCounter:    # This step is O(1), since there are at most 26 English letters 
-                res.append(i-len(p)+1)   # append the starting index
-            sCounter[s[i-len(p)+1]] -= 1   # decrease the count of oldest char in the window
-            if sCounter[s[i-len(p)+1]] == 0:
-                del sCounter[s[i-len(p)+1]]   # remove the count if it is 0
+        for i in range(len(p) - 1, len(s)):
+            sCounter[s[i]] += 1  # include a new char in the window
+            if sCounter == pCounter:  # This step is O(1), since there are at most 26 English letters
+                res.append(i - len(p) + 1)  # append the starting index
+            sCounter[s[i - len(p) + 1]] -= 1  # decrease the count of oldest char in the window
+            if sCounter[s[i - len(p) + 1]] == 0:
+                del sCounter[s[i - len(p) + 1]]  # remove the count if it is 0
         return res
-        

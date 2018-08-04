@@ -4,6 +4,7 @@ class TrieNode:
         self.next = {}
         self.is_word = is_word
 
+
 class Trie:
     def __init__(self):
         """
@@ -84,6 +85,7 @@ def respace(string, string_list):
     memo = {}
     return find_ans(string, set(string_list), my_trie, memo)
 
+
 def find_ans(string, string_set, my_trie, memo):
     if not string or string in string_set:
         memo[string] = 0
@@ -97,6 +99,6 @@ def find_ans(string, string_set, my_trie, memo):
             if not my_trie.start_with(string[i:j]):
                 break
             if string[i:j] in string_set:
-                res = min(res, i + find_ans(string[j:], string_set, my_trie,  memo))
+                res = min(res, i + find_ans(string[j:], string_set, my_trie, memo))
     memo[string] = res
     return memo[string]

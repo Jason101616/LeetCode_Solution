@@ -22,7 +22,7 @@ class Solution(object):
         left_pos = self.find_left(nums, one_target_pos)
         right_pos = self.find_right(nums, one_target_pos)
         return [left_pos, right_pos]
-    
+
     def find_target(self, nums, target):
         # binary search
         l, r = 0, len(nums) - 1
@@ -35,7 +35,7 @@ class Solution(object):
             else:
                 l = mid + 1
         return -1
-    
+
     def find_left(self, nums, one_target_pos):
         l, r = 0, one_target_pos
         while l <= r:
@@ -49,7 +49,7 @@ class Solution(object):
                     r = mid - 1
             elif nums[mid] < nums[one_target_pos]:
                 l = mid + 1
-    
+
     def find_right(self, nums, one_target_pos):
         l, r = one_target_pos, len(nums) - 1
         while l <= r:
@@ -63,5 +63,3 @@ class Solution(object):
                     l = mid + 1
             elif nums[mid] > nums[one_target_pos]:
                 r = mid - 1
-                
-        

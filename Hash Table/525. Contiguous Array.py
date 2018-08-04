@@ -35,4 +35,3 @@ class Solution(object):
             else:
                 res = max(res, i - cnt_dict[cur_sum])
         return res
-            

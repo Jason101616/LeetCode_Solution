@@ -52,7 +52,7 @@ class Solution(object):
         # ["a","a","b","b","c","c","c"]
         # ["a","2","b","2","c","3"]
         consec_cnt = 0
-        left = 0 # mark the starting place we should begin to modify the chars array
+        left = 0  # mark the starting place we should begin to modify the chars array
         for index, char in enumerate(chars):
             if index > 0:
                 # check whether current char is different from previous char

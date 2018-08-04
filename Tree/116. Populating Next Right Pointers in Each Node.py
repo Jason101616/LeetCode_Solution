@@ -57,10 +57,10 @@ class Solution:
     # @return nothing
     def connect(self, root):
         while root and root.left:
-            next_level_start = root.left
+            nextLevelStart = root.left
             while root:
                 root.left.next = root.right
                 if root.next:
                     root.right.next = root.next.left
                 root = root.next
-            root = next_level_start
+            root = nextLevelStart
