@@ -30,25 +30,26 @@
 
 
 # Solution 1:
-# idea: first put the preorder traversal in a list, than wire each node
+# idea: first put the preorder traversal into a list, than build the flattened tree
 class Solution(object):
+    def __init__(self):
+        self.inorderNode = []
+
     def flatten(self, root):
         """
         :type root: TreeNode
         :rtype: void Do not return anything, modify root in-place instead.
         """
-        self.inorder_node_list = []
-        self.inorder_traverse(root)
-        len_inorder = len(self.inorder_node_list)
-        for i in range(len_inorder - 1):
-            self.inorder_node_list[i].left = None
-            self.inorder_node_list[i].right = self.inorder_node_list[i + 1]
+        self.inorderTraverse(root)
+        for i in range(len(self.inorderNode) - 1):
+            self.inorderNode[i].left = None
+            self.inorderNode[i].right = self.inorderNode[i + 1]
 
-    def inorder_traverse(self, node):
+    def inorderTraverse(self, node):
         if node:
-            self.inorder_node_list.append(node)
-            self.inorder_traverse(node.left)
-            self.inorder_traverse(node.right)
+            self.inorderNode.append(node)
+            self.inorderTraverse(node.left)
+            self.inorderTraverse(node.right)
 
 
 # Solution 2:
@@ -59,7 +60,7 @@ class Solution(object):
         :type root: TreeNode
         :rtype: void Do not return anything, modify root in-place instead.
         """
-        prev_node = TreeNode(None)
+        prevNode = TreeNode(None)
         stack = [root]
         while stack:
             top = stack.pop()
@@ -67,6 +68,28 @@ class Solution(object):
                 continue
             stack.append(top.right)
             stack.append(top.left)
-            prev_node.right = top
-            prev_node.left = None
-            prev_node = top
+            prevNode.right = top
+            prevNode.left = None
+            prevNode = top
+
+# recursive solution
+class Solution(object):
+    def __init__(self):
+        self.prevNode = TreeNode(None)
+
+    def flatten(self, root):
+        """
+        :type root: TreeNode
+        :rtype: void Do not return anything, modify root in-place instead.
+        """
+        self.helper(root)
+
+    def helper(self, node):
+        if not node:
+            return
+        self.prevNode.left = None
+        self.prevNode.right = node
+        self.prevNode = node
+        tmp = node.right
+        self.helper(node.left)
+        self.helper(tmp)

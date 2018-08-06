@@ -30,7 +30,7 @@ class Solution:
         # start from pos to right, find the pos2, which satisfy nums[pos2] > nums[pos] >= nums[pos2+1]
         pos2 = len(nums) - 1
         for i in range(pos + 1, len(nums) - 1):
-            if nums[i] > nums[pos] and nums[pos] >= nums[i + 1]:
+            if nums[i] > nums[pos] >= nums[i + 1]:
                 pos2 = i
                 break
         # swap element in pos and pos2

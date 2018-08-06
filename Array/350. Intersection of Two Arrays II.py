@@ -21,13 +21,36 @@ class Solution(object):
         :type nums2: List[int]
         :rtype: List[int]
         """
-        ret_list = []
+        retList = []
         cnt1 = Counter(nums1)
         cnt2 = Counter(nums2)
         for key in cnt1:
             if key in cnt2:
                 num = min(cnt1[key], cnt2[key])
                 tmp = [key] * num
-                ret_list.extend(tmp)
+                retList.extend(tmp)
 
-        return ret_list
+        return retList
+
+# sort version
+class Solution(object):
+    def intersect(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: List[int]
+        """
+        nums1.sort()
+        nums2.sort()
+        res = []
+        ptr1 = ptr2 = 0
+        while ptr1 < len(nums1) and ptr2 < len(nums2):
+            if nums1[ptr1] < nums2[ptr2]:
+                ptr1 += 1
+            elif nums2[ptr2] < nums1[ptr1]:
+                ptr2 += 1
+            else:
+                res.append(nums1[ptr1])
+                ptr1 += 1
+                ptr2 += 1
+        return res
