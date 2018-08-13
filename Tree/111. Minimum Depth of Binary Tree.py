@@ -43,10 +43,10 @@ class Solution(object):
         """
         if not root:
             return 0
-        left_height = self.minDepth(root.left)
-        right_height = self.minDepth(root.right)
+        leftHeight = self.minDepth(root.left)
+        rightHeight = self.minDepth(root.right)
         if not root.left and root.right:
-            return right_height + 1
+            return rightHeight + 1
         if not root.right and root.left:
-            return left_height + 1
-        return min(left_height, right_height) + 1
+            return leftHeight + 1
+        return min(leftHeight, rightHeight) + 1

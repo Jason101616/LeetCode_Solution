@@ -59,27 +59,26 @@ class Solution(object):
         :type nums2: List[int]
         :rtype: float
         """
-        m = len(nums1)
-        n = len(nums2)
+        m, n = len(nums1), len(nums2)
         total = m + n
         if total % 2 != 0:
-            return self.find_kth_num(nums1, m, nums2, n, total // 2 + 1)
+            return self.findKthNum(nums1, m, nums2, n, total // 2 + 1)
         else:
-            return (self.find_kth_num(nums1, m, nums2, n, total // 2) + self.find_kth_num(nums1, m, nums2, n,
-                                                                                          total // 2 + 1)) / 2.0
+            return (self.findKthNum(nums1, m, nums2, n, total // 2) + self.findKthNum(nums1, m, nums2, n,
+                                                                                      total // 2 + 1)) / 2.0
 
-    def find_kth_num(self, nums1, m, nums2, n, k):
+    def findKthNum(self, nums1, m, nums2, n, k):
         if m > n:
-            return self.find_kth_num(nums2, n, nums1, m, k)
+            return self.findKthNum(nums2, n, nums1, m, k)
         if m == 0:
             return nums2[k - 1]
         if k == 1:
             return min(nums1[0], nums2[0])
-        i1 = min(k // 2, m)
+        i1 = min(k // 2, m)  # key point
         i2 = k - i1
         if nums1[i1 - 1] < nums2[i2 - 1]:
-            return self.find_kth_num(nums1[i1:], m - i1, nums2, n, k - i1)
+            return self.findKthNum(nums1[i1:], m - i1, nums2, n, k - i1)
         elif nums1[i1 - 1] > nums2[i2 - 1]:
-            return self.find_kth_num(nums1, m, nums2[i2:], n - i2, k - i2)
+            return self.findKthNum(nums1, m, nums2[i2:], n - i2, k - i2)
         else:
             return nums1[i1 - 1]

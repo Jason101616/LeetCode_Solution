@@ -11,24 +11,24 @@
 # time: O(n)
 # space: O(n)
 # idea: use dictionary and two pointers to calculate the number of each character
-from collections import defaultdict
-
-
 class Solution(object):
     def lengthOfLongestSubstring(self, s):
         """
         :type s: str
         :rtype: int
         """
-        cnt_num = defaultdict(lambda: 0)
-        left, right, max_len = 0, 0, 0
-
-        while right < len(s):
-            cnt_num[s[right]] += 1
-            while cnt_num[s[right]] > 1:
-                cnt_num[s[left]] -= 1
-                left += 1
-            if right - left + 1 > max_len:
-                max_len = right - left + 1
-            right += 1
-        return max_len
+        if not s:
+            return 0
+        l, r, res = 0, 0, 0
+        charCnt = set()
+        while r < len(s):
+            if s[r] not in charCnt:
+                charCnt.add(s[r])
+                r += 1
+                if r - l > res:
+                    res = r - l
+            else:
+                while s[r] in charCnt:
+                    charCnt.remove(s[l])
+                    l += 1
+        return res

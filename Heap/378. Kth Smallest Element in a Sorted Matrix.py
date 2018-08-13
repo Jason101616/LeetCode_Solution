@@ -16,6 +16,7 @@
 # You may assume k is always valid, 1 ≤ k ≤ n2.
 
 # Approach 1: Priority Queue(heap)
+# time: O(n^2*logk)
 import Queue
 
 
@@ -35,27 +36,43 @@ class Solution(object):
         return -pq.get()
 
 
-# Approach 2: Binary search(C++)
+# Approach 2: Binary search(Java)
 # time: O(nlgn*lgX), X is the gap between biggest value and smallest value
-class Solution {
-public:
-    int
+# public class Solution {
+#     public int kthSmallest(int[][] matrix, int k) {
+#         int lo = matrix[0][0], hi = matrix[matrix.length - 1][matrix[0].length - 1] + 1;//[lo, hi)
+#         while(lo < hi) {
+#             int mid = lo + (hi - lo) / 2;
+#             int count = 0;
+#             for(int i = 0; i < matrix.length; i++) {
+#                 int l = 0, r = matrix[i].length;
+#                 while (l < r) {
+#                     int m = l + (r - l) / 2;
+#                     if(matrix[i][m] > mid) r = m;
+#                     else l = m + 1;
+#                 }
+#                 count += l;
+#             }
+#             if(count < k) lo = mid + 1;
+#             else hi = mid;
+#         }
+#         return lo;
+#     }
+# }
 
-
-kthSmallest(vector < vector < int >> & matrix, int
-k) {
-    int
-left = matrix[0][0], right = matrix.back().back();
-while (left < right) {
-int mid = left + (right - left) / 2, cnt = 0;
-for (int i = 0; i < matrix.size(); ++i) {
-cnt += upper_bound(matrix[i].begin(), matrix[i].end(), mid) - matrix[i].begin();
-# Returns an iterator pointing to the first element in the range [first,last) which compares greater than val.
-# Python中对应的函数是bisect_right
-}
-if (cnt < k) left = mid + 1;
-else right = mid;
-}
-return left;
-}
-};
+# public class Solution {
+#     public int kthSmallest(int[][] matrix, int k) {
+#         int lo = matrix[0][0], hi = matrix[matrix.length - 1][matrix[0].length - 1] + 1;//[lo, hi)
+#         while(lo < hi) {
+#             int mid = lo + (hi - lo) / 2;
+#             int count = 0,  j = matrix[0].length - 1;
+#             for(int i = 0; i < matrix.length; i++) {
+#                 while(j >= 0 && matrix[i][j] > mid) j--;
+#                 count += (j + 1);
+#             }
+#             if(count < k) lo = mid + 1;
+#             else hi = mid;
+#         }
+#         return lo;
+#     }
+# }

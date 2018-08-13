@@ -56,10 +56,11 @@ class TicTacToe(object):
         Initialize your data structure here.
         :type n: int
         """
-        self.rows = [0 for _ in range(n)]
-        self.cols = [0 for _ in range(n)]
+        self.row = [0 for _ in range(n)]
+        self.col = [0 for _ in range(n)]
         self.diagonal = 0
-        self.anti_diagonal = 0
+        self.antiDiagonal = 0
+        self.n = n
 
     def move(self, row, col, player):
         """
@@ -77,17 +78,21 @@ class TicTacToe(object):
         :rtype: int
         """
         add = 1 if player == 1 else -1
-        self.rows[row] += add
-        self.cols[col] += add
+        self.row[row] += add
+        if abs(self.row[row]) == self.n:
+            return player
+        self.col[col] += add
+        if abs(self.col[col]) == self.n:
+            return player
         if row == col:
             self.diagonal += add
-        if row + col == len(self.rows) - 1:
-            self.anti_diagonal += add
-        if abs(self.rows[row]) == len(self.rows) or abs(self.cols[col]) == len(self.rows) or abs(self.diagonal) == len(
-                self.rows) or abs(self.anti_diagonal) == len(self.rows):
-            return player
-        else:
-            return 0
+            if abs(self.diagonal) == self.n:
+                return player
+        if row + col == self.n - 1:
+            self.antiDiagonal += add
+            if abs(self.antiDiagonal) == self.n:
+                return player
+        return 0
 
 # Your TicTacToe object will be instantiated and called as such:
 # obj = TicTacToe(n)

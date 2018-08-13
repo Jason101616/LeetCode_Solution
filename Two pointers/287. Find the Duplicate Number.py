@@ -7,7 +7,7 @@
 # There is only one duplicate number in the array, but it could be repeated more than once.
 
 
-# idea: first sort the list, then use two pointers
+# naive idea: first sort the list, then use two pointers
 class Solution(object):
     def findDuplicate(self, nums):
         """
@@ -21,3 +21,22 @@ class Solution(object):
                 return nums[left]
             left += 1
             right += 1
+
+# better idea: same as https://leetcode.com/problems/linked-list-cycle-ii/description/
+class Solution(object):
+    def findDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        slow, fast = nums[0], nums[0]
+        while True:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+            if slow == fast:
+                break
+        slow = nums[0]
+        while slow != fast:
+            slow = nums[slow]
+            fast = nums[fast]
+        return fast

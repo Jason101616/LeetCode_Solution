@@ -19,8 +19,8 @@
 
 # idea: use two heap to maintain large part of the list and small part of the list.
 # use the top item of the queue and calculate the average of them.
-
-import Queue
+# time: O(logn), space: O(1)
+from Queue import PriorityQueue
 
 
 class MedianFinder(object):
@@ -29,30 +29,29 @@ class MedianFinder(object):
         """
         initialize your data structure here.
         """
-        self.max_q = Queue.PriorityQueue()
-        self.min_q = Queue.PriorityQueue()
+        self.maxHeap = PriorityQueue()
+        self.minHeap = PriorityQueue()
 
     def addNum(self, num):
         """
         :type num: int
         :rtype: void
         """
-        # put it in the min_q
-        self.min_q.put(num)
-        # pop the min value from min_q and put it in the max_q
-        self.max_q.put(-self.min_q.get())
-        # if len(min_q) < len(max_q), put the max value in max_q to min_q
-        if self.min_q.qsize() < self.max_q.qsize():
-            self.min_q.put(-self.max_q.get())
+        if self.minHeap.qsize() == self.maxHeap.qsize():
+            self.maxHeap.put(-num)
+            self.minHeap.put(-self.maxHeap.get())
+        else:
+            self.minHeap.put(num)
+            self.maxHeap.put(-self.minHeap.get())
 
     def findMedian(self):
         """
         :rtype: float
         """
-        if self.min_q.qsize() > self.max_q.qsize():
-            return self.min_q.queue[0]
+        if self.minHeap.qsize() == self.maxHeap.qsize():
+            return (self.minHeap.queue[0] - self.maxHeap.queue[0]) / 2.0
         else:
-            return (-self.max_q.queue[0] + self.min_q.queue[0]) / 2.0
+            return self.minHeap.queue[0]
 
 # Your MedianFinder object will be instantiated and called as such:
 # obj = MedianFinder()

@@ -15,35 +15,39 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        nums = []
-        while n > 0:
-            nums.append(n % 10)
-            n = n // 10
-        nums = nums[::-1]
-
-        if len(nums) < 2:
+        if n < 10:
             return -1
-        # find from right, the first element smaller than its right element. mark the pos
-        # if pos < 0, rearrange it as the lowest possible order
-        pos = len(nums)
-        for i in range(len(nums) - 2, -1, -1):
-            if nums[i] < nums[i + 1]:
+        numsList = self.parseInt(n)
+        pos = len(numsList)
+        for i in range(len(numsList) - 2, -1, -1):
+            if numsList[i] < numsList[i + 1]:
                 pos = i
                 break
-        if pos == len(nums):
+        if pos == len(numsList):
             return -1
-        else:
-            # start from pos to right, find the pos2, which satisfy nums[pos2] > nums[pos] >= nums[pos2+1]
-            pos2 = len(nums) - 1
-            for i in range(pos + 1, len(nums) - 1):
-                if nums[i] > nums[pos] and nums[pos] >= nums[i + 1]:
-                    pos2 = i
-                    break
-            # swap element in pos and pos2
-            nums[pos], nums[pos2] = nums[pos2], nums[pos]
-            # reverse the number start from pos+1
-            nums[pos + 1:] = sorted(nums[pos + 1:])
-        ret = 0
-        for i in range(len(nums) - 1, -1, -1):
-            ret += nums[i] * pow(10, len(nums) - 1 - i)
-        return ret if ret < pow(2, 31) else -1
+        # start from pos to right, find the pos2, which satisfy numsList[pos2] > numsList[pos] >= numsList[pos2+1]
+        pos2 = len(numsList) - 1
+        for i in range(pos + 1, len(numsList) - 1):
+            if numsList[i] > numsList[pos] >= numsList[i + 1]:
+                pos2 = i
+                break
+        # swap element in pos and pos2
+        numsList[pos], numsList[pos2] = numsList[pos2], numsList[pos]
+        # reverse the number start from pos+1
+        numsList[pos + 1:] = sorted(numsList[pos + 1:])
+        res = self.buildInt(numsList)
+        return res if res < pow(2, 31) else -1
+
+    def parseInt(self, n):
+        res = []
+        while n:
+            res.append(n % 10)
+            n /= 10
+        return res[::-1]
+
+    def buildInt(self, numsList):
+        res = 0
+        for i in range(len(numsList)):
+            res *= 10
+            res += numsList[i]
+        return res

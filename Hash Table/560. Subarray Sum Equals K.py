@@ -10,6 +10,9 @@
 # idea: traverse once, use a hashmap to store the current sum.
 # when encounter a new number, check whether current sum - k is in the hashmap
 # if in the hashmap, res + 1
+from collections import defaultdict
+
+
 class Solution(object):
     def subarraySum(self, nums, k):
         """
@@ -17,13 +20,12 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        res = 0
-        sum_dict = collections.defaultdict(lambda: 0)
-        total_sum = 0
+        sumCnt = defaultdict(lambda: 0)
+        curSum = res = 0
         for num in nums:
-            total_sum += num
-            if total_sum == k:
+            curSum += num
+            if curSum == k:
                 res += 1
-            res += sum_dict[total_sum - k]
-            sum_dict[total_sum] += 1
+            res += sumCnt[curSum - k]
+            sumCnt[curSum] += 1
         return res
