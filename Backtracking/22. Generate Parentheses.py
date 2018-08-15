@@ -10,32 +10,57 @@
 #   "()()()"
 # ]
 
-
-# idea: generate the answer recursively, using backtracking. Also should discuss different condition
-# (1) l_remain == 0 and r_remain == 0 return current answer
-# (2) l_remain < r_remain and l_remain > 0, can have different direction to go
-# (3) l_remain == r_remain and both > 0, can only choose left
-# (4) l_remain == 0 and r_remain > 0, can only choose right
+# Recursive:
 class Solution(object):
     def generateParenthesis(self, n):
         """
         :type n: int
         :rtype: List[str]
         """
-        if n == 0:
-            return []
-        self.ans = []
-        self.gen_par("", n, n)
-        return self.ans
+        res = []
+        self.helper(res, "", n, n)
+        return res
 
-    def gen_par(self, cur_ans, l_remain, r_remain):
-        if l_remain == 0 and r_remain == 0:
-            self.ans.append(cur_ans)
+    def helper(self, res, curRes, leftRemain, rightRemain):
+        if leftRemain == 0 and rightRemain == 0:
+            res.append(curRes)
             return
-        if l_remain < r_remain and l_remain > 0:
-            self.gen_par(cur_ans + '(', l_remain - 1, r_remain)
-            self.gen_par(cur_ans + ')', l_remain, r_remain - 1)
-        elif l_remain == r_remain:
-            self.gen_par(cur_ans + '(', l_remain - 1, r_remain)
-        elif l_remain == 0:
-            self.gen_par(cur_ans + ')', l_remain, r_remain - 1)
+
+        if leftRemain == rightRemain:
+            self.helper(res, curRes + '(', leftRemain - 1, rightRemain)
+        else:
+            if leftRemain > 0:
+                self.helper(res, curRes + '(', leftRemain - 1, rightRemain)
+            self.helper(res, curRes + ')', leftRemain, rightRemain - 1)
+
+# DP:
+class Solution(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        return self.helper(n, n, {})
+
+    def helper(self, leftRemain, rightRemain, memo):
+        if (leftRemain, rightRemain) in memo:
+            return memo[(leftRemain, rightRemain)]
+
+        if leftRemain == 0 and rightRemain == 0:
+            return ['']
+
+        if leftRemain == rightRemain:
+            tmpRes = self.helper(leftRemain - 1, rightRemain, memo)
+            res = ['(' + tmp for tmp in tmpRes]
+            memo[(leftRemain, rightRemain)] = res
+            return res
+        else:
+            res = []
+            if leftRemain > 0:
+                tmpRes = self.helper(leftRemain - 1, rightRemain, memo)
+                res = ['(' + tmp for tmp in tmpRes]
+            tmpRes = self.helper(leftRemain, rightRemain - 1, memo)
+            res2 = [')' + tmp for tmp in tmpRes]
+            res.extend(res2)
+            memo[(leftRemain, rightRemain)] = res
+            return res

@@ -42,13 +42,13 @@ class Solution(object):
 
         ary = IP.split('.')
         if len(ary) == 4:
-            for i in xrange(len(ary)):
+            for i in range(len(ary)):
                 if not ary[i].isdigit() or not 0 <= int(ary[i]) < 256 or (ary[i][0] == '0' and len(ary[i]) > 1):
                     return "Neither"
             return "IPv4"
         ary = IP.split(':')
         if len(ary) == 8:
-            for i in xrange(len(ary)):
+            for i in range(len(ary)):
                 if len(ary[i]) == 0 or not len(ary[i]) <= 4 or not is_hex(ary[i]):
                     return "Neither"
             return "IPv6"

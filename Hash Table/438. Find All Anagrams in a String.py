@@ -28,9 +28,10 @@
 # The substring with start index = 1 is "ba", which is an anagram of "ab".
 # The substring with start index = 2 is "ab", which is an anagram of "ab".
 
-# Time:  O(n)
-# Space: O(1)
-# idea: sliding window with character count.
+# Time: O(len(s) + len(p))
+# Space: O(len(p))
+# idea: sliding window.
+from collections import Counter
 class Solution(object):
     def findAnagrams(self, s, p):
         """
@@ -38,31 +39,42 @@ class Solution(object):
         :type p: str
         :rtype: List[int]
         """
-        if len(s) < len(p):
-            return []
-
-        ret = []
-        orda = ord('a')
-        cnt_s, cnt_p = [0 for i in range(26)], [0 for i in range(26)]
-        for i in range(len(p) - 1):
-            cnt_s[ord(s[i]) - orda] += 1
-            cnt_p[ord(p[i]) - orda] += 1
-        cnt_p[ord(p[len(p) - 1]) - orda] += 1
-
-        for i in range((len(p) - 1), len(s)):
-            cnt_s[ord(s[i]) - orda] += 1
-            if cnt_s == cnt_p:
-                ret.append(i + 1 - len(p))
-            cnt_s[ord(s[i + 1 - len(p)]) - orda] -= 1
-        return ret
+        cntP = Counter(p)
+        numKeys = len(cntP)
+        res = []
+        l = r = 0
+        while r < len(s):
+            if s[r] in cntP:
+                cntP[s[r]] -= 1
+                if cntP[s[r]] == 0:
+                    numKeys -= 1
+                    if numKeys == 0:
+                        res.append(l)
+                elif cntP[s[r]] < 0:
+                    while cntP[s[r]] < 0:
+                        cntP[s[l]] += 1
+                        if cntP[s[l]] == 1:
+                            numKeys += 1
+                        l += 1
+                r += 1
+                if r - l + 1 > len(p):
+                    cntP[s[l]] += 1
+                    if cntP[s[l]] == 1:
+                        numKeys += 1
+                    l += 1
+            else:
+                while l < r:
+                    cntP[s[l]] += 1
+                    if cntP[s[l]] == 1:
+                        numKeys += 1
+                    l += 1
+                l = r = r + 1
+                numKeys = len(cntP)
+        return res
 
 
 # a more concise solution, use Count in Python. But slower than previous solution.
-# A Counter is a dict subclass for counting hashable objects. 
-# It is an unordered collection where elements are stored as dictionary keys and their counts are stored as dictionary values.
 from collections import Counter
-
-
 class Solution(object):
     def findAnagrams(self, s, p):
         """
