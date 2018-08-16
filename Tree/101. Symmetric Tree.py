@@ -25,7 +25,7 @@
 
 
 # Solution 1: recursive
-class Solution:
+class Solution(object):
     def isSymmetric(self, root):
         """
         :type root: TreeNode
@@ -33,18 +33,16 @@ class Solution:
         """
         if not root:
             return True
-        return self.is_symmetric(root.left, root.right)
+        return self.helper(root.left, root.right)
 
-    def is_symmetric(self, node1, node2):
-        if not node1 and not node2:
-            return True
-        if not node1 or not node2:
+    def helper(self, nodeLeft, nodeRight):
+        if not nodeLeft:
+            return not nodeRight
+        if not nodeRight:
+            return not nodeLeft
+        if nodeLeft.val != nodeRight.val:
             return False
-        if node1.val != node2.val:
-            return False
-        return self.is_symmetric(node1.left,
-                                 node2.right) and self.is_symmetric(
-            node1.right, node2.left)
+        return self.helper(nodeLeft.right, nodeRight.left) and self.helper(nodeLeft.left, nodeRight.right)
 
 
 # Solution 2: iteratively

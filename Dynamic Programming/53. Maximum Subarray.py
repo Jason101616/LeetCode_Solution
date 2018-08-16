@@ -22,3 +22,21 @@ class Solution(object):
             if dp[i] > max_ans:
                 max_ans = dp[i]
         return max_ans
+
+
+# another version:
+class Solution(object):
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        curSum = largest = nums[0]
+        for i in range(1, len(nums)):
+            if curSum > 0:
+                curSum += nums[i]
+            else:
+                curSum = nums[i]
+            if curSum > largest:
+                largest = curSum
+        return largest
