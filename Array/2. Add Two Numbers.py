@@ -23,25 +23,19 @@ class Solution(object):
         :rtype: ListNode
         """
         carry = 0
-        dummy = cur_node = ListNode(None)
-        while l1 and l2:
-            cur_val = l1.val + l2.val + carry
-            carry = cur_val // 10
-            cur_val %= 10
-            cur_node.next = ListNode(cur_val)
-            l1 = l1.next
-            l2 = l2.next
-            cur_node = cur_node.next
-        l1 = l1 if l1 else l2
-        while l1:
-            cur_val = l1.val + carry
-            carry = cur_val // 10
-            cur_val %= 10
-            cur_node.next = ListNode(cur_val)
-            l1 = l1.next
-            cur_node = cur_node.next
+        dummy = curNode = ListNode(None)
+        while l1 or l2:
+            curVal = carry
+            curVal += l1.val if l1 else 0
+            curVal += l2.val if l2 else 0
+            carry = curVal // 10
+            curVal %= 10
+            curNode.next = ListNode(curVal)
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
+            curNode = curNode.next
         if carry:
-            cur_node.next = ListNode(carry)
+            curNode.next = ListNode(carry)
         return dummy.next
 
 
@@ -53,9 +47,9 @@ class Solution(object):
         :type l2: ListNode
         :rtype: ListNode
         """
-        return self.add_num(l1, l2, 0)
+        return self.addNum(l1, l2, 0)
 
-    def add_num(self, l1, l2, carry):
+    def addNum(self, l1, l2, carry):
         if not l1 and not l2 and carry == 0:
             return None
         res = 0
@@ -64,8 +58,8 @@ class Solution(object):
             res += l1.val
         if l2:
             res += l2.val
-        new_node = ListNode(res % 10)
+        newNode = ListNode(res % 10)
         l1 = l1.next if l1 else None
         l2 = l2.next if l2 else None
-        new_node.next = self.add_num(l1, l2, res // 10)
-        return new_node
+        newNode.next = self.addNum(l1, l2, res // 10)
+        return newNode

@@ -2,6 +2,6 @@
   "files.associations": {
     "ios": "cpp"
   },
-  "python.pythonPath": "/Users/zhangdu/anaconda/bin/python",
+"python.pythonPath": "/Users/zhangdu/anaconda/bin/python3",
   "python.linting.enabled": false
 }

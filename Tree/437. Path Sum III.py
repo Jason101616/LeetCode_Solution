@@ -34,6 +34,13 @@
 # idea: dfs + hash table count sum
 # time: O(n)
 # space: if balanced O(logn), worst case O(n)
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
 class Solution(object):
     def pathSum(self, root, sum):
         """
@@ -41,21 +48,20 @@ class Solution(object):
         :type sum: int
         :rtype: int
         """
-        sum_dict = collections.defaultdict(lambda: 0)
+        pathSumMemo = collections.defaultdict(lambda: 0)
         self.res = 0
-        self.find_path(sum_dict, None, root, sum)
+        self.helper(root, sum, 0, pathSumMemo)
         return self.res
 
-    def find_path(self, sum_dict, cur_sum, cur_node, target):
-        if not cur_node:
+    def helper(self, node, target, curSum, pathSumMemo):
+        if not node:
             return
-        if not cur_sum:
-            cur_sum = 0
-        cur_sum += cur_node.val
-        if cur_sum == target:
+        curSum += node.val
+        if curSum == target:
             self.res += 1
-        self.res += sum_dict[cur_sum - target]
-        sum_dict[cur_sum] += 1
-        self.find_path(sum_dict, cur_sum, cur_node.left, target)
-        self.find_path(sum_dict, cur_sum, cur_node.right, target)
-        sum_dict[cur_sum] -= 1
+        self.res += pathSumMemo[curSum - target]
+
+        pathSumMemo[curSum] += 1
+        self.helper(node.left, target, curSum, pathSumMemo)
+        self.helper(node.right, target, curSum, pathSumMemo)
+        pathSumMemo[curSum] -= 1

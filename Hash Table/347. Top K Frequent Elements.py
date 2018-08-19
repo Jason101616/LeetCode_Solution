@@ -7,20 +7,11 @@
 # You may assume k is always valid, 1 ≤ k ≤ number of unique elements.
 # Your algorithm's time complexity must be better than O(n log n), where n is the array's size.
 
-# time: O(nlogn)
-# space: O(n)
-# idea: simple priority queue
+# time: O(n)
+# space: O(1)
+# idea: sort directly
 
-import Queue
-
-
-class number:
-    def __init__(self, num):
-        self.num = num
-        self.freq = 1
-
-    def __lt__(self, other):
-        return self.freq > other.freq
+from collections import Counter
 
 
 class Solution(object):
@@ -30,17 +21,6 @@ class Solution(object):
         :type k: int
         :rtype: List[int]
         """
-        num_dict = {}
-        q = Queue.PriorityQueue()
-        for num in nums:
-            if num not in num_dict:
-                new_num = number(num)
-                num_dict[num] = new_num
-            else:
-                num_dict[num].freq += 1
-        for num in num_dict:
-            q.put(num_dict[num])
-        ret_list = []
-        for i in range(k):
-            ret_list.append(q.get().num)
-        return ret_list
+        cntNums = Counter(nums)
+        sortedKeys = sorted(cntNums.keys(), key=lambda x: cntNums[x], reverse=True)
+        return sortedKeys[:k]

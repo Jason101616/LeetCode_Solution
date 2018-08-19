@@ -26,9 +26,7 @@ class Solution(object):
         """
         min_val = -math.pow(2, 31)
         max_val = math.pow(2, 31) - 1
-        is_negative = False
-        if x < 0:
-            is_negative = True
+        is_negative = True if x < 0 else False
         x = abs(x)
         x = int(str(x)[::-1])
         if is_negative:
@@ -37,21 +35,16 @@ class Solution(object):
 
 
 # C++
-class Solution {
-public:
-    int
-
-
-reverse(int
-x) {
-    int
-res = 0;
-while (x != 0) {
-if (abs(res) > INT_MAX / 10)
-return 0;
-res = res * 10 + x % 10;
-x /= 10;
-}
-return res;
-}
-};
+# class Solution {
+# public:
+#     int reverse(int x) {
+#         int res = 0;
+#         while (x != 0) {
+#             if (abs(res) > INT_MAX / 10)
+#                 return 0;
+#             res = res * 10 + x % 10;
+#             x /= 10;
+#         }
+#         return res;
+#     }
+# };

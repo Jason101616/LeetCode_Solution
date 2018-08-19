@@ -40,22 +40,24 @@ class Solution:
 
 
 # Solution 2: in the dfs process, check the height of each subtree
-class Solution:
+
+class Solution(object):
     def isBalanced(self, root):
         """
         :type root: TreeNode
         :rtype: bool
         """
-        ans = self.dfs(root)
-        return True if ans != -1 else False
+        return self.helper(root)[0]
 
-    def dfs(self, node):
+    def helper(self, node):
         if not node:
-            return 0
-        left_height = self.dfs(node.left)
-        right_height = self.dfs(node.right)
-        if left_height == -1 or right_height == -1:
-            return -1
-        if abs(left_height - right_height) > 1:
-            return -1
-        return max(left_height, right_height) + 1
+            return True, 0
+        leftBalanced, leftHeight = self.helper(node.left)
+        if not leftBalanced:
+            return False, 0
+        rightBalanced, rightHeight = self.helper(node.right)
+        if not rightBalanced:
+            return False, 0
+        if abs(leftHeight - rightHeight) > 1:
+            return False, 0
+        return True, max(leftHeight, rightHeight) + 1
