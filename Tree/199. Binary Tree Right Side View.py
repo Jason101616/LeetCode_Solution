@@ -18,8 +18,6 @@
 
 # idea: BFS, time: O(n), space: O(n)
 from collections import deque
-
-
 class Solution(object):
     def rightSideView(self, root):
         """
@@ -28,16 +26,16 @@ class Solution(object):
         """
         if not root:
             return []
-        ans = []
-        queue = deque()
-        queue.append(root)
-        while queue:
-            cur_level_len = len(queue)
-            for i in range(cur_level_len):
-                cur_node = queue.popleft()
-                if cur_node.left:
-                    queue.append(cur_node.left)
-                if cur_node.right:
-                    queue.append(cur_node.right)
-            ans.append(cur_node.val)
-        return ans
+        res = []
+        q = deque()
+        q.append(root)
+        while q:
+            curLevelLen = len(q)
+            for i in range(curLevelLen):
+                node = q.popleft()
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+            res.append(node.val)
+        return res

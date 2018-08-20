@@ -21,9 +21,9 @@
 
 # time: O(n log k)
 # space: O(n)
-# idea: simply use priority queue
+# idea: priority queue
 
-import queue
+from Queue import PriorityQueue
 
 
 class Word:
@@ -32,30 +32,29 @@ class Word:
         self.freq = 1
 
     def __lt__(self, other):
-        # words with low frequency and high alphabetical order have high priority, as we need to delete them
+        # words with low frequency and high alphabetical order have high priority
         return (self.freq, other.word) < (other.freq, self.word)
 
 
-class Solution:
+class Solution(object):
     def topKFrequent(self, words, k):
         """
         :type words: List[str]
         :type k: int
         :rtype: List[str]
         """
-        word_dict = {}
-        word_queue = queue.PriorityQueue()
+        mapping = {}
         for word in words:
-            if word not in word_dict:
-                word_dict[word] = Word(word)
+            if word not in mapping:
+                mapping[word] = Word(word)
             else:
-                word_dict[word].freq += 1
-        for word in word_dict.keys():
-            word_queue.put(word_dict[word])
-            if word_queue.qsize() > k:
-                word_queue.get()
-        ret_list = [None] * k
-        # reverse the priority queue, as we need the word with highest frequency first
-        for i in range(k):
-            ret_list[k - 1 - i] = word_queue.get().word
-        return ret_list
+                mapping[word].freq += 1
+        pq = PriorityQueue()
+        for word in mapping:
+            pq.put(mapping[word])
+            if pq.qsize() > k:
+                pq.get()
+        res = [None for _ in range(k)]
+        for i in range(k - 1, -1, -1):
+            res[i] = pq.get().word
+        return res

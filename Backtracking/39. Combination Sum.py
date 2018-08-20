@@ -12,10 +12,7 @@
 #   [2, 2, 3]
 # ]
 
-# idea: use backtracking
-from copy import deepcopy
-
-
+# idea: backtracking
 class Solution(object):
     def combinationSum(self, candidates, target):
         """
@@ -23,22 +20,17 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
-        if not candidates:
-            return []
-        self.target = target
-        self.ans = []
-        self.candidates = sorted(candidates)
-        self.candidates_len = len(candidates)
-        self.find_ans([], 0, 0)
-        return self.ans
+        res = []
+        self.helper(candidates, target, 0, [], res, 0)
+        return res
 
-    def find_ans(self, cur_list, cur_sum, index):
-        if cur_sum == self.target:
-            self.ans.append(deepcopy(cur_list))
+    def helper(self, candidates, target, curSum, curRes, res, idx):
+        if curSum > target:
             return
-        if cur_sum > self.target:
+
+        if curSum == target:
+            res.append(curRes)
             return
-        for i in range(index, self.candidates_len):
-            cur_list.append(self.candidates[i])
-            self.find_ans(cur_list, cur_sum + self.candidates[i], i)
-            cur_list.pop()
+
+        for i in range(idx, len(candidates)):
+            self.helper(candidates, target, curSum + candidates[i], curRes + [candidates[i]], res, i)

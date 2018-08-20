@@ -7,7 +7,7 @@
 # [-2, 0, 1]
 # [-2, 0, 3]
 # Follow up:
-# Could you solve it in O(n2) runtime?
+# Could you solve it in O(n^2) runtime?
 
 
 # idea: two pointers. easy.
@@ -19,14 +19,13 @@ class Solution(object):
         :rtype: int
         """
         nums.sort()
-        ret = 0
-        len_nums = len(nums)
-        for i in range(len_nums - 2):
-            left, right = i + 1, len_nums - 1
-            while left < right:
-                if nums[i] + nums[left] + nums[right] >= target:
-                    right -= 1
-                    continue
-                ret += (right - left)
-                left += 1
-        return ret
+        res = 0
+        for i in range(len(nums) - 2):
+            l, r = i + 1, len(nums) - 1
+            while l < r:
+                if nums[i] + nums[l] + nums[r] < target:
+                    res += r - l
+                    l += 1
+                else:
+                    r -= 1
+        return res

@@ -16,8 +16,8 @@
 
 # idea
 # (1) construct the graph
-# (2) use dfs to find the answer, now the edge should contain the weights
-# time complexity: O(N + E), where N is the number of nodes, E is the number of edges in the graph
+# (2) dfs find the answer
+# time complexity: O(len(queries) * (N + E)), where N is the number of nodes, E is the number of edges in the graph
 from collections import defaultdict
 
 
@@ -29,36 +29,27 @@ class Solution(object):
         :type queries: List[List[str]]
         :rtype: List[float]
         """
-        self.graph = defaultdict(lambda: [])
-        len_equ = len(equations)
-        for i in range(len_equ):
+        graph = defaultdict(lambda: [])
+        for i in range(len(equations)):
             node0, node1, val = equations[i][0], equations[i][1], values[i]
-            self.graph[node0].append([node1, val])
-            self.graph[node1].append([node0, 1 / val])
-        len_qu = len(queries)
-        self.ans = [-1 for _ in range(len_qu)]
-        for i in range(len_qu):
-            self.visited = set()
-            self.find_ans = False
-            self.cal_equ([], queries[i][0], queries[i][1], i)
-        return self.ans
+            graph[node0].append([node1, val])
+            graph[node1].append([node0, 1 / val])
+        res = [None for _ in range(len(queries))]
+        for i in range(len(queries)):
+            res[i] = self.helper(queries[i][0], queries[i][1], graph, {queries[i][0]})
+        return res
 
-    def cal_equ(self, prev_route, cur_node, target, index):
-        if cur_node not in self.graph:
-            self.find_ans = True
-            return
-        if self.find_ans:
-            return
-        if cur_node == target:
-            # calculate the answer
-            cal_sum = 1
-            for node in prev_route:
-                cal_sum *= node[1]
-            self.ans[index] = cal_sum
-            self.find_ans = True
-            return
-        self.visited.add(cur_node)
-        for i in range(len(self.graph[cur_node])):
-            if self.graph[cur_node][i][0] not in self.visited:
-                self.cal_equ(prev_route + [self.graph[cur_node][i]],
-                             self.graph[cur_node][i][0], target, index)
+    def helper(self, curNode, target, graph, visited):
+        if curNode not in graph:
+            return -1.0
+        if curNode == target:
+            return 1.0
+        nextNodes = graph[curNode]
+        for node in nextNodes:
+            if node[0] not in visited:
+                visited.add(node[0])
+                tmpRes = self.helper(node[0], target, graph, visited)
+                if tmpRes != -1.0:
+                    return node[1] * tmpRes
+                visited.remove(node[0])
+        return -1.0
