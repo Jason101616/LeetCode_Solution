@@ -20,19 +20,20 @@ class Solution:
         """
         if not nums:
             return 0
-        len_nums = len(nums)
-        dp = [1 for _ in range(len_nums)]
-        for i in range(1, len_nums):
+        dp = [1 for _ in range(len(nums))]
+        for i in range(1, len(nums)):
             for j in range(i):
-                if nums[j] < nums[i] and dp[i] < dp[j] + 1:
+                if nums[i] > nums[j] and dp[i] < dp[j] + 1:
                     dp[i] = dp[j] + 1
         return max(dp)
 
 
 # Solution 2:
-# idea: 先建立一个空的dp数组，然后开始遍历原数组，对于每一个遍历到的数字，我们用二分查找法在dp数组找第一个不小于它的数字，如果这个数字不存在，那么直接在dp数组后面加上遍历到的数字，如果存在，则将这个数字更新为当前遍历到的数字，最后返回dp数字的长度即可，注意的是，跟上面的方法一样，特别注意的是dp数组的值可能不是一个真实的LIS。
+# idea: 先建立一个空的dp数组，然后开始遍历原数组，对于每一个遍历到的数字，我们用二分查找法在dp数组找第一个不小于它的数字，
+# 如果这个数字不存在，那么直接在dp数组后面加上遍历到的数字，如果存在，则将这个数字更新为当前遍历到的数字，最后返回dp数字的长度即可，
+# 注意的是，dp数组的值可能不是一个真实的LIS。
 # time complexity: O(n*log(n))
-class Solution:
+class Solution(object):
     def lengthOfLIS(self, nums):
         """
         :type nums: List[int]
@@ -40,18 +41,17 @@ class Solution:
         """
         if not nums:
             return 0
-        len_nums = len(nums)
         dp = [nums[0]]
-        for num in nums[1:]:
-            if num > dp[-1]:
-                dp.append(num)
+        for i in range(1, len(nums)):
+            if nums[i] > dp[-1]:
+                dp.append(nums[i])
             else:
-                left, right = 0, len(dp) - 1
-                while left < right:
-                    mid = (left + right) // 2
-                    if dp[mid] < num:
-                        left = mid + 1
+                l, r = 0, len(dp) - 1
+                while l < r:
+                    mid = l + (r - l) // 2
+                    if dp[mid] < nums[i]:
+                        l = mid + 1
                     else:
-                        right = mid
-                dp[right] = num
+                        r = mid
+                dp[l] = nums[i]
         return len(dp)
