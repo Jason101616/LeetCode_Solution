@@ -13,7 +13,9 @@ class Solution(object):
         res = 0
         l, r = 0, len(height) - 1
         while l < r:
-            res = max(res, min(height[l], height[r]) * (r - l))
+            tmpRes = (r - l) * min(height[l], height[r])
+            if tmpRes > res:
+                res = tmpRes
             if height[l] < height[r]:
                 l += 1
             else:

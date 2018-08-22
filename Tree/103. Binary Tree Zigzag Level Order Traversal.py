@@ -39,18 +39,18 @@ class Solution(object):
         ans = []
         j = 0  # indicate the current level is odd or even
         while queue:
-            cur_len = len(queue)
-            cur_ans = []
-            for i in range(cur_len):
+            curLen = len(queue)
+            curAns = []
+            for i in range(curLen):
                 cur_node = queue.popleft()
-                cur_ans.append(cur_node.val)
+                curAns.append(cur_node.val)
                 if cur_node.left:
                     queue.append(cur_node.left)
                 if cur_node.right:
                     queue.append(cur_node.right)
             if j % 2 == 0:
-                ans.append(cur_ans)
+                ans.append(curAns)
             else:
-                ans.append(cur_ans[::-1])
+                ans.append(curAns[::-1])
             j += 1
         return ans

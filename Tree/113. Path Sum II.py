@@ -30,17 +30,18 @@ class Solution(object):
         :type sum: int
         :rtype: List[List[int]]
         """
+        if not root:
+            return []
         res = []
-        self.find_path(root, 0, sum, res, [])
+        self.helper(root, res, sum, [root.val])
         return res
 
-    def find_path(self, cur_node, prev_sum, target, res, cur_path):
-        if not cur_node:
+    def helper(self, node, res, target, curRes):
+        if not node.left and not node.right:
+            if sum(curRes) == target:
+                res.append(curRes)
             return
-        cur_sum = prev_sum + cur_node.val
-        cur_path.append(cur_node.val)
-        if not cur_node.left and not cur_node.right and cur_sum == target:
-            res.append(copy.deepcopy(cur_path))
-        self.find_path(cur_node.left, cur_sum, target, res, cur_path)
-        self.find_path(cur_node.right, cur_sum, target, res, cur_path)
-        cur_path.pop()
+        if node.left:
+            self.helper(node.left, res, target, curRes + [node.left.val])
+        if node.right:
+            self.helper(node.right, res, target, curRes + [node.right.val])
