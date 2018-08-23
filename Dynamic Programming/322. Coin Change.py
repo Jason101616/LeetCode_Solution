@@ -11,7 +11,7 @@
 # Note:
 # You may assume that you have an infinite number of each kind of coin.
 
-# Approach 1: Top-bottom with memorization
+# bottom-up dp
 class Solution(object):
     def coinChange(self, coins, amount):
         """
@@ -19,43 +19,14 @@ class Solution(object):
         :type amount: int
         :rtype: int
         """
-        coins.sort(reverse=True)
-        memo = [[None for _ in range(amount + 1)] for __ in range(len(coins))]
-        return self.find_change(coins, amount, 0, memo)
-
-    def find_change(self, coins, amount, index, memo):
-        if amount == 0:
-            return 0
-        if index >= len(coins):
-            return -1
-        if memo[index][amount] != None:
-            return memo[index][amount]
-        cur_coin = coins[index]
-        max_coin_amount = amount // cur_coin
-        res = float('inf')
-        for i in range(max_coin_amount, -1, -1):
-            cur_res = self.find_change(coins, amount - i * cur_coin, index + 1, memo)
-            if cur_res != -1:
-                res = min(res, cur_res + i)
-        if res != float('inf'):
-            memo[index][amount] = res
-            return res
-        memo[index][amount] = -1
-        return -1
-
-
-# Approach 2: bottom-up dp
-class Solution(object):
-    def coinChange(self, coins, amount):
-        """
-        :type coins: List[int]
-        :type amount: int
-        :rtype: int
-        """
-        dp = [amount + 1 for _ in range(amount + 1)]
+        dp = [-1 for _ in range(amount + 1)]
         dp[0] = 0
+        
         for i in range(1, amount + 1):
             for coin in coins:
-                if i - coin >= 0:
-                    dp[i] = min(dp[i], dp[i - coin] + 1)
-        return dp[amount] if dp[amount] < amount + 1 else -1
+                if i - coin >= 0 and dp[i - coin] != -1:
+                    if dp[i] == -1:
+                        dp[i] = dp[i - coin] + 1
+                    else:
+                        dp[i] = min(dp[i], dp[i - coin] + 1)
+        return dp[-1]
