@@ -56,4 +56,3 @@ class Solution(object):
             prevSmallestNode.next = newNode
 
         return head
-    

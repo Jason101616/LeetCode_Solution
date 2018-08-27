@@ -34,3 +34,23 @@ class Solution(object):
             elif nums[i] == 2:
                 nums[ri], nums[i] = nums[i], nums[ri]
                 ri -= 1
+
+# k color solution. Fix the color one by one. Time: O(kn)
+class Solution(object):
+    def sortColors(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        start, end, k = 0, len(nums) - 1, 3  # k is the number of color
+        for i in range(k):
+            start = self.helper(nums, start, end, i)
+
+    def helper(self, nums, start, end, color):
+        while start < end:
+            while start < end and nums[start] == color:
+                start += 1
+            while start < end and nums[end] != color:
+                end -= 1
+            nums[start], nums[end] = nums[end], nums[start]
+        return start

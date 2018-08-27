@@ -1,15 +1,17 @@
 # Given an array of non-negative integers, you are initially positioned at the first index of the array.
-
+#
 # Each element in the array represents your maximum jump length at that position.
-
+#
 # Your goal is to reach the last index in the minimum number of jumps.
-
-# For example:
-# Given array A = [2,3,1,1,4]
-
-# The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)
-
+#
+# Example:
+#
+# Input: [2,3,1,1,4]
+# Output: 2
+# Explanation: The minimum number of jumps to reach the last index is 2.
+#     Jump 1 step from index 0 to 1, then 3 steps to the last index.
 # Note:
+#
 # You can assume that you can always reach the last index.
 
 # Approach 1: BFS, TLE
@@ -53,14 +55,16 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        if len(nums) == 1:
+        if len(nums) <= 1:
             return 0
-        step, max_pos, next_max_pos = 1, nums[0], nums[0]
+        step, maxPos, nextMaxPos = 1, nums[0], nums[0]
+
         for i in range(1, len(nums)):
-            if max_pos >= len(nums) - 1:
+            if maxPos >= len(nums) - 1:
                 return step
-            if i > max_pos:
-                max_pos = next_max_pos
+            if i > maxPos:
                 step += 1
-            next_max_pos = max(next_max_pos, i + nums[i])
+                maxPos = nextMaxPos
+            nextMaxPos = max(nextMaxPos, i + nums[i])
         return step
+

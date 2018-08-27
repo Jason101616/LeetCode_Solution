@@ -1,13 +1,20 @@
 # Given an array of non-negative integers, you are initially positioned at the first index of the array.
-
+#
 # Each element in the array represents your maximum jump length at that position.
-
+#
 # Determine if you are able to reach the last index.
-
-# For example:
-# A = [2,3,1,1,4], return true.
-
-# A = [3,2,1,0,4], return false.
+#
+# Example 1:
+#
+# Input: [2,3,1,1,4]
+# Output: true
+# Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
+# Example 2:
+#
+# Input: [3,2,1,0,4]
+# Output: false
+# Explanation: You will always arrive at index 3 no matter what. Its maximum
+#              jump length is 0, which makes it impossible to reach the last index.
 
 # Greedy
 class Solution(object):
@@ -16,10 +23,11 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
-        max_jump = 0  # the longest points can be reached from current point
-        for index, num in enumerate(nums):
-            max_jump = max(max_jump - 1, num)
-            if max_jump + index >= len(nums) - 1:
+        maxJump = 0
+        for idx, num in enumerate(nums):
+            maxJump = max(maxJump - 1, num)
+            if maxJump + idx >= len(nums) - 1:
                 return True
-            if max_jump == 0:
+            if maxJump == 0:
                 return False
+        return False
