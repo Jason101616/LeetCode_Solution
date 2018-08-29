@@ -19,7 +19,8 @@
 
 # Time:  O(m * n)
 # Space: O(m * n)
-# idea: Add a new row and col to handle edge case of Unique Path. It can be optimized, see https://discuss.leetcode.com/topic/15267/4ms-o-n-dp-solution-in-c-with-explanations
+# idea: Add a new row and col to handle edge case of Unique Path.
+# It can be optimized, see https://discuss.leetcode.com/topic/15267/4ms-o-n-dp-solution-in-c-with-explanations
 
 class Solution(object):
     def uniquePathsWithObstacles(self, obstacleGrid):

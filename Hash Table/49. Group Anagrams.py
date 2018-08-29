@@ -17,18 +17,18 @@ class Solution(object):
         :type strs: List[str]
         :rtype: List[List[str]]
         """
-        cnt_dict = collections.defaultdict(lambda: [])
-        for i in strs:
-            cnt = collections.Counter(i)
-            cnt_dict[tuple(sorted(cnt.items()))].append(i)
-        ret_list = []
-        for key, item in cnt_dict.items():
-            ret_list.append(item)
-        return ret_list
+        ans = collections.defaultdict(lambda: [])
+        for s in strs:
+            count = [0] * 26
+            for c in s:
+                count[ord(c) - ord('a')] += 1
+            ans[tuple(count)].append(s)
+        return ans.values()
 
 
 # Solution 2: simply use the sorted string as the key
-# Time Complexity: O(NKlog(K)), where N is the length of strs, and K is the maximum length of a string in strs. The outer loop has complexity O(N) as we iterate through each string. Then, we sort each string in O(KlogK) time.
+# Time Complexity: O(NKlog(K)), where N is the length of strs, and K is the maximum length of a string in strs.
+# The outer loop has complexity O(N) as we iterate through each string. Then, we sort each string in O(KlogK) time.
 class Solution(object):
     def groupAnagrams(self, strs):
         """

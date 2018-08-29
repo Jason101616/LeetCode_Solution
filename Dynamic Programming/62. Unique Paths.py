@@ -21,3 +21,14 @@ class Solution(object):
                 memo[i][j] = memo[i - 1][j] + memo[i][j - 1]
 
         return memo[m - 1][n - 1]
+
+# Space: O(n) version
+class Solution(object):
+    def uniquePaths(self, m, n):
+        prevRow = [1 for _ in range(n)]
+        curRow = list(prevRow)
+        for i in range(1, m):
+            for j in range(1, n):
+                curRow[j] = curRow[j - 1] + prevRow[j]
+            prevRow, curRow = curRow, prevRow
+        return prevRow[-1]

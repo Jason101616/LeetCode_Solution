@@ -36,14 +36,14 @@ class Solution:
 
     def nextOne(self, cur):
         res = []
-        tmp = cur[0]
-        prev = 0
-        for i in range(prev + 1, len(cur)):
-            if cur[i] != tmp:
-                res.append(str(i - prev))
-                res.append(tmp)
-                prev = i
-                tmp = cur[i]
-        res.append(str(len(cur) - prev))
-        res.append(tmp)
+        prevVal = cur[0]
+        prevIdx = 0
+        for i in range(prevIdx + 1, len(cur)):
+            if cur[i] != prevVal:
+                res.append(str(i - prevIdx))
+                res.append(prevVal)
+                prevIdx = i
+                prevVal = cur[i]
+        res.append(str(len(cur) - prevIdx))
+        res.append(prevVal)
         return ''.join(res)
