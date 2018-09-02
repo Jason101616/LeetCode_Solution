@@ -1,20 +1,20 @@
-# Given a string S, you are allowed to convert it to a palindrome by adding characters in front of it. Find and return the shortest palindrome you can find by performing this transformation.
+# Given a string s, you are allowed to convert it to a palindrome by adding characters in front of it. Find and return the shortest palindrome you can find by performing this transformation.
+#
+# Example 1:
+#
+# Input: "aacecaaa"
+# Output: "aaacecaaa"
+# Example 2:
+#
+# Input: "abcd"
+# Output: "dcbabcd"
 
-# For example:
 
-# Given "aacecaaa", return "aaacecaaa".
-
-# Given "abcd", return "dcbabcd".
-
-# TLE
 class Solution(object):
     def shortestPalindrome(self, s):
-        """
-        :type s: str
-        :rtype: str
-        """
-        re_s = s[::-1]
-        for i in range(len(s), 0, -1):
-            if s[:i] == re_s[len(s) - i:]:
-                return s[i:][::-1] + s
-        return ''
+        if not s:
+            return ''
+        r = s[::-1]
+        for i in range(len(s)):
+            if s.startswith(r[i:]):
+                return r[:i] + s

@@ -33,25 +33,24 @@ class BSTIterator(object):
         """
         :type root: TreeNode
         """
-        self.root = root
         self.stack = []
-        self.fill_stack(root)
+        self.fillStack(root)
 
     def hasNext(self):
         """
         :rtype: bool
         """
-        return self.stack != []
+        return len(self.stack) > 0
 
     def next(self):
         """
         :rtype: int
         """
-        cur_node = self.stack.pop()
-        self.fill_stack(cur_node.right)
-        return cur_node.val
+        node = self.stack.pop()
+        self.fillStack(node.right)
+        return node.val
 
-    def fill_stack(self, node):
+    def fillStack(self, node):
         while node:
             self.stack.append(node)
             node = node.left

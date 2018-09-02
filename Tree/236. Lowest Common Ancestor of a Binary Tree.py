@@ -28,32 +28,28 @@ class Solution(object):
         :type q: TreeNode
         :rtype: TreeNode
         """
-        node, res = self.LCAhelper(root, p, q)
+        node, res = self.helper(root, p, q)
         return node if res else None
 
-    def LCAhelper(self, root, p, q):
-        # base case
-        if not root:
+    def helper(self, node, p, q):
+        if not node:
             return None, False
-        if root == p and root == q:
-            return root, True
+        if node == p and node == q:
+            return node, True
 
-        # already find the answer in one side
-        l_node, is_left = self.LCAhelper(root.left, p, q)
-        if is_left:
-            return l_node, True
-        r_node, is_right = self.LCAhelper(root.right, p, q)
-        if is_right:
-            return r_node, True
+        lNode, isLeft = self.helper(node.left, p, q)
+        if isLeft:
+            return lNode, True
+        rNode, isRight = self.helper(node.right, p, q)
+        if isRight:
+            return rNode, True
 
-        # current node is p or q, we should check whether we have find q or p in one of the child
-        if root == p or root == q:
-            return (root, True) if l_node or r_node else (root, False)
+        if node == p or node == q:
+            return (node, True) if lNode or rNode else (node, False)
 
-        # find one node in one or two sides or non of the sides
-        if l_node and r_node:
-            return root, True
-        elif l_node or r_node:
-            return (l_node, False) if l_node else (r_node, False)
+        if lNode and rNode:
+            return node, True
+        elif lNode or rNode:
+            return (lNode, False) if lNode else (rNode, False)
         else:
             return None, False
