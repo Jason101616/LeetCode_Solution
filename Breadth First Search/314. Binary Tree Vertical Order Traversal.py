@@ -63,7 +63,10 @@
 #         self.right = None
 
 # idea: use BFS to perform level-order traversal. And use a dictionary to write down the answer.
-class Solution(object):
+from collections import defaultdict, deque
+
+
+class Solution:
     def verticalOrder(self, root):
         """
         :type root: TreeNode
@@ -71,21 +74,18 @@ class Solution(object):
         """
         if not root:
             return []
-        mark_dict = collections.defaultdict(lambda: [])
-        q = collections.deque()
-        q.append((root, 0))
-        while q:
-            cur_len = len(q)
-            for i in range(cur_len):
-                front = q.popleft()
-                cur_node, cur_level = front[0], front[1]
-                mark_dict[cur_level].append(cur_node.val)
-                if cur_node.left:
-                    q.append((cur_node.left, cur_level - 1))
-                if cur_node.right:
-                    q.append((cur_node.right, cur_level + 1))
-        keys = sorted(mark_dict.keys())
-        ans = []
-        for key in keys:
-            ans.append(mark_dict[key])
-        return ans
+        levelDict = defaultdict(lambda: [])
+        queue = deque()
+        queue.append((root, 0))  # 0 is the relative position
+        while queue:
+            levelLen = len(queue)
+            for i in range(levelLen):
+                node, relativePos = queue.popleft()
+                levelDict[relativePos].append(node.val)
+                if node.left:
+                    queue.append((node.left, relativePos - 1))
+                if node.right:
+                    queue.append((node.right, relativePos + 1))
+
+        positions = sorted(levelDict.keys())
+        return [levelDict[pos] for pos in positions]

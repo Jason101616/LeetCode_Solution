@@ -30,9 +30,11 @@ class Solution(object):
         intervals.sort(key=lambda x: (x.start, x.end))
         mergeIntervals = [intervals[0]]
         for i in range(1, len(intervals)):
-            if intervals[i].start <= mergeIntervals[-1].end and intervals[i].end > mergeIntervals[-1].end:
-                # merge interval
-                mergeIntervals[-1].end = intervals[i].end
-            elif intervals[i].start > mergeIntervals[-1].end:
+            if self.isOverlap(intervals[i], mergeIntervals[-1]):
+                mergeIntervals[-1].end = max(intervals[i].end, mergeIntervals[-1].end)
+            else:
                 mergeIntervals.append(intervals[i])
         return mergeIntervals
+
+    def isOverlap(self, i1, i2):
+        return i2.end >= i1.start
