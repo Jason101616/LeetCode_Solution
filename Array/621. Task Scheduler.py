@@ -12,7 +12,8 @@
 # The number of tasks is in the range [1, 10000].
 # The integer n is in the range [0, 100].
 
-import queue
+from collections import defaultdict
+from queue import PriorityQueue
 
 
 class Solution(object):
@@ -22,38 +23,26 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        # count the frequency of each task
-        count_freq = {}
+        counter = defaultdict(lambda: 0)
         for task in tasks:
-            if task not in count_freq:
-                count_freq[task] = 1
-            else:
-                count_freq[task] += 1
+            counter[task] += 1
 
-        # put the frequency of each task into a priority queue. largest frequency should be in the front of the queue.
-        # use '-' here because PriorityQueue in python can only sort ascendingly. We want it decendingly.
-        freq_queue = queue.PriorityQueue()
-        for task in count_freq.keys():
-            freq_queue.put(-count_freq[task])
+        pq = PriorityQueue()
+        for cnt in counter.values():
+            pq.put(-cnt) # because python pq is ascending
 
-        intervals = 0
-        cycle = n + 1
-        while not freq_queue.empty():
-            tmp_freq, time = [], 0
-            # the pop out cycle, we pop out the task with largest frequency.
-            # need to store it in a tmp list, because we may insert it back again.
-            for _ in range(cycle):
-                if not freq_queue.empty():
-                    tmp_freq.append(freq_queue.get())
-                    time += 1
-                else:
+        res = 0
+        while pq.qsize() > 0:
+            tmpBuffer = []
+            for i in range(n + 1):
+                tmp = pq.get()
+                if tmp + 1 < 0: # there are remaining tasks
+                    tmpBuffer.append(tmp + 1)
+                res += 1
+                if pq.qsize() == 0: # cannot execute more tasks on this cycle
+                    if len(tmpBuffer) > 0:
+                        res += (n - i)
                     break
-            # if the frequency - 1 != 0, we must insert it to the PriorityQueue again
-            for freq in tmp_freq:
-                freq += 1
-                if freq:
-                    freq_queue.put(freq)
-
-            intervals += cycle if not freq_queue.empty() else time
-
-        return intervals
+            for cnt in tmpBuffer:
+                pq.put(cnt)
+        return res

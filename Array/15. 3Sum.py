@@ -35,7 +35,7 @@ class Solution(object):
         return ans
 
 
-# Approach 2: sort. Fix one number from the begining of the sorted array. Then the problem become 2 sum. Now I can use two pointers to finish the task of 2sum.
+# Approach 2: sort. Fix one number from the beginning of the sorted array. The problem becomes 2 sum.
 class Solution(object):
     def threeSum(self, nums):
         """
@@ -52,11 +52,11 @@ class Solution(object):
             while l < r:
                 if nums[l] + nums[r] == target:
                     res.append([nums[i], nums[l], nums[r]])
-                    r -= 1
-                    while r >= 0 and nums[r] == nums[r + 1]:
-                        r -= 1
                     l += 1
-                    while l < len(nums) and nums[l] == nums[l - 1]:
+                    r -= 1
+                    while l < r and nums[r] == nums[r + 1]:
+                        r -= 1
+                    while l < r and nums[l] == nums[l - 1]:
                         l += 1
                 elif nums[l] + nums[r] < target:
                     l += 1
