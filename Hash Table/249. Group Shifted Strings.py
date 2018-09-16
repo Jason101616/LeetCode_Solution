@@ -1,11 +1,12 @@
 # Given a string, we can "shift" each of its letter to its successive letter, for example: "abc" -> "bcd". We can keep "shifting" which forms the sequence:
-
+#
 # "abc" -> "bcd" -> ... -> "xyz"
 # Given a list of strings which contains only lowercase alphabets, group all strings that belong to the same shifting sequence.
-
-# For example, given: ["abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"], 
-# A solution is:
-
+#
+# Example:
+#
+# Input: ["abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"],
+# Output:
 # [
 #   ["abc","bcd","xyz"],
 #   ["az","ba"],
@@ -14,25 +15,29 @@
 # ]
 
 
+from collections import defaultdict
+
+
 class Solution(object):
     def groupStrings(self, strings):
         """
         :type strings: List[str]
         :rtype: List[List[str]]
         """
-        dict_pattern = collections.defaultdict(lambda: [])
+        mapping = defaultdict(lambda: [])
         for string in strings:
-            if len(string) == 1:
-                dict_pattern[(0)].append(string)
-                continue
-            pattern = []
-            for i in range(1, len(string)):
-                if string[i] < string[i - 1]:
-                    pattern.append(26 - (ord(string[i - 1]) - ord(string[i])))
-                else:
-                    pattern.append(ord(string[i]) - ord(string[i - 1]))
-            dict_pattern[tuple(pattern)].append(string)
+            mapping[self.helper(string)].append(string)
+        return list(mapping.values())
+
+    def helper(self, string):
+        if len(string) == 1:
+            return ()
+        minus = ord(string[0]) - ord('a')
         res = []
-        for pattern in dict_pattern.keys():
-            res.append(dict_pattern[pattern])
-        return res
+        for char in string:
+            tmp = ord(char) - minus
+            if tmp < ord('a'):
+                res.append(tmp + 26)
+            else:
+                res.append(tmp)
+        return tuple(res)

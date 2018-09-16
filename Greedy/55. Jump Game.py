@@ -24,10 +24,9 @@ class Solution(object):
         :rtype: bool
         """
         maxJump = 0
-        for idx, num in enumerate(nums):
-            maxJump = max(maxJump - 1, num)
-            if maxJump + idx >= len(nums) - 1:
+        for idx, length in enumerate(nums):
+            maxJump = max(maxJump - 1, length)
+            if idx + maxJump >= len(nums) - 1:
                 return True
             if maxJump == 0:
                 return False
-        return False

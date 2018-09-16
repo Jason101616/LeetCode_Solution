@@ -1,29 +1,18 @@
 # Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), find the minimum number of conference rooms required.
+#
+# Example 1:
+#
+# Input: [[0, 30],[5, 10],[15, 20]]
+# Output: 2
+# Example 2:
+#
+# Input: [[7,10],[2,4]]
+# Output: 1
 
-# For example,
-# Given [[0, 30],[5, 10],[15, 20]],
-# return 2.
-
-# Time:  O(n*n)
+# Time:  O(n*log(n))
 # Space: O(n)
-# idea: simulate the booking of meeting rooms. A very natural and naive solution.
-
-# Definition for an interval.
-# class Interval(object):
-#     def __init__(self, s=0, e=0):
-#         self.start = s
-#         self.end = e
-
-class Room(object):
-    def __init__(self, start, end, occupied):
-        self.start = start
-        self.end = end
-        self.occupied = occupied
-
-    def is_occupied(self, time):
-        if time >= self.end:
-            self.occupied = False
-        return self.occupied
+# detect how many intervals interleave at most
+from collections import defaultdict
 
 
 class Solution(object):
@@ -32,19 +21,22 @@ class Solution(object):
         :type intervals: List[Interval]
         :rtype: int
         """
-        intervals.sort(key=lambda x: x.start)
-        Rooms = []
+        cuttingPoint = set()
+        startPoint = defaultdict(lambda: 0)
+        endPoint = defaultdict(lambda: 0)
         for interval in intervals:
-            find_room = False
-            for room in Rooms:
-                if not room.is_occupied(interval.start):
-                    room.start, room.end, room.occupied = interval.start, interval.end, True
-                    find_room = True
-                    break
-            if not find_room:
-                new_room = Room(interval.start, interval.end, True)
-                Rooms.append(new_room)
-        return len(Rooms)
+            cuttingPoint.add(interval.start)
+            cuttingPoint.add(interval.end)
+            startPoint[interval.start] += 1
+            endPoint[interval.end] += 1
+
+        cuttingPoint = sorted(list(cuttingPoint))
+        res, curRes = 0, 0
+        for point in cuttingPoint:
+            curRes -= endPoint[point]
+            curRes += startPoint[point]
+            res = max(res, curRes)
+        return res
 
 
 # Time:  O(n*log(n))

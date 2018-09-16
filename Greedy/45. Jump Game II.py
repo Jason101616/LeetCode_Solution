@@ -57,14 +57,17 @@ class Solution(object):
         """
         if len(nums) <= 1:
             return 0
-        step, maxPos, nextMaxPos = 1, nums[0], nums[0]
 
-        for i in range(1, len(nums)):
-            if maxPos >= len(nums) - 1:
-                return step
-            if i > maxPos:
-                step += 1
-                maxPos = nextMaxPos
-            nextMaxPos = max(nextMaxPos, i + nums[i])
-        return step
+        canReachMaxIdx = nums[0]
+        if canReachMaxIdx >= len(nums) - 1:
+            return 1
 
+        nextReachMax, curJump = 0, 1
+        for i, length in enumerate(nums):
+            if i > canReachMaxIdx:
+                canReachMaxIdx = nextReachMax
+                curJump += 1
+
+            nextReachMax = max(nextReachMax, i + length)
+            if nextReachMax >= len(nums) - 1:
+                return curJump + 1

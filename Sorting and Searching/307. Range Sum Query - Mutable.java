@@ -33,7 +33,9 @@ public class NumArray {
 
     SegmentTreeNode root = null;
 
-    public NumArray(int[] nums) { root = buildTree(nums, 0, nums.length - 1); }
+    public NumArray(int[] nums) { 
+        root = buildTree(nums, 0, nums.length - 1); 
+    }
 
     private SegmentTreeNode buildTree(int[] nums, int start, int end) {
         if (start > end) {
@@ -52,7 +54,9 @@ public class NumArray {
         }
     }
 
-    void update(int i, int val) { update(root, i, val); }
+    void update(int i, int val) { 
+        update(root, i, val); 
+    }
 
     void update(SegmentTreeNode root, int pos, int val) {
         if (root.start == root.end) {
@@ -68,10 +72,12 @@ public class NumArray {
         }
     }
 
-    public int sumRange(int i, int j) { return sumRange(root, i, j); }
+    public int sumRange(int i, int j) { 
+        return sumRange(root, i, j); 
+    }
 
     public int sumRange(SegmentTreeNode root, int start, int end) {
-        if (root.end == end && root.start == start) {
+        if (root.start == start && root.end == end) {
             return root.sum;
         } else {
             int mid = root.start + (root.end - root.start) / 2;
@@ -235,7 +241,9 @@ public class NumArray {
         return sum;
     }
 
-    public int sumRange(int i, int j) { return getSum(j) - getSum(i - 1); }
+    public int sumRange(int i, int j) { 
+        return getSum(j) - getSum(i - 1); 
+    }
 }
 
 // Your NumArray object will be instantiated and called as such:
