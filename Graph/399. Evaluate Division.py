@@ -53,3 +53,77 @@ class Solution(object):
                     return node[1] * tmpRes
                 visited.remove(node[0])
         return -1.0
+
+# union find
+class UnionFindNode:
+    def __init__(self, string):
+        self.parent = string
+        self.ratioToParent = 1
+
+
+class Solution(object):
+    def __init__(self):
+        self.parent = {}
+
+    def union(self, firstStr, secondStr, val):
+        firstStrParent = self.find(firstStr)
+        secondStrParent = self.find(secondStr)
+        self.parent[firstStrParent].parent = secondStrParent
+        if firstStr == firstStrParent and secondStr == secondStrParent:
+            self.parent[firstStrParent].ratioToParent *= val
+        elif firstStr != firstStrParent and secondStr == secondStrParent:
+            self.parent[firstStrParent].ratioToParent *= 1 / self.parent[firstStr].ratioToParent * val
+        elif firstStr == firstStrParent and secondStr != secondStrParent:
+            self.parent[firstStrParent].ratioToParent *= self.parent[secondStr].ratioToParent * val
+        else:
+            self.parent[firstStrParent].ratioToParent *= 1 / self.parent[firstStr].ratioToParent * self.parent[secondStr].ratioToParent * val
+
+    def find(self, string):
+        p = string
+        ratioPath = []
+        while self.parent[p].parent != p:
+            ratioPath.append(self.parent[p].ratioToParent)
+            p = self.parent[p].parent
+
+        for i in range(len(ratioPath) - 2, -1, -1):
+            ratioPath[i] *= ratioPath[i + 1]
+
+        # compress the path
+        idx = 0
+        while self.parent[string].parent != p:
+            self.parent[string].ratioToParent = ratioPath[idx]
+            tmpParent = self.parent[string].parent
+            self.parent[string].parent = p
+            string = tmpParent
+            idx += 1
+        return p
+
+    def calcEquation(self, equations, values, queries):
+        """
+        :type equations: List[List[str]]
+        :type values: List[float]
+        :type queries: List[List[str]]
+        :rtype: List[float]
+        """
+
+        for i in range(len(equations)):
+            firstStr, secondStr = equations[i]
+            if firstStr not in self.parent:
+                self.parent[firstStr] = UnionFindNode(firstStr)
+            if secondStr not in self.parent:
+                self.parent[secondStr] = UnionFindNode(secondStr)
+            self.union(firstStr, secondStr, values[i])
+
+        res = []
+        for query in queries:
+            firstStr, secondStr = query
+            if firstStr not in self.parent or secondStr not in self.parent:
+                res.append(-1.0)
+                continue
+            firstStrParent = self.find(firstStr)
+            secondStrParent = self.find(secondStr)
+            if firstStrParent != secondStrParent:
+                res.append(-1.0)
+                continue
+            res.append(1.0 * self.parent[firstStr].ratioToParent / self.parent[secondStr].ratioToParent)
+        return res
