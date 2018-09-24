@@ -26,7 +26,7 @@
 
 
 # idea: use union find.
-# we simply find the first edge occurring in the graph that is already connected.
+# find the first edge occurring in the graph that is already connected.
 # time complexity: O(N), space complexity: O(N), where N is the number of nodes in the graph
 class DSU(object):
     def __init__(self):

@@ -58,7 +58,7 @@ class Solution {
         queue.offer(new int[] {start[0], start[1], 0});
         while (!queue.isEmpty()) {
             int[] cur = queue.poll();
-            if (length[cur[0]][cur[1]] <= cur[2])
+            if (length[cur[0]][cur[1]] <= cur[2]) // pruning here
                 continue;
             length[cur[0]][cur[1]] = cur[2];
             if (cur[0] == destination[0] && cur[1] == destination[1]) {
@@ -83,5 +83,30 @@ class Solution {
             }
         }
         return res == Integer.MAX_VALUE ? -1 : res;
+    }
+}
+
+class Solution {
+    static final int[] DIRS = {0, 1, 0, -1, 0};
+    public int shortestDistance(int[][] maze, int[] start, int[] destination) {
+        int[][] dist = new int[maze.length][maze[0].length];
+        dist[start[0]][start[1]] = 1;
+        dfs(start[0], start[1], destination, maze, dist);
+        return dist[destination[0]][destination[1]] - 1;
+    }
+    void dfs(int row, int col, int[] dest, int[][] maze, int[][] dist) {
+        if (row == dest[0] && col == dest[1]) return;
+        int m = maze.length, n = maze[0].length;
+        for (int d = 0; d < 4; ++d) {
+            int i = row, j = col, p = DIRS[d], q = DIRS[d + 1], len = dist[row][col];
+            while (i + p >= 0 && i + p < m && j + q >= 0 && j + q < n && maze[i + p][j + q] == 0) {
+                i += p;
+                j += q;
+                len++;
+            }
+            if (dist[i][j] > 0 && len >= dist[i][j]) continue;
+            dist[i][j] = len;
+            dfs(i, j, dest, maze, dist);
+        }
     }
 }
