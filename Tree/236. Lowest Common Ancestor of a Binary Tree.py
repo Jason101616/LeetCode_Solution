@@ -53,3 +53,25 @@ class Solution(object):
             return (lNode, False) if lNode else (rNode, False)
         else:
             return None, False
+
+# easy version:
+class Solution(object):
+    def lowestCommonAncestor(self, root, p, q):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: TreeNode
+        """
+        if root == p or root == q or not root:
+            return root
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+        if not left and right:
+            return right
+        elif not right and left:
+            return left
+        elif not left and not right:
+            return None
+        else:
+            return root

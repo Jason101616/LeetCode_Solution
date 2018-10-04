@@ -54,49 +54,30 @@ class Solution(object):
                 visited.remove(node[0])
         return -1.0
 
-# union find
+# union find with path compression
 class UnionFindNode:
-    def __init__(self, string):
-        self.parent = string
+    def __init__(self):
+        self.parent = self
         self.ratioToParent = 1
 
 
 class Solution(object):
     def __init__(self):
-        self.parent = {}
+        self.stringToNode = {}
 
-    def union(self, firstStr, secondStr, val):
-        firstStrParent = self.find(firstStr)
-        secondStrParent = self.find(secondStr)
-        self.parent[firstStrParent].parent = secondStrParent
-        if firstStr == firstStrParent and secondStr == secondStrParent:
-            self.parent[firstStrParent].ratioToParent *= val
-        elif firstStr != firstStrParent and secondStr == secondStrParent:
-            self.parent[firstStrParent].ratioToParent *= 1 / self.parent[firstStr].ratioToParent * val
-        elif firstStr == firstStrParent and secondStr != secondStrParent:
-            self.parent[firstStrParent].ratioToParent *= self.parent[secondStr].ratioToParent * val
-        else:
-            self.parent[firstStrParent].ratioToParent *= 1 / self.parent[firstStr].ratioToParent * self.parent[secondStr].ratioToParent * val
+    def union(self, firstNode, secondNode, val):
+        p1 = self.find(firstNode)
+        p2 = self.find(secondNode)
+        ratio = 1.0 * val * secondNode.ratioToParent / firstNode.ratioToParent
+        for string, node in self.stringToNode.items():
+            if self.find(node) == p1:
+                node.ratioToParent *= ratio
+        p1.parent = p2
 
-    def find(self, string):
-        p = string
-        ratioPath = []
-        while self.parent[p].parent != p:
-            ratioPath.append(self.parent[p].ratioToParent)
-            p = self.parent[p].parent
-
-        for i in range(len(ratioPath) - 2, -1, -1):
-            ratioPath[i] *= ratioPath[i + 1]
-
-        # compress the path
-        idx = 0
-        while self.parent[string].parent != p:
-            self.parent[string].ratioToParent = ratioPath[idx]
-            tmpParent = self.parent[string].parent
-            self.parent[string].parent = p
-            string = tmpParent
-            idx += 1
-        return p
+    def find(self, node):
+        if node.parent != node:
+            node.parent = self.find(node.parent)
+        return node.parent
 
     def calcEquation(self, equations, values, queries):
         """
@@ -108,22 +89,28 @@ class Solution(object):
 
         for i in range(len(equations)):
             firstStr, secondStr = equations[i]
-            if firstStr not in self.parent:
-                self.parent[firstStr] = UnionFindNode(firstStr)
-            if secondStr not in self.parent:
-                self.parent[secondStr] = UnionFindNode(secondStr)
-            self.union(firstStr, secondStr, values[i])
+            if firstStr not in self.stringToNode and secondStr not in self.stringToNode:
+                self.stringToNode[firstStr] = UnionFindNode()
+                self.stringToNode[secondStr] = UnionFindNode()
+                self.stringToNode[firstStr].ratioToParent = values[i] * 1.0
+                self.stringToNode[firstStr].parent = self.stringToNode[secondStr]
+            elif firstStr not in self.stringToNode and secondStr in self.stringToNode:
+                self.stringToNode[firstStr] = UnionFindNode()
+                self.stringToNode[firstStr].ratioToParent = 1.0 * self.stringToNode[secondStr].ratioToParent * values[i]
+                self.stringToNode[firstStr].parent = self.stringToNode[secondStr]
+            elif firstStr in self.stringToNode and secondStr not in self.stringToNode:
+                self.stringToNode[secondStr] = UnionFindNode()
+                self.stringToNode[secondStr].ratioToParent = 1.0 * self.stringToNode[firstStr].ratioToParent / values[i]
+                self.stringToNode[secondStr].parent = self.stringToNode[firstStr]
+            else:
+                self.union(self.stringToNode[firstStr], self.stringToNode[secondStr], values[i])
 
         res = []
         for query in queries:
             firstStr, secondStr = query
-            if firstStr not in self.parent or secondStr not in self.parent:
+            if firstStr not in self.stringToNode or secondStr not in self.stringToNode or \
+                    self.find(self.stringToNode[firstStr]) != self.find(self.stringToNode[secondStr]):
                 res.append(-1.0)
-                continue
-            firstStrParent = self.find(firstStr)
-            secondStrParent = self.find(secondStr)
-            if firstStrParent != secondStrParent:
-                res.append(-1.0)
-                continue
-            res.append(1.0 * self.parent[firstStr].ratioToParent / self.parent[secondStr].ratioToParent)
+            else:
+                res.append(1.0 * self.stringToNode[firstStr].ratioToParent / self.stringToNode[secondStr].ratioToParent)
         return res
