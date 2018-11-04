@@ -26,7 +26,7 @@ class Solution(object):
         res = float('inf')
         for index, word in enumerate(words):
             if word == word1 or word == word2:
-                if prev != None and (words[prev] != word or word1 == word2):
+                if prev and (words[prev] != word or word1 == word2):
                     res = min(res, index - prev)
                 prev = index
         return res

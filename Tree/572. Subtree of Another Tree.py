@@ -5,7 +5,8 @@
 #         self.left = None
 #         self.right = None
 
-# idea: For each node during pre-order traversal of s, use a recursive function isIdentical to validate if subtree started with current node is the same with t.
+# idea: For each node during pre-order traversal of s,
+# use a recursive function isIdentical to validate if subtree started with current node is the same with t.
 class Solution(object):
     def isSubtree(self, s, t):
         """

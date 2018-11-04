@@ -10,7 +10,7 @@
 #     27 -> AA
 #     28 -> AB 
 
-# idea: The essence of this problem is a conversion between 26 base. But we should deal with some edge case.
+# idea: The essence of this problem is the conversion between 10 and 26 base.
 from collections import deque
 
 
@@ -22,8 +22,9 @@ class Solution(object):
         """
         ret = deque()
         while n:
-            tmp_char = chr((n - 1) % 26 + ord('a'))
+            n -= 1
+            tmp_char = chr(n % 26 + ord('a'))
             ret.appendleft(tmp_char.upper())
-            n = (n - 1) // 26
+            n = n // 26
 
         return ''.join(ret)

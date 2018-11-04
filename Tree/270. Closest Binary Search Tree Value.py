@@ -32,16 +32,14 @@ class Solution(object):
         :rtype: int
         """
         self.closestNodeVal = root.val
-        self.closestVal = float('inf')
         self.helper(root, target)
         return self.closestNodeVal
 
     def helper(self, node, target):
         if not node:
             return
-        if abs(node.val - target) < self.closestVal:
+        if abs(node.val - target) < abs(self.closestNodeVal - target):
             self.closestNodeVal = node.val
-            self.closestVal = abs(node.val - target)
         if node.val > target:
             self.helper(node.left, target)
         else:

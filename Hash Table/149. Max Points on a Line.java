@@ -1,49 +1,76 @@
+/*
+Given n points on a 2D plane, find the maximum number of points that lie on the same straight line.
+
+Example 1:
+
+Input: [[1,1],[2,2],[3,3]]
+Output: 3
+Explanation:
+^
+|
+|        o
+|     o
+|  o  
++------------->
+0  1  2  3  4
+Example 2:
+
+Input: [[1,1],[3,2],[5,3],[4,1],[2,3],[1,4]]
+Output: 4
+Explanation:
+^
+|
+|  o
+|     o        o
+|        o
+|  o        o
++------------------->
+0  1  2  3  4  5  6
+
+*/
+
 // Given n points on a 2D plane, find the maximum number of points that lie on the same straight line.
 
-// 每次迭代以某一个点为基准， 看后面每一个点跟它构成的直线， 维护一个HashMap， key是跟这个点构成直线的斜率的值， 而value就是该斜率对应的点的数量， 计算它的斜率， 如果已经存在， 那么就多添加一个点， 否则创建新的key。 这里只需要考虑斜率而不用考虑截距是因为所有点都是对应于一个参考点构成的直线， 只要斜率相同就必然在同一直线上。 最后取map中最大的值， 就是通过这个点的所有直线上最多的点的数量。 对于每一个点都做一次这种计算， 并且后面的点不需要看扫描过的点的情况了， 因为如果这条直线是包含最多点的直线并且包含前面的点， 那么前面的点肯定统计过这条直线了。 因此算法总共需要两层循环， 外层进行点的迭代， 内层扫描剩下的点进行统计， 时间复杂度是O（n^2), 空间复杂度是哈希表的大小， 也就是O（n)
+// 每次迭代以某一个点为基准， 看后面每一个点跟它构成的直线， 维护一个HashMap， 
+// key是跟这个点构成直线的斜率的值， 而value就是该斜率对应的点的数量， 计算它的斜率， 如果已经存在， 那么就多添加一个点， 否则创建新的key。 
+// 这里只需要考虑斜率而不用考虑截距是因为所有点都是对应于一个参考点构成的直线， 只要斜率相同就必然在同一直线上。 
+// 最后取map中最大的值， 就是通过这个点的所有直线上最多的点的数量。 对于每一个点都做一次这种计算， 并且后面的点不需要看扫描过的点的情况了， 
+// 因为如果这条直线是包含最多点的直线并且包含前面的点， 那么前面的点肯定统计过这条直线了。 
+// 因此算法总共需要两层循环， 外层进行点的迭代， 内层扫描剩下的点进行统计， 时间复杂度是O（n^2), 空间复杂度是哈希表的大小， 也就是O（n)
 
 // 注意java会有精度的问题，因此这种方法并不能通过OJ
 public int maxPoints(Point[] points) {
     if (points == null || points.length == 0) return 0;
     int max = 1;
     double ratio = 0.0;
-    for (int i = 0; i < points.length - 1; i++) 
-    {
+    for (int i = 0; i < points.length - 1; i++) {
         HashMap<Double, Integer> map = new HashMap<Double, Integer>();
         int numofSame = 0;
         int localMax = 1;
-        for (int j = i + 1; j < points.length; j++) 
-        {
+        for (int j = i + 1; j < points.length; j++) {
             if(points[j].x == points[i].x && points[j].y == points[i].y) {
                 numofSame++;
                 continue;
             }
-            else if(points[j].x == points[i].x)
-            {
+            else if(points[j].x == points[i].x) {
                 ratio = (double) Integer.MAX_VALUE;
             }
-            else if(points[j].y == points[i].y)
-            {
+            else if(points[j].y == points[i].y) {
                 ratio = 0.0;
             }
-            else
-            {
+            else {
                 ratio = (double) (points[j].y - points[i].y) / (double) (points[j].x - points[i].x);
             }
             int num;
-            if (map.containsKey(ratio)) 
-            {
-                num = map.get(ratio)+1;
-                
+            if (map.containsKey(ratio)) {
+                num = map.get(ratio)+1;  
             }
-            else 
-            {
+            else {
                 num = 2;
             }
             map.put(ratio, num);
         }
-        for (Integer value : map.values()) 
-        {
+        for (Integer value : map.values()) {
             localMax = Math.max(localMax, value);
         }
         localMax += numofSame;

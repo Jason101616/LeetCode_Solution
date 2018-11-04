@@ -29,7 +29,7 @@ class MaxStack(object):
         initialize your data structure here.
         """
         self.stack = []
-        # jot down the current max element in the stack
+        # store the current max element in the stack
         self.max_stack = []
 
     def push(self, x):
