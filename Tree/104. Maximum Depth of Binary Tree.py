@@ -11,23 +11,13 @@
 #         self.right = None
 
 
-class Solution(object):
-    def maxDepth(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
-        self.max = 0
-        self.find_max(root, 0)
-        return self.max
-
-    def find_max(self, node, length):
-        if not node:
-            if length > self.max:
-                self.max = length
-            return
-        self.find_max(node.left, length + 1)
-        self.find_max(node.right, length + 1)
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        l = self.maxDepth(root.left)
+        r = self.maxDepth(root.right)
+        return max(l, r) + 1
 
 
 # Solution 2: BFS

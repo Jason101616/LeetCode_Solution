@@ -16,8 +16,7 @@ class Solution(object):
         :type grid: List[List[int]]
         :rtype: int
         """
-        m = len(grid)
-        n = len(grid[0])
+        m, n = len(grid), len(grid[0])
         for i in range(1, n):
             grid[0][i] += grid[0][i - 1]
         for i in range(1, m):
@@ -37,12 +36,12 @@ class Solution(object):
         """
         m = len(grid)
         n = len(grid[0])
-        row0 = [None] * n
-        row0[0] = grid[0][0]
+        col = [None] * n
+        col[0] = grid[0][0]
         for i in range(1, n):
-            row0[i] = grid[0][i] + row0[i - 1]
+            col[i] = grid[0][i] + col[i - 1]
         for i in range(1, m):
-            row0[0] = grid[i][0] + row0[0]
+            col[0] = grid[i][0] + col[0]
             for j in range(1, n):
-                row0[j] = grid[i][j] + min(row0[j - 1], row0[j])
-        return row0[n - 1]
+                col[j] = grid[i][j] + min(col[j - 1], col[j])
+        return col[n - 1]

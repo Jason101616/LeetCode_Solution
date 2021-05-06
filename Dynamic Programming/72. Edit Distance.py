@@ -6,7 +6,7 @@
 # b) Delete a character
 # c) Replace a character
 
-# approach 1: top-down recurse with memo
+# approach 1: top-down recursion with memo
 class Solution(object):
     def minDistance(self, word1, word2):
         """

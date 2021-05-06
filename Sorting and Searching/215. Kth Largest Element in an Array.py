@@ -40,7 +40,7 @@ class Solution(object):
 
 
 # solution 2: use heap
-# time: O(N * log(k))
+# time: O(n * log(k))
 import queue  # python 3
 
 
